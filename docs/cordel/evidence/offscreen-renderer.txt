@@ -1,0 +1,79 @@
+2026-10-07 05:55:18 UTC
+Linux-6.18.44-x86_64-with-glibc2.41
+Ren'Py 8.6.0.26100603+unofficial.dirty.cordel/bootstrap
+
+Early init took 39 ms
+Loading error handling took 26 ms
+Loading script took 113 ms
+Loading save slot metadata took 11 ms
+Loading persistent took 0 ms
+Running init code took 43 ms
+Loading analysis data took 2 ms
+Analyze and compile ATL took 2 ms
+Reloading save slot metadata took 1 ms
+Dump and make backups took 0 ms
+Cleaning cache took 0 ms
+Making clean stores took 0 ms
+Initial gc took 38 ms
+Creating interface object took 0 ms
+Init translation took 0 ms
+Cleaning stores took 0 ms
+Load screen analysis took 6 ms
+Analyze screens took 1 ms
+Save screen analysis took 0 ms
+Save pyanalysis took 0 ms
+Save bytecode took 0 ms
+
+[rpytest] Starting test run
+[rpytest] Platform:      Linux-6.18.44-x86_64-with-glibc2.41
+[rpytest] Python:        3.12.8
+[rpytest] Ren'Py:        Ren'Py 8.6.0.26100603+unofficial.dirty.cordel/bootstrap
+[rpytest] Game Version:  7.0
+
+[rpytest] [exc] + global
+Running _start took 2 ms
+Interface start took 150 ms
+
+Initializing gl2 renderer:
+primary display bounds: (0, 0, 1024, 768)
+swap interval: 1 frames
+Requesting OpenGL 3.3.
+Windowed mode.
+Vendor: 'Mesa'
+Renderer: 'llvmpipe (LLVM 19.1.7, 256 bits)'
+Version: '4.5 (Compatibility Profile) Mesa 25.0.7-2+deb13u1'
+Shading language version: '4.50'
+Display Info: <Info({'bitsize': 32, 'bytesize': 4, 'masks': (16711680, 65280, 255, 0), 'shifts': (16, 8, 0, 0), 'losses': (0, 0, 0, 8), 'current_w': 1024, 'current_h': 768, 'refresh_rate': 0.0, 'hw': False, 'wm': True, 'video_mem': 268435456, 'blit_hw': False, 'blit_hw_CC': False, 'blit_hw_A': False, 'blit_sw': False, 'blit_sw_CC': False, 'blit_sw_A': False})>
+Emitting shaders as GLSL 330.
+Screen sizes: virtual=(1280, 720) physical=(1280, 720) drawable=(1280, 720)
+Maximum texture size: 4096x4096
+Screen sizes: virtual=(1280, 720) physical=(1280, 720) drawable=(1280, 720)
+Maximum texture size: 4096x4096
+[rpytest] [exc]   - bad_end
+Cleaning stores took 0 ms
+Load screen analysis took 29 ms
+Analyze screens took 0 ms
+Running _start took 0 ms
+[rpytest] [exc]   - bad_end (0.858 s)
+[rpytest] [exc]   - good_end
+Cleaning stores took 0 ms
+Load screen analysis took 7 ms
+Analyze screens took 0 ms
+Running _start took 1 ms
+[rpytest] [exc]   - good_end (2.898 s)
+
+[rpytest] Test outcomes (Detailed)
+[rpytest] PASSED  global               - (4.350 s)
+[rpytest]   PASSED  bad_end              - (0.858 s)
+[rpytest]   PASSED  good_end             - (2.898 s)
+
+====================
+
+[rpytest] Test outcomes (Summary)
+[rpytest] Test suites:     1 |     1 passed |     0 xfailed |     0 failed |     0 xpassed |     0 skipped |     0 not run
+[rpytest] Test cases :     3 |     2 passed |     0 xfailed |     0 failed |     0 xpassed |     1 skipped |     0 not run
+[rpytest] Test hooks :     3 |     3 passed |     0 xfailed |     0 failed |     0 xpassed |     0 skipped |     0 not run
+[rpytest] Assertions :     2 |     2 passed |     0 xfailed |     0 failed |     0 xpassed |
+
+[rpytest] Time: 4.350 s
+[rpytest] Status: PASSED

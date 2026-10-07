@@ -1,0 +1,23 @@
+# CORDEL identity is separate from Ren'Py package and save-format versions.
+schema_version = 1
+name = "CORDEL ENGINE"
+version = "0.1.0-dev"
+display_name = "CORDEL ENGINE — 0.1.0-dev"
+milestone = "Phase 0 — Foundation"
+status = "architecture-and-baseline"
+
+[repository]
+url = "https://github.com/mylife-as-miles/cordel-engine"
+default_branch = "main"
+history = "fresh-cordel-history"
+
+[upstream]
+repository = "https://github.com/renpy/renpy"
+remote = "upstream"
+branch_at_bootstrap = "master"
+base_commit = "68fdaef917919e330c90765dd69668fee1cb9654"
+
+[compatibility]
+python = ">=3.12.8,<3.13"
+preserve_renpy_namespace = true
+cordel_runtime_implemented = false

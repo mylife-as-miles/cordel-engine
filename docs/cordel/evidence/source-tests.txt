@@ -1,0 +1,266 @@
+test_budget_checks_clock_after_each_step (test_asynctask.TestAsyncTask.test_budget_checks_clock_after_each_step) ... ok
+test_cancel_before_start (test_asynctask.TestAsyncTask.test_cancel_before_start) ... ok
+test_cancel_closes_nested_yield_from (test_asynctask.TestAsyncTask.test_cancel_closes_nested_yield_from) ... ok
+test_cancel_different_queued_task_from_running_task (test_asynctask.TestAsyncTask.test_cancel_different_queued_task_from_running_task) ... ok
+test_cancel_only_started_task_clears_ready_queue (test_asynctask.TestAsyncTask.test_cancel_only_started_task_clears_ready_queue) ... ok
+test_cleanup_that_yields_is_error_but_other_tasks_are_closed (test_asynctask.TestAsyncTask.test_cleanup_that_yields_is_error_but_other_tasks_are_closed) ... ok
+test_empty_and_result (test_asynctask.TestAsyncTask.test_empty_and_result) ... ok
+test_exception_propagates_without_discarding_other_work (test_asynctask.TestAsyncTask.test_exception_propagates_without_discarding_other_work) ... ok
+test_nested_yield_from_result (test_asynctask.TestAsyncTask.test_nested_yield_from_result) ... ok
+test_reset_closes_all_pending_and_reusable (test_asynctask.TestAsyncTask.test_reset_closes_all_pending_and_reusable) ... ok
+test_reset_from_running_task_defers_its_close (test_asynctask.TestAsyncTask.test_reset_from_running_task_defers_its_close) ... ok
+test_round_robin_and_budget (test_asynctask.TestAsyncTask.test_round_robin_and_budget) ... ok
+test_run_sync_and_guard (test_asynctask.TestAsyncTask.test_run_sync_and_guard) ... ok
+test_run_sync_closes_on_exception (test_asynctask.TestAsyncTask.test_run_sync_closes_on_exception) ... ok
+test_slow_step_disabled_and_invalid_setting (test_asynctask.TestAsyncTask.test_slow_step_disabled_and_invalid_setting) ... ok
+test_slow_step_logs_nested_location_and_completed (test_asynctask.TestAsyncTask.test_slow_step_logs_nested_location_and_completed) ... ok
+test_slow_step_logs_single_frame_location (test_asynctask.TestAsyncTask.test_slow_step_logs_single_frame_location) ... ok
+test_audio_queue (unittest.loader._FailedTest.test_audio_queue) ... ERROR
+test_der_pem_roundtrip (test_ecsign.TestECSign.test_der_pem_roundtrip) ... ok
+test_key_generation (test_ecsign.TestECSign.test_key_generation) ... ok
+test_p256_sec1_and_pkcs8_private_key_compatibility (test_ecsign.TestECSign.test_p256_sec1_and_pkcs8_private_key_compatibility) ... ok
+test_rejects_invalid_private_key_constructor_scalar (test_ecsign.TestECSign.test_rejects_invalid_private_key_constructor_scalar) ... ok
+test_rejects_invalid_private_key_der_and_pem (test_ecsign.TestECSign.test_rejects_invalid_private_key_der_and_pem) ... ok
+test_rejects_invalid_public_points (test_ecsign.TestECSign.test_rejects_invalid_public_points) ... ok
+test_rejects_noncanonical_or_invalid_spki (test_ecsign.TestECSign.test_rejects_noncanonical_or_invalid_spki) ... ok
+test_rejects_oversized_digests (test_ecsign.TestECSign.test_rejects_oversized_digests) ... ok
+test_sign_and_verify (test_ecsign.TestECSign.test_sign_and_verify) ... ok
+test_supported_hashfuncs (test_ecsign.TestECSign.test_supported_hashfuncs) ... ok
+test_particle (unittest.loader._FailedTest.test_particle) ... ERROR
+test_persistent_tasks (unittest.loader._FailedTest.test_persistent_tasks) ... ERROR
+test_prediction (unittest.loader._FailedTest.test_prediction) ... ERROR
+test_failed_initialization_propagates_and_can_retry (test_renpy_test_support.TestRenpyInitialization.test_failed_initialization_propagates_and_can_retry) ... ok
+test_initializes_once_in_fresh_process (test_renpy_test_support.TestRenpyInitialization.test_initializes_once_in_fresh_process) ... FAIL
+test_savelocation_background (unittest.loader._FailedTest.test_savelocation_background) ... ERROR
+test_other_process_waits_for_build (test_setuplib.TestBuildLock.test_other_process_waits_for_build) ... ok
+test_setup_holds_lock_through_build (test_setuplib.TestBuildLock.test_setup_holds_lock_through_build) ... ok
+test_surface_deallocation (unittest.loader._FailedTest.test_surface_deallocation) ... ERROR
+test_test_input (unittest.loader._FailedTest.test_test_input) ... ERROR
+test_test_window (unittest.loader._FailedTest.test_test_window) ... ERROR
+test_warp (unittest.loader._FailedTest.test_warp) ... ERROR
+
+======================================================================
+ERROR: test_audio_queue (unittest.loader._FailedTest.test_audio_queue)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_audio_queue
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_audio_queue.py", line 12, in <module>
+    from renpy.audio import renpysound
+ImportError: cannot import name 'renpysound' from 'renpy.audio' (/workspace/cordel-engine/renpy/audio/__init__.py)
+
+
+======================================================================
+ERROR: test_particle (unittest.loader._FailedTest.test_particle)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_particle
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_particle.py", line 7, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_persistent_tasks (unittest.loader._FailedTest.test_persistent_tasks)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_persistent_tasks
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_persistent_tasks.py", line 9, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_prediction (unittest.loader._FailedTest.test_prediction)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_prediction
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_prediction.py", line 8, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_savelocation_background (unittest.loader._FailedTest.test_savelocation_background)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_savelocation_background
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_savelocation_background.py", line 13, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_surface_deallocation (unittest.loader._FailedTest.test_surface_deallocation)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_surface_deallocation
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_surface_deallocation.py", line 7, in <module>
+    from renpy import pygame
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_test_input (unittest.loader._FailedTest.test_test_input)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_test_input
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_test_input.py", line 6, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_test_window (unittest.loader._FailedTest.test_test_window)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_test_window
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_test_window.py", line 8, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+ERROR: test_warp (unittest.loader._FailedTest.test_warp)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_warp
+Traceback (most recent call last):
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 396, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/loader.py", line 339, in _get_module_from_name
+    __import__(name)
+  File "/workspace/cordel-engine/unittests/test_warp.py", line 8, in <module>
+    initialize_renpy()
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+======================================================================
+FAIL: test_initializes_once_in_fresh_process (test_renpy_test_support.TestRenpyInitialization.test_initializes_once_in_fresh_process)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/cordel-engine/unittests/test_renpy_test_support.py", line 32, in test_initializes_once_in_fresh_process
+    self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<string>", line 7, in <module>
+  File "/workspace/cordel-engine/unittests/renpy_test_support.py", line 10, in initialize_renpy
+    renpy.import_all()
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1139, in __call__
+    return self._mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1143, in _mock_call
+    return self._execute_mock_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/unittest/mock.py", line 1216, in _execute_mock_call
+    return self._mock_wraps(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cordel-engine/renpy/__init__.py", line 398, in import_all
+    import renpy.loader
+  File "/workspace/cordel-engine/renpy/loader.py", line 35, in <module>
+    from renpy.pygame.iostream import IOPath, IOBuffer, IOSubFile
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+
+----------------------------------------------------------------------
+Ran 40 tests in 0.477s
+
+FAILED (failures=1, errors=9)

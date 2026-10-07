@@ -1,0 +1,49 @@
+﻿Ren'Py 8.6.0.26100603+unofficial.dirty.cordel/bootstrap lint report, generated at: Wed Oct  7 05:53:34 2026
+
+
+Statistics:
+
+The game contains 70 dialogue blocks, containing 743 words and 3,919
+characters, for an average of 10.6 words and 56 characters per block.
+
+The czech translation contains 70 dialogue blocks, containing 671 words and
+3,831 characters, for an average of 9.6 words and 55 characters per block.
+
+The danish translation contains 70 dialogue blocks, containing 843 words and
+4,503 characters, for an average of 12.0 words and 64 characters per block.
+
+The french translation contains 70 dialogue blocks, containing 825 words and
+4,625 characters, for an average of 11.8 words and 66 characters per block.
+
+The italian translation contains 70 dialogue blocks, containing 727 words and
+4,274 characters, for an average of 10.4 words and 61 characters per block.
+
+The japanese translation contains 70 dialogue blocks, containing 71 words and
+1,571 characters, for an average of 1.0 words and 22 characters per block.
+
+The korean translation contains 70 dialogue blocks, containing 540 words and
+2,085 characters, for an average of 7.7 words and 30 characters per block.
+
+The malay translation contains 70 dialogue blocks, containing 679 words and
+4,171 characters, for an average of 9.7 words and 60 characters per block.
+
+The russian translation contains 70 dialogue blocks, containing 668 words and
+4,012 characters, for an average of 9.5 words and 57 characters per block.
+
+The schinese translation contains 70 dialogue blocks, containing 70 words and
+1,252 characters, for an average of 1.0 words and 18 characters per block.
+
+The spanish translation contains 70 dialogue blocks, containing 695 words and
+4,180 characters, for an average of 9.9 words and 60 characters per block.
+
+The tchinese translation contains 70 dialogue blocks, containing 70 words and
+1,275 characters, for an average of 1.0 words and 18 characters per block.
+
+The ukrainian translation contains 70 dialogue blocks, containing 644 words
+and 3,928 characters, for an average of 9.2 words and 56 characters per block.
+
+The game contains 2 menus, 0 images, and 23 screens.
+
+
+Lint is not a substitute for thorough testing. Remember to update Ren'Py
+before releasing. New releases fix bugs and improve compatibility.

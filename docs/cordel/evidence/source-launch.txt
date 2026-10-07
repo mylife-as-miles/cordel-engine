@@ -1,0 +1,37 @@
+Error in sys.excepthook:
+Traceback (most recent call last):
+  File "/workspace/cordel-engine/renpy/bootstrap.py", line 182, in excepthook
+    te = renpy.error.TracebackException(value)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cordel-engine/renpy/error.py", line 1315, in __init__
+    self.stack = StackSummary(exception.__traceback__)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/cordel-engine/renpy/error.py", line 960, in __init__
+    FrameSummary(
+  File "/workspace/cordel-engine/renpy/error.py", line 758, in __init__
+    from renpy.lexer import elide_filename
+  File "/workspace/cordel-engine/renpy/lexer.py", line 664, in <module>
+    class Lexer:
+  File "/workspace/cordel-engine/renpy/lexer.py", line 1308, in Lexer
+    ) -> PyExpr:
+         ^^^^^^
+NameError: name 'PyExpr' is not defined
+
+Original exception was:
+Traceback (most recent call last):
+  File "/workspace/cordel-engine/renpy.py", line 308, in <module>
+    main()
+  File "/workspace/cordel-engine/renpy.py", line 304, in main
+    renpy.bootstrap.bootstrap(renpy_base)
+  File "/workspace/cordel-engine/renpy/bootstrap.py", line 298, in bootstrap
+    import renpy.pygame
+  File "/workspace/cordel-engine/renpy/pygame/__init__.py", line 53, in <module>
+    from .error import *
+ModuleNotFoundError: No module named 'renpy.pygame.error'
+
+Could not import renpy.pygame. Please ensure that this program has been built
+and unpacked properly. Also, make sure that the directories containing this
+program do not contain : or ; in their names.
+
+You may be using a system install of python. Please run renpy.sh,
+renpy.exe, or renpy.app instead.

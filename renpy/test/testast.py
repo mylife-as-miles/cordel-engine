@@ -1,0 +1,1910 @@
+# Copyright 2004-2026 Tom Rothamel <pytom@bishoujo.us>
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+import glob
+import itertools
+import os
+from typing import Any, ClassVar
+
+import renpy
+from renpy.display.displayable import Displayable
+from renpy.display.focus import Focus
+from renpy.test.testmouse import click_mouse, move_mouse, scroll_mouse
+from renpy.test.testsettings import _test, global_testsuite_name
+from renpy.test.types import (
+    HookType,
+    NodeLocation,
+    NodeState,
+    Position,
+    RenpyTestException,
+    RenpyTestScreenshotError,
+    RenpyTestTimeoutError,
+)
+
+
+class SelectorException(RenpyTestException):
+    pass
+
+
+class LoopBreakException(Exception):
+    """Exception raised to break out of a loop."""
+
+
+class LoopContinueException(Exception):
+    """Exception raised to continue to the next iteration of a loop."""
+
+
+class Node:
+    """
+    An AST node for a test script.
+    """
+
+    __slots__ = ("done", "filename", "linenumber", "next")
+
+    def __init__(self, loc: NodeLocation):
+        self.filename, self.linenumber = loc
+        self.next: Node | None = None
+        self.done: bool = False
+
+    def __eq__(self, other):
+        if not isinstance(other, Node):
+            return False
+
+        return (self.filename, self.linenumber) == (other.filename, other.linenumber)
+
+    def __repr__(self):
+        if params := self.get_repr_params():
+            params = " " + params
+        return f"<{type(self).__name__}{params} ({self.filename}:{self.linenumber})>"
+
+    def chain(self, next: "Node | None") -> None:
+        """
+        This is called with the Node node that should be followed after
+        executing this node, and all nodes that this node
+        executes. (For example, if this node is a block label, the
+        next is the node that should be executed after all nodes in
+        the block.)
+        """
+
+        self.next = next
+
+    def get_repr_params(self) -> str:
+        """
+        Returns a string representation of the parameters of this node.
+        This is used in the __repr__ method to provide additional information
+        about the node.
+        """
+        return ""
+
+    def restart(self) -> None:
+        self.done = False
+
+    #######################
+
+    def ready(self) -> bool:
+        """
+        Returns True if this node is ready to execute, or False otherwise.
+        """
+        return True
+
+    def start(self) -> NodeState:
+        """
+        Called once when the node starts execution.
+
+        This is expected to return a state, or None to advance to the next
+        node.
+        """
+        return 0
+
+    def execute(self, state: NodeState, t: float) -> NodeState:
+        """
+        Called once each time the screen is drawn.
+
+        Returning None indicates that the node is done executing. You should
+        then call `next_node()` with the next node to execute.
+
+        `state`
+            The last state that was returned from this node.
+
+        `t`
+            The time since start was called.
+        """
+        next_node(self.next)
+        return None
+
+    def after_until(self) -> None:
+        """
+        Called after an Until node has finished executing.
+        This is used to end any function that was started by this node.
+        """
+
+    def cleanup_after_error(self, state: NodeState) -> None:
+        """
+        Called if an exception is raised during the execution of this node.
+        This can be used to clean up any state that was set by this node.
+        """
+
+
+class Block(Node):
+    __slots__ = ("block", "name")
+
+    def __init__(self, loc: NodeLocation, block: list[Node], name: str = ""):
+        Node.__init__(self, loc)
+        self.block = block
+        self.name = name
+        self.restart()
+
+    def chain(self, next):
+        if self.block:
+            self.next = self.block[0]
+
+            for a, b in zip(self.block, self.block[1:]):
+                a.chain(b)
+
+            self.block[-1].chain(next)
+        else:
+            super().chain(next)
+
+    def restart(self) -> None:
+        if self.block:
+            for node in self.block:
+                node.restart()
+            self.done = False
+        else:
+            self.done = True
+
+    def execute(self, state, t):
+        if not self.block:
+            next_node(self.next)
+            return
+
+        next_node(self.block[0])
+        return
+
+
+class BaseTestBlock(Block):
+    """
+    A base class for TestCase, TestSuite, and TestHook.
+    """
+
+    __slots__ = ("parent", "xfail_expr")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        block: list[Node],
+        name: str,
+        parent: "TestSuite | None" = None,
+        xfail_expr: str = "False",
+    ):
+        self.parent = parent
+        self.xfail_expr = xfail_expr
+        super().__init__(loc, block, name)
+
+    def __hash__(self):
+        return hash(self.full_path)
+        # return hash(self.parameterized_id)
+
+    def get_repr_params(self) -> str:
+        return f"name={self.current_full_parameterized_path!r}"
+
+    def get_parameterized_name(self, index: int | None = None) -> str:
+        """
+        Returns the name with the parameters for the given index shown.
+        If index is None, uses the current parameters.
+        """
+        raise NotImplementedError
+
+    def get_parent_chain(self) -> list["TestSuite"]:
+        """
+        Returns a list of parent TestSuites, starting with the root (global)
+        and ending with the immediate parent.
+        """
+        chain: list[TestSuite] = []
+        current = self.parent
+        while current is not None:
+            chain.append(current)
+            current = current.parent
+        chain.reverse()
+        return chain
+
+    @property
+    def xfail(self) -> bool:
+        return bool(scoped_eval(self.xfail_expr))
+
+    @property
+    def current_parameters(self) -> dict[str, Any]:
+        """The current parameters for this test block, or an empty dict if there are none."""
+        raise NotImplementedError
+
+    @property
+    def full_path(self) -> str:
+        """The full hierarchical path using `.` to separate testcases and `::` to separate hook."""
+        if self.parent:
+            return f"{self.parent.full_path}.{self.name}"
+        return f"{global_testsuite_name}.{self.name}"
+
+    @property
+    def current_parameterized_name(self) -> str:
+        """The name with current parameters shown."""
+        return self.get_parameterized_name(None)
+
+    @property
+    def current_full_parameterized_path(self) -> str:
+        """The full hierarchical path with current parameters shown."""
+        if self.parent:
+            return f"{self.parent.current_full_parameterized_path}.{self.current_parameterized_name}"
+        return self.current_parameterized_name
+
+
+class TestHook(BaseTestBlock):
+    __slots__ = ("call_count", "depth")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        block: list[Node],
+        name: str,
+        parent: "TestSuite | None" = None,
+        xfail_expr: str = "False",
+        depth: int = 0,
+    ):
+        self.depth = depth
+        self.call_count = 0
+        super().__init__(loc, block, name, parent, xfail_expr)
+
+    def increment_call_count(self) -> None:
+        self.call_count += 1
+
+    def __hash__(self):
+        return hash(self.current_full_parameterized_path)
+
+    @property
+    def full_path(self) -> str:
+        """The full hierarchical path using `.` to separate testcases and `::` to separate hook."""
+        if self.parent:
+            return f"{self.parent.full_path}::{self.name}"
+        return f"{global_testsuite_name}::{self.name}"
+
+    def get_parameterized_name(self, index=None):
+        if index is None:
+            index = self.call_count
+        return f"{self.name}({index})"
+
+    @property
+    def current_full_parameterized_path(self) -> str:
+        """The full hierarchical path with current parameters shown."""
+        if self.parent:
+            return f"{self.parent.current_full_parameterized_path}::{self.current_parameterized_name}"
+        return f"{global_testsuite_name}::{self.name}"
+
+
+class TestCase(BaseTestBlock):
+    __slots__ = ("description", "enabled", "only", "parameter_index", "parameters")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        block: list[Node],
+        name: str,
+        parent: "TestSuite | None" = None,
+        xfail_expr: str = "False",
+        description: str = "",
+        enabled: bool = True,
+        only: bool = False,
+        parameters: list[list[dict[str, Any]]] | None = None,
+    ):
+        self.description = description
+        self.enabled = enabled
+        self.only = only
+        self.parameters = self.generate_parameter_combinations(parameters)
+        self.parameter_index = -1
+        super().__init__(loc, block, name, parent, xfail_expr)
+
+        if not self.enabled and self.only:
+            raise ValueError(f"Test case '{self.name}' must be enabled before setting 'only' to True.")
+
+    def restart(self) -> None:
+        self.parameter_index = -1
+        return super().restart()
+
+    def generate_parameter_combinations(self, parameters: list[list[dict[str, Any]]] | None) -> list[dict[str, Any]]:
+        if parameters is None:
+            return []
+
+        if len(parameters) == 1:
+            return parameters[0]
+
+        # Cartesian product of parameter lists.
+        rv = []
+        product = itertools.product(*parameters)
+        for param_tuple in product:
+            merged_dict = {}
+            for d in param_tuple:
+                merged_dict.update(d)
+            rv.append(merged_dict)
+
+        return rv
+
+    def advance_to_next_parameter_set(self):
+        """
+        Advances the test case to the next parameter set.
+
+        Returns True if there are no more parameter sets to advance to.
+        """
+        self.parameter_index += 1
+
+    def get_parameterized_name(self, index=None):
+        if not self.parameters:
+            return self.name
+
+        if index is None:
+            index = self.parameter_index
+
+        if index < 0 or index >= len(self.parameters):
+            return f"{self.name}"
+
+        params = self.parameters[index]
+        param_str = ", ".join(f"{k}={v!r}" for k, v in params.items())
+        return f"{self.name}({param_str})"
+
+    @property
+    def current_parameters(self) -> dict[str, Any]:
+        if not self.parameters:
+            return {}
+        return self.parameters[self.parameter_index]
+
+    @property
+    def has_all_parameters_been_processed(self) -> bool:
+        return self.parameter_index >= max(1, len(self.parameters))
+
+    def has_testcase(self) -> bool:
+        """
+        Returns True if there is at least one test case defined.
+        """
+
+        return True
+
+
+class TestSuite(TestCase):
+    """
+    Most of the logic is handled in renpy.test.testexecution.
+    """
+
+    __slots__ = (
+        "after_testcase",
+        "after_testsuite",
+        "before_testcase",
+        "before_testsuite",
+        "setup",
+        "subtest_index",
+        "subtests",
+        "teardown",
+    )
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        name: str,
+        parent: "TestSuite | None" = None,
+        xfail_expr: str = "False",
+        description: str = "",
+        enabled: bool = True,
+        only: bool = False,
+        parameters: list[list[dict[str, Any]]] | None = None,
+        subtests: list[TestCase] | None = None,
+        setup: TestHook | None = None,
+        before_testsuite: TestHook | None = None,
+        before_testcase: TestHook | None = None,
+        after_testsuite: TestHook | None = None,
+        after_testcase: TestHook | None = None,
+        teardown: TestHook | None = None,
+    ):
+        self.subtest_index = 0
+
+        self.subtests: list[TestCase] = []
+        self.setup = setup
+        self.before_testsuite = before_testsuite
+        self.before_testcase = before_testcase
+        self.after_testcase = after_testcase
+        self.after_testsuite = after_testsuite
+        self.teardown = teardown
+        super().__init__(loc, [], name, parent, xfail_expr, description, enabled, only, parameters)
+
+        if subtests is not None:
+            for subtest in subtests:
+                self.add(subtest)
+
+        for hook in self.hooks:
+            hook.parent = self
+
+    def chain(self, next: Node | None) -> None:
+        for block in self.hooks:
+            block.chain(None)
+
+        for subtest in self.subtests:
+            subtest.chain(None)
+
+    def add(self, child: TestCase) -> None:
+        child.parent = self
+        self.subtests.append(child)
+
+    def restart(self) -> None:
+        self.parameter_index = -1
+        self.subtest_index = 0
+        for subtest in self.subtests:
+            subtest.restart()
+        for hook in self.hooks:
+            hook.restart()
+        return super().restart()
+
+    def advance_to_next_subtest(self) -> None:
+        """
+        Advances the test suite to the next block.
+        """
+        test = self.current_test
+        if test is None:
+            raise RenpyTestException("No current test to advance to.")
+
+        if test.enabled:
+            test.advance_to_next_parameter_set()
+            if test.has_all_parameters_been_processed:
+                test.parameter_index = -1
+                self.subtest_index += 1
+        else:
+            self.subtest_index += 1
+
+    def advance_to_next_parameter_set(self):
+        """
+        Advances the test case to the next parameter set.
+
+        Returns True if there are no more parameter sets to advance to.
+        """
+
+        super().advance_to_next_parameter_set()
+        self.subtest_index = 0
+
+    def get_hook(self, hook_type: HookType) -> TestHook | None:
+        """Returns the hook of the given type, or None if no such hook exists."""
+        match hook_type:
+            case HookType.SETUP:
+                return self.setup
+            case HookType.BEFORE_TESTSUITE:
+                return self.before_testsuite
+            case HookType.BEFORE_TESTCASE:
+                return self.before_testcase
+            case HookType.AFTER_TESTCASE:
+                return self.after_testcase
+            case HookType.AFTER_TESTSUITE:
+                return self.after_testsuite
+            case HookType.TEARDOWN:
+                return self.teardown
+
+    @property
+    def hooks(self) -> list[TestHook]:
+        rv: list[TestHook] = []
+        for hook in [
+            self.setup,
+            self.before_testsuite,
+            self.before_testcase,
+            self.after_testcase,
+            self.after_testsuite,
+            self.teardown,
+        ]:
+            if hook is not None:
+                rv.append(hook)
+        return rv
+
+    @property
+    def current_test(self) -> TestCase | None:
+        if 0 <= self.subtest_index < len(self.subtests):
+            return self.subtests[self.subtest_index]
+        return None
+
+    @property
+    def num_tests(self) -> int:
+        return len(self.subtests)
+
+    @property
+    def has_completed_all_subtests(self) -> bool:
+        return self.subtest_index >= len(self.subtests)
+
+    @property
+    def full_path(self) -> str:
+        if self.parent:
+            return f"{self.parent.full_path}.{self.name}"
+        if self.name != global_testsuite_name:
+            return f"{global_testsuite_name}.{self.name}"
+        return self.name
+
+    def has_testcase(self) -> bool:
+        """
+        Returns True if there is at least one test case defined.
+        """
+
+        if self.subtests is None:
+            return False
+
+        return any(subtest.has_testcase() for subtest in self.subtests)
+
+
+class Condition(Node):
+    """
+    A base class for conditions that can be used in test scripts.
+
+    Conditions should NOT execute any actions or change the state of the game.
+    They should only check if a certain condition is met.
+    """
+
+    def execute(self, state: NodeState, t: float) -> NodeState:
+        raise RenpyTestException("Conditions should not be executed directly. Use `ready()` instead.")
+
+
+################################################################################
+# Selectors
+class Selector(Condition):
+    """
+    Base class for selectors. Selectors find a focusable or displayable
+    item on the screen.
+    """
+
+    __slots__ = ("element", "wait_for_focus")
+
+    def __init__(self, loc, wait_for_focus):
+        super().__init__(loc)
+
+        self.wait_for_focus: bool = wait_for_focus
+        self.element: Displayable | Focus | None = None
+
+    def ready(self) -> bool:
+        self.element = self.get_element()
+        focused = self.is_focused() or not self.wait_for_focus
+        return self.element is not None and focused
+
+    def get_element(self) -> Displayable | Focus | None:
+        """
+        Returns the element that this selector is looking for.
+        If no element is found, returns None.
+        """
+        raise NotImplementedError("get_element() must be implemented in subclasses of Selector.")
+
+    def element_not_found_during_perform(self) -> None:
+        """
+        Called when the element is not found during perform.
+        This can be overridden to handle cases where the element is not found.
+        """
+        raise SelectorException("Element was not found.")
+
+    def is_focused(self) -> bool:
+        """
+        Checks if the element or its children are focused.
+        """
+        displayable = None
+        if isinstance(self.element, Focus):
+            displayable = self.element.widget
+        elif isinstance(self.element, Displayable):
+            displayable = self.element
+
+        if displayable is None:
+            return False
+
+        child_stack: list[Displayable] = [displayable]
+        while child_stack:
+            child = child_stack.pop()
+
+            if child is renpy.game.context().scene_lists.focused:
+                return True
+
+            if isinstance(child, renpy.display.layout.Container):
+                child_stack.extend(child.children)
+
+        return False
+
+
+class DisplayableSelector(Selector):
+    """
+    A selector that finds a widget by its id or screen.
+    """
+
+    __slots__ = ("id", "layer", "screen")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        screen: str | None = None,
+        id: str | None = None,
+        layer: str | None = None,
+        wait_for_focus: bool = False,
+    ):
+        super().__init__(loc, wait_for_focus)
+        self.screen = screen
+        self.id = id
+        self.layer = layer
+
+        if self.screen is None and self.id is None:
+            raise ValueError("Specify screen and/or id.")
+
+    def ready(self) -> bool:
+        ## Needs to be checked here and not in __init__ since screens are not be defined yet.
+        if self.screen is not None and not renpy.exports.has_screen(scoped_eval(self.screen)):
+            raise ValueError(f"The screen {self.screen!r} does not exist.")
+
+        return super().ready()
+
+    def get_element(self) -> Displayable | None:
+        if self.screen and self.id is None:
+            layer = None if self.layer is None else scoped_eval(self.layer)
+            screen = scoped_eval(self.screen)
+            rv = renpy.exports.get_screen(screen, layer)
+        else:
+            rv = self.get_displayable()
+
+        return rv
+
+    def get_displayable(self) -> Displayable | None:
+        """
+        Returns the displayable that this selector is looking for.
+        If no displayable is found, returns None.
+
+        renpy.exports.get_displayable(screen, id, layer) is supposed to do this, but it sucks
+        """
+        ## NOTE: Move to renpy.exports.get_displayable() eventually?
+
+        if self.id is None:
+            raise ValueError("At least one of `id` or `screen` must be set.")
+
+        layer = None if self.layer is None else scoped_eval(self.layer)
+        screen = None if self.screen is None else scoped_eval(self.screen)
+        id = scoped_eval(self.id)
+
+        if isinstance(screen, str):
+            screen = tuple(screen.split())
+
+        ctx: renpy.execution.Context = renpy.game.context()
+        for context_layer, sles in ctx.scene_lists.layers.items():
+            context_layer: str
+            sles: list[renpy.display.scenelists.SceneListEntry]
+
+            if layer and layer != context_layer:
+                continue
+
+            for sle in sles:
+                if not isinstance(sle.displayable, renpy.display.screen.ScreenDisplayable):
+                    continue
+
+                if screen and sle.name != screen:
+                    continue
+
+                rv = sle.displayable.widgets.get(id, None)
+
+                if rv is not None:
+                    return rv
+
+        return None
+
+    def element_not_found_during_perform(self) -> None:
+        if self.screen or self.id:
+            raise SelectorException("The displayable with screen {self.screen!r} and id {self.id!r} was not found")
+
+        raise SelectorException("No displayable was specified.")
+
+    def __str__(self) -> str:
+        parts = []
+        if self.screen:
+            parts.append(f"screen={self.screen!r}")
+        if self.id:
+            parts.append(f"id={self.id!r}")
+        if self.layer:
+            parts.append(f"layer={self.layer!r}")
+        if self.wait_for_focus:
+            parts.append("wait_for_focus=True")
+        return f"<{type(self).__name__} {' '.join(parts)}>"
+
+
+class TextSelector(Selector):
+    """
+    A selector that finds a widget by its text or alt text.
+    Once found, the `perform()` method is called.
+
+    `pattern`
+        The pattern string used to find a focus.
+        This could be a text string, alt text, or another
+        identifier recognized by `renpy.test.testfocus.find_focus`.
+
+    `raw`
+        If True, the raw text is used for matching before translation and
+        substitution. If False, the processed text is used.
+
+    `expression`
+        If True, the pattern is treated as a Python expression that is
+        evaluated to get the actual pattern string.
+    """
+
+    __slots__ = ("expression", "pattern", "raw")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        wait_for_focus: bool = False,
+        pattern: str = "",
+        raw: bool = False,
+        expression: bool = False,
+    ):
+        super().__init__(loc, wait_for_focus)
+        self.pattern = pattern
+        self.raw = raw
+        self.expression = expression
+
+    def get_repr_params(self) -> str:
+        return f"pattern={self.pattern!r}, raw={self.raw}"
+
+    def get_element(self) -> Focus | None:
+        pattern = self.pattern
+        if getattr(self, "expression", False):
+            pattern = scoped_eval(self.pattern)
+
+        rv = renpy.test.testfocus.find_focus(pattern, self.raw)
+        return rv
+
+    def element_not_found_during_perform(self) -> None:
+        if self.pattern:
+            raise SelectorException(f"The given pattern {self.pattern!r} was not resolved to a target")
+
+
+################################################################################
+# Command statements
+class SelectorDrivenNode(Node):
+    """
+    Base class for nodes that perform actions that may take
+    a selector as a target.
+
+    `selector`
+        An optional `Selector` instance that determines the target
+
+    `position`
+        An optional Python expression string that, when evaluated,
+        should return a tuple `(x, y)` representing a position relative to the
+        target element.
+        If not specified or selector is None, the current mouse position will be used.
+
+    `always`
+        If True, the `ready()` method will always return True,
+        regardless of whether the selector is ready.
+    """
+
+    __slots__ = ("always", "position", "selector")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        selector: Selector | None = None,
+        position: str | None = None,
+        always: bool = False,
+    ):
+        super().__init__(loc)
+        self.selector = selector
+        self.position = position
+        self.always = always
+
+    def ready(self) -> bool:
+        if self.always:
+            return True
+
+        if self.selector is not None:
+            return self.selector.ready()
+
+        return True
+
+    def execute(self, state: NodeState, t: float) -> NodeState:
+        if renpy.display.interface.trans_pause or renpy.display.interface.ongoing_transition:
+            if t >= _test.transition_timeout:
+                ## End the transition and wait for the next frame.
+                ## We need to suppress_transition in the core loop
+                old_less_updates = renpy.game.less_updates
+                renpy.game.less_updates = True
+                return ("skipped_transition", old_less_updates, state)
+            return state
+
+        if isinstance(state, tuple) and len(state) == 3 and state[0] == "skipped_transition":
+            renpy.game.less_updates = state[1]
+            state = state[-1]
+
+        if self.selector and not self.selector.ready():
+            return state
+
+        x, y = self.get_position()
+
+        rv = self.perform(x, y, state, t)
+        if rv is None:
+            next_node(self.next)
+            return None
+
+        return rv
+
+    def get_position(self) -> tuple[int, int]:
+        """
+        Returns the x and y coordinates for the action to be performed.
+        """
+        position: Position | tuple[None, None] = (None, None)
+        if self.position is not None:
+            position = scoped_eval(self.position)
+            if not (isinstance(position, tuple) and len(position) == 2):
+                raise ValueError("Position expression must evaluate to a tuple of (x, y).")
+
+        if self.selector is None:
+            f = None
+        else:
+            f = self.selector.element
+            if f is None and not self.always:
+                self.selector.element_not_found_during_perform()
+
+        x, y = renpy.test.testfocus.find_position(f, position)
+
+        return x, y
+
+    def perform(self, x: int, y: int, state: NodeState, t: float) -> NodeState | None:
+        """
+        Perform the action at the given coordinates.
+
+        Returning None indicates that the node is done executing, and
+        to advance to the next node.
+
+        `x`
+            The x-coordinate where the action should be performed.
+        `y`
+            The y-coordinate where the action should be performed.
+        `state`
+            The current state of the test execution.
+        `t`
+            The time since start was called.
+        """
+        raise NotImplementedError("perform() must be implemented in subclasses of SelectorDrivenNode.")
+
+
+class Click(SelectorDrivenNode):
+    __slots__ = ("button_expr",)
+
+    def __init__(self, loc: NodeLocation, button_expr: str = "1", **kwargs):
+        super().__init__(loc, **kwargs)
+        self.button_expr = button_expr
+
+    def start(self):
+        button = scoped_eval(self.button_expr)
+        if not isinstance(button, int):
+            raise TypeError(f"Expected an integer for click button, got {button!r}.")
+        return button
+
+    def perform(self, x, y, state, t):
+        click_mouse(state, x, y)
+
+
+class Move(SelectorDrivenNode):
+    def perform(self, x, y, state, t):
+        move_mouse(x, y)
+
+
+class Scroll(SelectorDrivenNode):
+    __slots__ = ("amount_expr",)
+
+    def __init__(self, loc: NodeLocation, amount_expr: str = "1", **kwargs):
+        super().__init__(loc, **kwargs)
+        self.amount_expr = amount_expr
+
+    def start(self):
+        amount = scoped_eval(self.amount_expr)
+        if not isinstance(amount, int):
+            raise TypeError(f"Expected an integer for scroll amount, got {amount!r}.")
+        return amount
+
+    def perform(self, x, y, state, t):
+        amount = state
+
+        if self.selector is not None:
+            element = self.selector.element
+
+            if isinstance(element, renpy.display.focus.Focus):
+                element = element.widget
+
+            if isinstance(element, renpy.display.behavior.Bar):
+                adj = element.adjustment
+
+                if adj.value == adj.range:
+                    new = 0
+                else:
+                    new = adj.value + (adj.page * amount)
+
+                new = max(0, min(new, adj.range))
+                adj.change(new)
+                return
+
+        scroll_mouse(-amount, x, y)
+
+
+class Drag(Node):
+    __slots__ = ("button_expr", "end_point", "start_point", "steps_expr")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        start_point: SelectorDrivenNode,
+        end_point: SelectorDrivenNode,
+        button_expr: str = "1",
+        steps_expr: str = "10",
+    ):
+        super().__init__(loc)
+        self.start_point = start_point
+        self.end_point = end_point
+        self.button_expr = button_expr
+        self.steps_expr = steps_expr
+
+    def ready(self):
+        return self.start_point.ready() and self.end_point.ready()
+
+    def start(self):
+        start_pos = self.start_point.get_position()
+        end_pos = self.end_point.get_position()
+
+        button = scoped_eval(self.button_expr)
+        steps = scoped_eval(self.steps_expr)
+
+        if not isinstance(button, int):
+            raise TypeError(f"Expected an integer for drag button, got {button!r}.")
+
+        if not isinstance(steps, int):
+            raise TypeError(f"Expected an integer for drag steps, got {steps!r}.")
+
+        return (start_pos, end_pos, button, steps, 0)  # (x, y, button, steps, step)
+
+    def execute(self, state: tuple[tuple[int, int], tuple[int, int], int, int, int], t):
+        if renpy.display.interface.trans_pause:
+            return state
+
+        start_pos, end_pos, button, steps, step = state
+        x = int(start_pos[0] + (end_pos[0] - start_pos[0]) * step / steps)
+        y = int(start_pos[1] + (end_pos[1] - start_pos[1]) * step / steps)
+
+        renpy.test.testmouse.move_mouse(x, y)
+
+        if step == 0:
+            renpy.test.testmouse.press_mouse(button)
+
+        elif step >= steps:
+            renpy.test.testmouse.release_mouse(button)
+            next_node(self.next)
+            return None
+
+        return (start_pos, end_pos, button, steps, step + 1)
+
+
+class Type(SelectorDrivenNode):
+    __slots__ = ("text_expr",)
+
+    def __init__(self, loc: NodeLocation, text_expr: str, **kwargs):
+        super().__init__(loc, **kwargs)
+        self.text_expr = text_expr
+
+    def start(self):
+        text = scoped_eval(self.text_expr)
+        if not isinstance(text, str):
+            raise TypeError(f"Expected a string, got {text!r}.")
+        return (text, 0)
+
+    def perform(self, x, y, state: tuple[str, int], t):
+        text, idx = state
+        if idx >= len(text):
+            next_node(self.next)
+            return None
+
+        move_mouse(x, y)
+
+        key = text[idx]
+        renpy.test.testkey.down(key)
+        renpy.test.testkey.up(key)
+
+        return (text, idx + 1)
+
+
+class Keysym(SelectorDrivenNode):
+    __slots__ = ("keysym_expr",)
+
+    def __init__(self, loc: NodeLocation, keysym_expr: str, **kwargs):
+        super().__init__(loc, **kwargs)
+        self.keysym_expr = keysym_expr
+
+    def start(self):
+        keysym = scoped_eval(self.keysym_expr)
+        if not isinstance(keysym, str):
+            raise TypeError(f"Expected a string, got {keysym!r}.")
+
+        return keysym
+
+    def perform(self, x, y, state: str, t):
+        move_mouse(x, y)
+        renpy.test.testkey.queue_keysym(state)
+
+
+class Action(Node):
+    """
+    This is for the `run` keyword
+    """
+
+    __slots__ = ("expr",)
+
+    def __init__(self, loc: NodeLocation, expr: str):
+        super().__init__(loc)
+        self.expr = expr
+
+    def ready(self):
+        action = scoped_eval(self.expr)
+        return renpy.display.behavior.is_sensitive(action)
+
+    def start(self):
+        return {"executed_already": False}
+
+    def execute(self, state, t):
+        # execute() may be re-run when an action like Replay creates a new context,
+        # and the test executor keeps ticking inside that context.
+        # We advance to the next node inside the replay context so the test continues,
+        # and we skip the redundant next_node() call when run() eventually returns.
+
+        if t > 0:
+            state["executed_already"] = True
+            next_node(self.next)
+            return
+
+        action = scoped_eval(self.expr)
+        renpy.display.behavior.run(action)
+
+        if not state["executed_already"]:
+            next_node(self.next)
+
+        return
+
+
+class Pause(Node):
+    __slots__ = ("expr",)
+
+    def __init__(self, loc: NodeLocation, expr: str):
+        super().__init__(loc)
+        self.expr = expr
+
+    def get_repr_params(self):
+        return f"{self.expr}"
+
+    def start(self):
+        return float(scoped_eval(self.expr)), 0
+
+    def execute(self, state, t):
+        delay, _ = state
+        if t < delay:
+            ## Avoids timeout by appending t to the state
+            return delay, t
+        else:
+            next_node(self.next)
+            return None
+
+
+class Label(Condition):
+    __slots__ = ("name",)
+
+    def __init__(self, loc: NodeLocation, name: str):
+        super().__init__(loc)
+        self.name = name
+
+    def ready(self):
+        # Match the evaluated value or the raw expression text.
+        # This lets `label chapter_1` and `label "chapter_1"` both work,
+        # while also allowing `label label_name` to use a variable.
+
+        names = [self.name]
+
+        try:
+            eval_name = scoped_eval(self.name)
+            if not isinstance(eval_name, str):
+                raise TypeError(f"Expected a string, got {eval_name!r}.")
+
+            names.append(eval_name.strip())
+        except (NameError, TypeError):
+            pass
+
+        return any(name in renpy.test.testexecution.reached_labels for name in names)
+
+    def get_repr_params(self):
+        return f"{self.name}"
+
+
+class Eval(Condition):
+    __slots__ = ("expr",)
+
+    def __init__(self, loc: NodeLocation, expr):
+        super().__init__(loc)
+        self.expr = expr
+
+    def ready(self):
+        return bool(scoped_eval(self.expr))
+
+
+class RepeatCounter(Condition):
+    __slots__ = ("initial_value", "value")
+
+    def __init__(self, loc: NodeLocation, value: int):
+        super().__init__(loc)
+        self.initial_value = value
+        self.restart()
+
+    def get_repr_params(self) -> str:
+        return f"{self.initial_value}"
+
+    def restart(self) -> None:
+        self.value = self.initial_value
+        return super().restart()
+
+    def ready(self):
+        self.value -= 1
+        return self.value < 0
+
+
+class Pass(Node):
+    pass
+
+
+class Advance(Node):
+    """
+    Advances the said dialogue by one line.
+    """
+
+    last_event: ClassVar[str] = ""
+    last_kwargs: ClassVar[dict] = {}
+    began_newline: ClassVar[bool] = False
+
+    @staticmethod
+    def character_callback(event, **kwargs) -> None:
+        if event == "begin":
+            Advance.began_newline = True
+        Advance.last_event = event
+        Advance.last_kwargs = kwargs
+
+    def ready(self):
+        if Advance.character_callback not in renpy.config.all_character_callbacks:
+            renpy.config.all_character_callbacks.append(Advance.character_callback)
+
+        return True
+
+    def start(self):
+        Advance.began_newline = False
+        return Advance.last_event
+
+    def execute(self, state, t):
+        if Advance.began_newline:
+            next_node(self.next)
+            return None
+
+        renpy.test.testkey.queue_keysym("dismiss")
+        return Advance.last_event
+
+
+class Skip(Node):
+    """
+    Trigger the skip key
+    """
+
+    __slots__ = ("fast",)
+
+    def __init__(self, loc: NodeLocation, fast: bool = False):
+        super().__init__(loc)
+        self.fast = fast
+
+    def start(self):
+        if not renpy.config.allow_skipping:
+            return None
+
+        if renpy.store.main_menu:
+            return None
+
+        return True
+
+    def execute(self, state, t):
+        was_skipping = renpy.config.skipping is not None
+
+        if renpy.exports.context()._menu:  # type: ignore
+            if self.fast:
+                renpy.exports.jump("_return_fast_skipping")
+            else:
+                renpy.exports.jump("_return_skipping")
+        else:
+            if self.fast:
+                renpy.config.skipping = "fast"
+            else:
+                renpy.config.skipping = "slow"
+
+            if not was_skipping:
+                renpy.exports.restart_interaction()
+
+        next_node(self.next)
+
+    def after_until(self) -> None:
+        renpy.config.skipping = None
+
+
+################################################################################
+# Boolean operators
+
+
+class Not(Condition):
+    __slots__ = ("condition",)
+
+    def __init__(self, loc: NodeLocation, condition: Condition):
+        super().__init__(loc)
+        self.condition = condition
+
+    def ready(self):
+        return not self.condition.ready()
+
+
+class Binary(Condition):
+    __slots__ = ("left", "left_ready", "left_state", "right", "right_ready", "right_state")
+
+    def __init__(self, loc: NodeLocation, left: Condition, right: Condition):
+        super().__init__(loc)
+        self.left = left
+        self.right = right
+        self.left_ready = self.right_ready = None
+        self.left_state = self.right_state = None
+
+    def state(self) -> bool | None:
+        """
+        Returns the state of this binary operator.
+        """
+        raise NotImplementedError("state() must be implemented in subclasses of Binary.")
+
+    def start(self):
+        self.left_state = self.left.start()
+        self.right_state = self.right.start()
+        return self.state()
+
+
+class And(Binary):
+    __slots__ = ()
+
+    def ready(self):
+        self.left_ready = self.left.ready()
+        self.right_ready = self.right.ready()
+        return self.left_ready and self.right_ready
+
+    def state(self) -> bool | None:
+        if (self.left_state is None) and (self.right_state is None):
+            return None
+        return True
+
+    def execute(self, state, t):
+        ## TODO: Remove?
+        """
+        Executes both if both are ready, otherwise the left one.
+        """
+        self.ready()
+
+        if self.left_state is not None:
+            self.left_state = self.left.execute(self.left_state, t)
+
+        if self.left_ready and self.right_ready and (self.right_state is not None):
+            self.right_state = self.right.execute(self.right_state, t)
+
+        if self.state() is None:
+            next_node(self.next)
+            return None
+
+        next_node(self)
+        return self.state()
+
+
+class Or(Binary):
+    __slots__ = ()
+
+    def ready(self):
+        self.left_ready = self.left.ready()
+        self.right_ready = self.right.ready()
+        return self.left_ready or self.right_ready
+
+    def state(self) -> bool | None:
+        if (self.left_state is None) or (self.right_state is None):
+            return None
+        return True
+
+    def execute(self, state, t):
+        ## TODO: Remove?
+        """
+        Executes the ready one(s), if any, otherwise the right one.
+        """
+        self.ready()
+
+        if self.left_ready and (self.left_state is not None):
+            self.left_state = self.left.execute(self.left_state, t)
+
+        if (self.right_ready or not self.left_ready) and (self.right_state is not None):
+            self.right_state = self.right.execute(self.right_state, t)
+
+        if self.state() is None:
+            next_node(self.next)
+            return None
+
+        next_node(self)
+        return self.state()
+
+
+################################################################################
+# Non-clause statements.
+
+
+class Until(Node):
+    """
+    Executes `left` repeatedly until `right` is ready (and unless it already is),
+    then executes `right` once before quitting.
+
+    `left`
+        The node to execute repeatedly until `right` is ready.
+    `right`
+        The condition that must be ready for the node to stop executing.
+    `timeout`
+        The maximum time in seconds to wait for `right` to be ready.
+    """
+
+    __slots__ = ("left", "right", "timeout")
+
+    def __init__(self, loc: NodeLocation, left: Node, right: Condition, timeout: str = "None"):
+        Node.__init__(self, loc)
+        self.left = left
+        self.right = right
+        self.timeout = timeout
+
+    def restart(self):
+        self.left.restart()
+        self.right.restart()
+        super().restart()
+
+    def ready(self):
+        return self.left.ready() or self.right.ready()
+
+    def start(self):
+        old_timeout = _test.timeout
+        timeout = scoped_eval(self.timeout)
+        if isinstance(timeout, (int, float)):
+            _test.timeout = timeout
+        elif timeout is not None:
+            raise ValueError("Timeout must be a float or None.")
+
+        child_state = None
+        start_time = 0
+        has_started = False
+
+        return (old_timeout, child_state, start_time, has_started)
+
+    def execute(self, state: tuple[float | None, Any, float, bool], t):
+        old_timeout, child_state, start_time, has_started = state
+
+        if t > _test.timeout:
+            msg = f"Until Statement timed out after {_test.timeout} seconds."
+            raise RenpyTestTimeoutError(msg)
+
+        if self.right.ready():
+            self.cleanup_after_error(state)
+            next_node(self.next)
+            return None
+
+        ## The right hand side is not ready, so we execute the left hand side.
+        if not has_started and self.left.ready():
+            child_state = self.left.start()
+            start_time = t
+            has_started = True
+
+        if has_started:
+            child_state = self.left.execute(child_state, t - start_time)
+
+        next_node(self)
+        if child_state is None:
+            start_time = 0
+            has_started = False
+
+        return old_timeout, child_state, start_time, has_started
+
+    def cleanup_after_error(self, state) -> None:
+        _test.timeout = state[0]
+        self.left.after_until()
+
+
+class Repeat(Until):
+    """
+    Executes `left` for `count` times.
+    """
+
+    __slots__ = ("count_expr",)
+
+    def __init__(self, loc: NodeLocation, left: Node, count_expr: str, timeout: str = "None"):
+        self.count_expr = count_expr
+        # A placeholder counter, replaced with a real one in start() when the
+        # count expression is evaluated at runtime.
+        right = RepeatCounter(loc, 0)
+        super().__init__(loc, left, right, timeout)
+
+    def start(self):
+        count = scoped_eval(self.count_expr)
+
+        if not isinstance(count, int):
+            raise TypeError(f"Expected a number for repeat count, got {count!r}.")
+
+        self.right = RepeatCounter((self.filename, self.linenumber), count)
+
+        return super().start()
+
+    def restart(self):
+        self.right = RepeatCounter((self.filename, self.linenumber), 0)
+        super().restart()
+
+    def ready(self):
+        return self.left.ready()
+
+
+class If(Node):
+    """
+    If `condition` is ready, runs the block. Otherwise, goes to the next
+    statement.
+    """
+
+    __slots__ = ("entries",)
+
+    def __init__(self, loc: NodeLocation, entries: list[tuple[Condition, "Block"]]):
+        Node.__init__(self, loc)
+
+        self.entries = entries  # List of (condition, block) tuples.
+
+    def chain(self, next):
+        self.next = next
+
+        for _condition, block in self.entries:
+            block.chain(next)
+
+    def execute(self, state, t):
+        for condition, block in self.entries:
+            if condition.ready():
+                next_node(block.block[0])
+                return
+
+        next_node(self.next)
+        return
+
+
+class ControlFrame(Node):
+    """
+    Control-flow frame for nodes like For and While.
+
+    This node sets up a context for the loop body to execute in, and provides hooks for handling
+    the end of the body, exceptions raised in the body, and the end of execution of the loop.
+
+    The corresponding frame instance is kept in `testexecution.control_frame_stack`.
+    """
+
+    def execute(self, state, t):
+        self.on_end_execution()
+        next_node(self.next)
+
+    def on_end_execution(self) -> None:
+        """
+        Called when execution of the control frame is ending, either by normal termination,
+        loop breaking, or exception raising.
+        """
+        return
+
+    def on_exception(self, exc: Exception) -> bool:
+        """
+        Handles an exception raised during execution of the loop body.
+        Returns True if the exception was handled and should be suppressed, or False to propagate it.
+        """
+        return False
+
+
+class For(ControlFrame):
+    """
+    A for loop node that iterates over an expression.
+
+    `variable`
+        The loop variable pattern (e.g., "i" or "(x, y)").
+    `expression`
+        The iterable expression.
+    `block`
+        A Block containing the statements to execute in each iteration.
+    """
+
+    __slots__ = ("block", "expression", "loop_iterator", "variable")
+
+    def __init__(self, loc: NodeLocation, variable: str, expression: str, block: Block):
+        super().__init__(loc)
+        self.variable = variable
+        self.expression = expression
+        self.block = block
+        self.loop_iterator = None
+
+    def chain(self, next):
+        self.next = next
+        self.block.chain(self)
+
+    def start(self) -> NodeState:
+        """Initialize and push a control frame for this loop."""
+
+        if self.loop_iterator is None:
+            iterable = scoped_eval(self.expression)
+            self.loop_iterator = iter(iterable)
+
+        renpy.test.testexecution.push_control_frame(self)
+        return self.loop_iterator
+
+    def execute(self, state: NodeState, t: float) -> NodeState:
+        """Execute the loop body or advance to the next iteration."""
+
+        iterator = state
+
+        try:
+            loop_value = next(iterator)
+            scope = renpy.test.testexecution.get_current_scope()
+
+            temp_name = "__renpy_test_loop_value__"
+            scope[temp_name] = loop_value
+            try:
+                scoped_exec(f"{self.variable} = {temp_name}")
+            finally:
+                scope.pop(temp_name, None)
+
+            if self.block.block:
+                self.block.restart()
+                next_node(self.block.block[0])
+                return None
+            else:
+                next_node(self)
+                return state
+
+        except StopIteration:
+            self.loop_iterator = None
+            renpy.test.testexecution.pop_control_frame(self)
+            next_node(self.next)
+            return None
+
+    def on_exception(self, exc: Exception) -> bool:
+        if isinstance(exc, LoopContinueException):
+            next_node(self)
+            return True
+
+        if isinstance(exc, LoopBreakException):
+            self.loop_iterator = None
+            renpy.test.testexecution.pop_control_frame(self)
+            next_node(self.next)
+            return True
+
+        return False
+
+    def get_repr_params(self) -> str:
+        return f"variable={self.variable!r}, expression={self.expression!r}"
+
+
+class While(ControlFrame):
+    def __init__(self, loc: NodeLocation, condition: Condition, block: Block):
+        super().__init__(loc)
+
+        self.condition = condition
+        self.block = block
+
+    def start(self) -> NodeState:
+        renpy.test.testexecution.push_control_frame(self)
+        return 0
+
+    def chain(self, next):
+        self.next = next
+        self.block.chain(self)
+
+    def execute(self, state, t):
+        if self.condition.ready():
+            self.block.restart()
+            next_node(self.block.block[0])
+            return
+
+        next_node(self.next)
+        return
+
+    def on_exception(self, exc: Exception) -> bool:
+        if isinstance(exc, LoopContinueException):
+            next_node(self)
+            return True
+
+        if isinstance(exc, LoopBreakException):
+            renpy.test.testexecution.pop_control_frame(self)
+            next_node(self.next)
+            return True
+
+        return False
+
+
+class Break(Node):
+    """Breaks out of the nearest enclosing loop."""
+
+    def execute(self, state, t):
+        raise LoopBreakException()
+
+
+class Continue(Node):
+    """Continues to the next iteration of the nearest enclosing loop."""
+
+    def execute(self, state, t):
+        raise LoopContinueException()
+
+
+class Python(Node):
+    __slots__ = ("hide", "source")
+
+    def __init__(self, loc: NodeLocation, source: str, hide: bool = False):
+        Node.__init__(self, loc)
+        self.source = source
+        self.hide = hide
+
+    def start(self):
+        return {"executed_already": False}
+
+    def execute(self, state, t):
+        # execute() may be re-run when an action like Replay creates a new context,
+        # and the test executor keeps ticking inside that context.
+        # We advance to the next node inside the replay context so the test continues,
+        # and we skip the redundant next_node() call when run() eventually returns.
+
+        if t > 0:
+            state["executed_already"] = True
+            next_node(self.next)
+            return
+
+        scoped_exec(self.source, self.hide)
+
+        if not state["executed_already"]:
+            next_node(self.next)
+
+        return
+
+
+class Assert(Node):
+    """
+    An assertion that checks if a condition is met.
+    If the condition is not met, a RenpyTestAssertionError is raised.
+
+    `condition`
+        A `Condition` instance that should be ready for the assertion to pass.
+    `timeout`
+        The maximum delay to wait for the condition to be ready.
+    `xfail_expr`
+        If True, the test is expected to fail. If the condition is not met,
+        the test will be marked as xfailed instead of failed.
+    """
+
+    __slots__ = ("condition", "is_assertion_true", "timeout", "xfail_expr")
+
+    def __init__(self, loc: NodeLocation, condition: Condition, timeout: str = "None", xfail_expr: str = "False"):
+        Node.__init__(self, loc)
+        self.condition = condition
+        self.timeout = timeout
+        self.xfail_expr = xfail_expr
+        self.is_assertion_true = False  # Whether the assertion was true or not
+
+    def start(self):
+        old_timeout = _test.timeout
+        timeout = scoped_eval(self.timeout)
+        if isinstance(timeout, (int, float)):
+            _test.timeout = timeout
+        elif timeout is None:
+            _test.timeout = 0
+        else:
+            raise ValueError("Timeout must be a float or None.")
+
+        return old_timeout
+
+    def execute(self, state, t):
+        """
+        Executes the assertion. If the condition is not ready, it waits up to
+        `self.timeout` seconds.
+        """
+        if (not self.condition.ready() ^ self.xfail) and t < _test.timeout:
+            return state
+
+        self.is_assertion_true = self.condition.ready()
+        renpy.test.testreporter.reporter.log_assert(self)
+        self.cleanup_after_error(state)
+        next_node(self.next)
+        return None
+
+    def cleanup_after_error(self, state) -> None:
+        _test.timeout = state
+
+    @property
+    def xfail(self) -> bool:
+        return bool(scoped_eval(self.xfail_expr))
+
+
+class Screenshot(Node):
+    __slots__ = ("crop", "filename_expr", "max_pixel_difference")
+
+    def __init__(
+        self,
+        loc: NodeLocation,
+        filename: str,
+        max_pixel_difference: str | None = None,
+        crop: str | None = None,
+    ):
+        self.max_pixel_difference = max_pixel_difference
+        self.crop = crop
+        self.filename_expr = filename  # Note: self.filename refers to the Node attribute.
+        super().__init__(loc)
+
+    def start(self):
+        filename = scoped_eval(self.filename_expr)
+        if not isinstance(filename, str):
+            raise TypeError("Filename must be a string.")
+
+        filename = filename.replace("\\", "/")
+        filename = filename.lstrip("/")
+        filename = os.path.join(renpy.config.basedir, _test.screenshot_directory, filename)
+        filename = os.path.normpath(filename)
+
+        base_filename, ext = os.path.splitext(filename)
+        if ext.lower() != ".png":
+            ext = ".png"
+            filename = base_filename + ext
+
+        return filename
+
+    def execute(self, state, t):
+        filename = state
+
+        img: renpy.pygame.Surface | None = None
+        old_img: renpy.pygame.Surface | None = None
+        diff: renpy.pygame.Surface | None = None
+
+        try:
+            img = renpy.display.draw.screenshot(renpy.game.interface.surftree)
+
+            if self.crop:
+                # img = renpy.display.scale.smoothscale(img, (renpy.config.screen_width, renpy.config.screen_height))
+                img = img.subsurface(scoped_eval(self.crop))
+
+            base_filename, ext = os.path.splitext(filename)
+            ref_img_path = self.get_reference_image_path(filename)
+            new_fname = f"{base_filename}.new{ext}"
+            diff_fname = f"{base_filename}.diff{ext}"
+
+            if _test.overwrite_screenshots and ref_img_path is not None:
+                os.remove(ref_img_path)
+                ref_img_path = None
+
+            if ref_img_path is None:
+                if _test.vc_revision:
+                    fname = f"{base_filename}@{_test.vc_revision}{ext}"
+                else:
+                    fname = filename
+                self.save_image(img, fname)
+
+                next_node(self.next)
+                return
+
+            old_img = renpy.pygame.image.load(ref_img_path)  # type: ignore
+
+            if img.get_size() != old_img.get_size():
+                raise RenpyTestScreenshotError(f"{filename} (size mismatch: {img.get_size()} != {old_img.get_size()})")
+
+            if img.get_bitsize() != old_img.get_bitsize():
+                raise RenpyTestScreenshotError(
+                    f"{filename} (bit size mismatch: {img.get_bitsize()} != {old_img.get_bitsize()})"
+                )
+
+            diff = renpy.pygame.Surface(img.get_size(), 0, img)
+
+            diff_count = renpy.pygame.transform._diff(diff, img, old_img, (0, 0, 0, 255), (255, 255, 255, 255))
+
+            max_pixel_difference = 0
+            if self.max_pixel_difference is not None:
+                max_pixel_difference = scoped_eval(self.max_pixel_difference)
+                if not isinstance(max_pixel_difference, (int, float)):
+                    raise ValueError("max_pixel_difference must be an int or float.")
+                if isinstance(max_pixel_difference, float) and 0 < max_pixel_difference < 1:
+                    max_pixel_difference = int(max_pixel_difference * img.get_width() * img.get_height())
+
+            if diff_count > max_pixel_difference:
+                self.save_image(img, new_fname)
+                self.save_image(diff, diff_fname)
+                raise RenpyTestScreenshotError(
+                    f"{filename} (pixel difference: {diff_count} > {max_pixel_difference})\n"
+                    f"Current image saved to {new_fname}\n"
+                    f"Difference image saved to {diff_fname}"
+                )
+            else:
+                if os.path.exists(new_fname):
+                    os.remove(new_fname)
+                if os.path.exists(diff_fname):
+                    os.remove(diff_fname)
+
+            next_node(self.next)
+            return
+
+        finally:
+            # Clear up surfaces to avoid memory leaks.
+            if diff is not None:
+                del diff
+            if old_img is not None:
+                del old_img
+            if img is not None:
+                del img
+
+    def get_reference_image_path(self, filename: str) -> str | None:
+        if os.path.exists(filename):
+            return filename
+
+        base_filename, ext = os.path.splitext(filename)
+        fnames = glob.glob(os.path.join(base_filename + "@*" + ext))
+        if len(fnames) > 1:
+            raise RuntimeError(f"Multiple reference images found for {filename}: {', '.join(fnames)}")
+        elif len(fnames) == 1:
+            return fnames[0]
+
+        return None
+
+    def save_image(self, img: renpy.pygame.Surface, filename: str) -> None:
+        path = os.path.dirname(filename)
+        if path:
+            os.makedirs(path, exist_ok=True)
+
+        renpy.display.scale.image_save_unscaled(img, filename)
+
+
+################################################################################
+# Control structures.
+
+
+class Exit(Node):
+    def execute(self, state, t):
+        raise renpy.game.QuitException
+
+
+################################################################################
+# Utility functions
+################################################################################
+
+
+def next_node(node: Node | None):
+    renpy.test.testexecution.set_next_execution_node(node)
+
+
+def scoped_eval(expr: str) -> Any:
+    return renpy.test.testexecution.scoped_eval(expr)
+
+
+def scoped_exec(source: str, hide: bool = False) -> None:
+    renpy.test.testexecution.scoped_exec(source, hide)
+
+
+def format_parameterized_name(name: str, parameters: dict[str, Any]) -> str:
+    """
+    Formats a name and parameters into a string like "name(key=value, ...)".
+    """
+    if not parameters:
+        return name
+
+    param_str = ", ".join(f"{k}={v!r}" for k, v in parameters.items())
+    return f"{name}({param_str})"

@@ -1,0 +1,2 @@
+Error: No Wayland (weston) or X11 (xvfb-run/Xvfb) virtual display server found.
+Please install weston or xvfb (e.g. 'sudo apt install weston' or 'sudo apt install xvfb').

@@ -1,0 +1,131 @@
+Compiling src/_renpy.pyx because it changed.
+Compiling renpy/pygame/iostream.pyx because it changed.
+Compiling renpy/pygame/locals.pyx because it changed.
+Compiling renpy/pygame/image.pyx because it changed.
+Compiling renpy/pygame/sdl_image.pyx because it changed.
+Compiling renpy/pygame/controller.pyx because it changed.
+Compiling renpy/pygame/joystick.pyx because it changed.
+Compiling renpy/pygame/pygame_time.pyx because it changed.
+Compiling renpy/pygame/power.pyx because it changed.
+Compiling renpy/pygame/transform.pyx because it changed.
+Compiling renpy/pygame/scrap.pyx because it changed.
+Compiling renpy/pygame/key.pyx because it changed.
+Compiling renpy/pygame/mouse.pyx because it changed.
+Compiling renpy/pygame/event.pyx because it changed.
+Compiling renpy/pygame/display.pyx because it changed.
+Compiling renpy/pygame/sdl.pyx because it changed.
+Compiling renpy/pygame/color.pyx because it changed.
+Compiling renpy/pygame/rect.pyx because it changed.
+Compiling renpy/pygame/error.pyx because it changed.
+Compiling renpy/pygame/surface.pyx because it changed.
+Compiling renpy/pygame/draw.pyx because it changed.
+Compiling renpy/pygame/gfxdraw.pyx because it changed.
+Compiling renpy/astsupport.pyx because it changed.
+Compiling renpy/cslots.pyx because it changed.
+Compiling renpy/lexersupport.pyx because it changed.
+Compiling renpy/pydict.pyx because it changed.
+Compiling renpy/style.pyx because it changed.
+Compiling renpy/encryption.pyx because it changed.
+Compiling renpy/tfd.pyx because it changed.
+Compiling renpy/audio/renpysound.pyx because it changed.
+Compiling renpy/audio/filter.pyx because it changed.
+Compiling renpy/styledata/styleclass.pyx because it changed.
+Compiling renpy/styledata/style_selected_hover_functions.pyx because it changed.
+Compiling renpy/styledata/style_selected_idle_functions.pyx because it changed.
+Compiling renpy/styledata/style_selected_insensitive_functions.pyx because it changed.
+Compiling renpy/styledata/style_selected_functions.pyx because it changed.
+Compiling renpy/styledata/style_hover_functions.pyx because it changed.
+Compiling renpy/styledata/style_idle_functions.pyx because it changed.
+Compiling renpy/styledata/style_insensitive_functions.pyx because it changed.
+Compiling renpy/styledata/style_functions.pyx because it changed.
+Compiling renpy/styledata/style_activate_functions.pyx because it changed.
+Compiling renpy/styledata/style_selected_activate_functions.pyx because it changed.
+Compiling renpy/display/matrix.pyx because it changed.
+Compiling renpy/display/render.pyx because it changed.
+Compiling renpy/display/accelerator.pyx because it changed.
+Compiling renpy/display/quaternion.pyx because it changed.
+Compiling renpy/uguu/gl.pyx because it changed.
+Compiling renpy/uguu/uguu.pyx because it changed.
+Compiling renpy/gl2/gl2mesh.pyx because it changed.
+Compiling renpy/gl2/gl2mesh2.pyx because it changed.
+Compiling renpy/gl2/gl2mesh3.pyx because it changed.
+Compiling renpy/gl2/gl2polygon.pyx because it changed.
+Compiling renpy/gl2/gl2model.pyx because it changed.
+Compiling renpy/gl2/gl2draw.pyx because it changed.
+Compiling renpy/gl2/gl2texture.pyx because it changed.
+Compiling renpy/gl2/gl2uniform.pyx because it changed.
+Compiling renpy/gl2/gl2physics.pyx because it changed.
+Compiling renpy/gl2/gl2shader.pyx because it changed.
+Compiling renpy/gl2/gl2statecache.pyx because it changed.
+Compiling renpy/gl2/assimp.pyx because it changed.
+Compiling renpy/text/textsupport.pyx because it changed.
+Compiling renpy/text/texwrap.pyx because it changed.
+Compiling renpy/text/ftfont.pyx because it changed.
+Compiling renpy/text/hbfont.pyx because it changed.
+Compiling renpy/text/bidi.pyx because it changed.
+[ 3/65] Cythonizing renpy/audio/renpysound.pyx
+[ 7/65] Cythonizing renpy/display/quaternion.pyx
+[ 8/65] Cythonizing renpy/display/render.pyx
+[11/65] Cythonizing renpy/gl2/gl2draw.pyx
+[17/65] Cythonizing renpy/gl2/gl2polygon.pyx
+[19/65] Cythonizing renpy/gl2/gl2statecache.pyx
+[21/65] Cythonizing renpy/gl2/gl2uniform.pyx
+[28/65] Cythonizing renpy/pygame/error.pyx
+[31/65] Cythonizing renpy/pygame/image.pyx
+[32/65] Cythonizing renpy/pygame/iostream.pyx
+[39/65] Cythonizing renpy/pygame/rect.pyx
+[42/65] Cythonizing renpy/pygame/sdl_image.pyx
+[45/65] Cythonizing renpy/style.pyx
+[48/65] Cythonizing renpy/styledata/style_hover_functions.pyx
+[50/65] Cythonizing renpy/styledata/style_insensitive_functions.pyx
+[54/65] Cythonizing renpy/styledata/style_selected_idle_functions.pyx
+[57/65] Cythonizing renpy/text/bidi.pyx
+[58/65] Cythonizing renpy/text/ftfont.pyx
+[61/65] Cythonizing renpy/text/texwrap.pyx
+[62/65] Cythonizing renpy/tfd.pyx
+[63/65] Cythonizing renpy/uguu/gl.pyx
+[ 1/65] Cythonizing renpy/astsupport.pyx
+[ 4/65] Cythonizing renpy/cslots.pyx
+[ 6/65] Cythonizing renpy/display/matrix.pyx
+[ 9/65] Cythonizing renpy/encryption.pyx
+[10/65] Cythonizing renpy/gl2/assimp.pyx
+[14/65] Cythonizing renpy/gl2/gl2mesh3.pyx
+[16/65] Cythonizing renpy/gl2/gl2physics.pyx
+[18/65] Cythonizing renpy/gl2/gl2shader.pyx
+[22/65] Cythonizing renpy/lexersupport.pyx
+[23/65] Cythonizing renpy/pydict.pyx
+[24/65] Cythonizing renpy/pygame/color.pyx
+[26/65] Cythonizing renpy/pygame/display.pyx
+[29/65] Cythonizing renpy/pygame/event.pyx
+[33/65] Cythonizing renpy/pygame/joystick.pyx
+[36/65] Cythonizing renpy/pygame/mouse.pyx
+[38/65] Cythonizing renpy/pygame/pygame_time.pyx
+[41/65] Cythonizing renpy/pygame/sdl.pyx
+[44/65] Cythonizing renpy/pygame/transform.pyx
+[46/65] Cythonizing renpy/styledata/style_activate_functions.pyx
+[49/65] Cythonizing renpy/styledata/style_idle_functions.pyx
+[51/65] Cythonizing renpy/styledata/style_selected_activate_functions.pyx
+[53/65] Cythonizing renpy/styledata/style_selected_hover_functions.pyx
+[56/65] Cythonizing renpy/styledata/styleclass.pyx
+[60/65] Cythonizing renpy/text/textsupport.pyx
+[65/65] Cythonizing src/_renpy.pyx
+[ 2/65] Cythonizing renpy/audio/filter.pyx
+[ 5/65] Cythonizing renpy/display/accelerator.pyx
+[12/65] Cythonizing renpy/gl2/gl2mesh.pyx
+[13/65] Cythonizing renpy/gl2/gl2mesh2.pyx
+[15/65] Cythonizing renpy/gl2/gl2model.pyx
+[20/65] Cythonizing renpy/gl2/gl2texture.pyx
+[25/65] Cythonizing renpy/pygame/controller.pyx
+[27/65] Cythonizing renpy/pygame/draw.pyx
+[30/65] Cythonizing renpy/pygame/gfxdraw.pyx
+[34/65] Cythonizing renpy/pygame/key.pyx
+[35/65] Cythonizing renpy/pygame/locals.pyx
+[37/65] Cythonizing renpy/pygame/power.pyx
+[40/65] Cythonizing renpy/pygame/scrap.pyx
+[43/65] Cythonizing renpy/pygame/surface.pyx
+[47/65] Cythonizing renpy/styledata/style_functions.pyx
+[52/65] Cythonizing renpy/styledata/style_selected_functions.pyx
+[55/65] Cythonizing renpy/styledata/style_selected_insensitive_functions.pyx
+[59/65] Cythonizing renpy/text/hbfont.pyx
+[64/65] Cythonizing renpy/uguu/uguu.pyx
+Could not find pkg-config package 'sdl3'.

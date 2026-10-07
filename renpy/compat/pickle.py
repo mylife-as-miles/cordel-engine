@@ -1,0 +1,606 @@
+# Copyright 2004-2026 Tom Rothamel <pytom@bishoujo.us>
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+from typing import Any, BinaryIO, Callable, Iterable
+
+import types
+import pickle
+import copyreg
+import io
+import functools
+import datetime
+import ast
+import renpy
+
+PROTOCOL = pickle.HIGHEST_PROTOCOL
+
+
+def _reduce_object(obj: object) -> str | tuple[Callable, tuple, Any, Any, Any, Any]:
+    """
+    Reduce an object the way pickle would, and return either a string or
+    a tuple padded to exactly 6 elements. Raises an exception if the
+    reduction is malformed.
+    """
+
+    if (reduce_func := copyreg.dispatch_table.get(type(obj))) is not None:
+        rv = reduce_func(obj)
+    else:
+        rv = obj.__reduce_ex__(PROTOCOL)
+
+    if isinstance(rv, str):
+        return rv
+
+    # Shallow validation of the reduction, mirroring pickle's own checks.
+    if not isinstance(rv, tuple) or not (2 <= len(rv) <= 6):
+        raise pickle.PicklingError(
+            f"__reduce__ must return a string or a tuple of 2 to 6 elements, got {repr(rv)[:160]}"
+        )
+
+    if not callable(rv[0]):
+        raise pickle.PicklingError(f"first item of the __reduce__ tuple must be callable, got {repr(rv[0])[:160]}")
+
+    if not isinstance(rv[1], tuple):
+        raise pickle.PicklingError(f"second item of the __reduce__ tuple must be a tuple, got {repr(rv[1])[:160]}")
+
+    return (*rv, *[None] * (6 - len(rv)))  # type: ignore
+
+
+def dump_paths(filename: str, **roots: object):
+    """
+    Dumps information about the `roots` to `filename`. We dump the size
+    of the object (including unique children), the path to the object,
+    and the type or repr of the object.
+    """
+
+    # Maps id(o) -> o. Keeping a reference to each visited object ensures
+    # it stays alive, so CPython can't recycle its id for a new object.
+    seen: dict[int, object] = {}
+    o_repr_cache: dict[int, str] = {}
+
+    def visit_seq(o: Iterable[Any], path: str) -> int:
+        size = 1
+        for i, oo in enumerate(o):
+            size += 1
+            size += visit(oo, f"{path}[{i!r}]")
+
+        return size
+
+    def visit_map(o: Iterable[tuple[Any, Any]], path: str) -> int:
+        size = 2
+        for k, v in o:
+            size += 2
+            if isinstance(k, str):
+                size += len(k) // 40 + 1
+            else:
+                size += visit(k, f"key {k!r} of {path}")
+            size += visit(v, f"{path}[{k!r}]")
+
+        return size
+
+    def visit(o: object, path: str) -> int:
+        try:
+            ido = id(o)
+
+            if ido in seen:
+                f.write(f"{0: 7d} {path} = alias {o_repr_cache[ido]}\n")
+                return 0
+
+            seen[ido] = o
+
+            if isinstance(o, (int, float, complex, types.NoneType, types.ModuleType, type)):
+                o_repr = repr(o)
+
+            elif isinstance(o, str):
+                if len(o) <= 80:
+                    o_repr = repr(o)
+                else:
+                    o_repr = repr(o[:40] + "..." + o[-40:])
+
+            elif isinstance(o, bytes):
+                if len(o) <= 80:
+                    o_repr = repr(o)
+                else:
+                    o_repr = repr(o[:40] + b"..." + o[-40:])
+
+            elif isinstance(o, (tuple, list, dict)):
+                o_repr = f"<{o.__class__.__name__}>"
+
+            elif isinstance(o, types.MethodType):
+                o_repr = f"<method {o.__self__.__class__}.{o.__name__}>"
+
+            elif isinstance(o, types.FunctionType):
+                name = o.__qualname__ or o.__name__
+                o_repr = f"{o.__module__}.{name}"
+
+            else:
+                o_repr = f"<{type(o).__name__}>"
+
+            o_repr_cache[ido] = o_repr
+
+            if isinstance(o, (int, float, complex, types.NoneType, types.ModuleType, type)):
+                size = 1
+
+            elif isinstance(o, (bytes, str)):
+                size = len(o) // 40 + 1
+
+            elif isinstance(o, (tuple, list)):
+                size = visit_seq(o, path)
+
+            elif isinstance(o, dict):
+                size = visit_map(o.items(), path)
+
+            elif isinstance(o, types.MethodType):
+                size = 1 + visit(o.__self__, f"{path}.__self__")
+
+            elif isinstance(o, types.FunctionType):
+                size = 1
+
+            else:
+                try:
+                    reduction = _reduce_object(o)
+                except Exception:
+                    reduction = None
+                    o_repr_cache[ido] = "BAD REDUCTION " + o_repr
+
+                # An estimate of the size of the object, in arbitrary
+                # units. (These units are about 20-25 bytes on my
+                # computer.)
+                size = 1
+
+                if reduction is None:
+                    pass
+
+                elif isinstance(reduction, str):
+                    module = getattr(o, "__module__", "<unknown>")
+                    o_repr_cache[ido] = f"{module}.{reduction}"
+
+                else:
+                    (
+                        func,
+                        args,
+                        state,
+                        listitems,
+                        dictitems,
+                        state_setter,
+                    ) = reduction
+
+                    size += visit(func, f"{path}.__reduce__()[0]")
+                    size += visit_seq(args, f"{path}.__reduce__()[1]")
+
+                    if state is not None:
+                        size += visit(state, f"{path}.__reduce__()[2]")
+
+                    if listitems is not None:
+                        size += visit_seq(listitems, path)
+
+                    if dictitems is not None:
+                        size += visit_map(dictitems, path)
+
+            f.write(f"{size: 7d} {path} = {o_repr_cache[ido]}\n")
+
+            return size
+
+        except Exception as e:
+            f.write(f"{0: 7d} {path} = dump failed: {e!s}\n")
+
+            return 0
+
+    f, _ = renpy.error.open_error_file(filename, "w")
+
+    with f:
+        for k, v in roots.items():
+            visit(v, k)
+
+
+def find_bad_reduction(**roots: object) -> str | None:
+    """
+    Finds objects that can't be reduced properly.
+    """
+
+    # Maps id(o) -> o. Keeping a reference to each visited object ensures
+    # it stays alive, so CPython can't recycle its id for a new object.
+    seen: dict[int, object] = {}
+
+    def visit_seq(o: Iterable[Any], path: str) -> str | None:
+        for i, oo in enumerate(o):
+            if rv := visit(oo, f"{path}[{i!r}]"):
+                return rv
+
+        return None
+
+    def visit_map(o: Iterable[tuple[Any, Any]], path: str) -> str | None:
+        for k, v in o:
+            if rv := visit(k, f"key {k!r} of {path}"):
+                return rv
+
+            if rv := visit(v, f"{path}[{k!r}]"):
+                return rv
+
+        return None
+
+    def visit(o: object, path: str) -> str | None:
+        ido = id(o)
+
+        if ido in seen:
+            return None
+
+        seen[ido] = o
+
+        if isinstance(o, (int, float, complex, str, bytes, types.NoneType, types.ModuleType, type)):
+            return None
+
+        try:
+            if isinstance(o, types.MethodType):
+                return visit(o.__self__, f"{path}.__self__")
+
+            if isinstance(o, types.FunctionType):
+                # Lambdas and functions defined inside other functions can't be pickled.
+                name = o.__qualname__ or o.__name__
+
+                if "<lambda>" in name or "<locals>" in name:
+                    return f"{path} = {repr(o)[:160]}"
+
+                return None
+
+            reduction = _reduce_object(o)
+
+            if isinstance(reduction, str):
+                return None
+
+            (
+                func,
+                args,
+                state,
+                listitems,
+                dictitems,
+                state_setter,
+            ) = reduction
+
+            if rv := visit(func, f"{path}.__reduce__()[0]"):
+                return rv
+
+            if rv := visit_seq(args, f"{path}.__reduce__()[1]"):
+                return rv
+
+            # Could be anything, but most likely it is a mapping.
+            if state is not None:
+                if rv := visit(state, f"{path}.__reduce__()[2]"):
+                    return rv
+
+            if listitems is not None:
+                if rv := visit_seq(listitems, path):
+                    return rv
+
+            if dictitems is not None:
+                if rv := visit_map(dictitems, path):
+                    return rv
+
+            if state_setter is not None:
+                if rv := visit(state_setter, f"{path}.__reduce__()[5]"):
+                    return rv
+
+        except RecursionError:
+            raise
+
+        except Exception:
+            # An object that raises while being examined almost certainly
+            # can't be pickled - report it rather than crashing the
+            # diagnostic.
+            try:
+                repr_o = repr(o)
+            except Exception:
+                repr_o = "BAD REPR"
+            if len(repr_o) > 80:
+                repr_o = f"{repr_o[:40]}...{repr_o[-40:]}"
+
+            return f"{path} = {repr_o}"
+
+        return None
+
+    for k, v in roots.items():
+        try:
+            if rv := visit(v, k):
+                return rv
+        except RecursionError:
+            return None
+
+    return None
+
+
+def make_datetime(cls, *args, **kwargs):
+    """
+    Makes a datetime.date, datetime.time, or datetime.datetime object
+    from a surrogateescaped str. This is used when unpickling a datetime
+    object that was first created in Python 2.
+    """
+
+    if (len(args) == 1) and isinstance(args[0], str):
+        data = args[0].encode("utf-8", "surrogateescape")
+        return cls.__new__(cls, data.decode("latin-1"))
+
+    return cls.__new__(cls, *args, **kwargs)
+
+
+class Unpickler(pickle.Unpickler):
+    date = staticmethod(functools.partial(make_datetime, datetime.date))
+    time = staticmethod(functools.partial(make_datetime, datetime.time))
+    datetime = staticmethod(functools.partial(make_datetime, datetime.datetime))
+
+    def find_class(self, module, name):
+        if module == "datetime":
+            if name == "date":
+                return self.date
+            elif name == "time":
+                return self.time
+            elif name == "datetime":
+                return self.datetime
+
+        if module == "_ast" and name in REWRITE_NODES:
+            return REWRITE_NODES[name]
+
+        return super().find_class(module, name)
+
+
+def load(f) -> Any:
+    """
+    Read and return an object from the pickle data stored in a file.
+    """
+
+    return Unpickler(f, fix_imports=True, encoding="utf-8", errors="surrogateescape").load()
+
+
+def loads(s) -> Any:
+    """
+    Read and return an object from the given pickle data.
+    """
+
+    return load(io.BytesIO(s))
+
+
+def dump(o: object, f: BinaryIO, highest=False):
+    """
+    Write a pickled representation of `o` to the open file object `f`.
+
+    `highest`
+        If true, use the highest protocol version available.
+        Otherwise, use the default protocol version.
+    """
+
+    pickle.dump(o, f, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
+
+
+def dumps(o: object, highest=False, bad_reduction_name: str | None = None) -> bytes:
+    """
+    Return the pickled representation of the object as a bytes object.
+
+    `highest`
+        If true, use the highest protocol version available.
+        Otherwise, use the default protocol version.
+
+    `bad_reduction_name`
+        If provided, this parameter name is used to help diagnose pickle errors
+        caused by problematic object reduction. When pickling fails, it attempts
+        to find path to the specific reduction that caused the error using this name.
+    """
+
+    try:
+        return pickle.dumps(o, pickle.HIGHEST_PROTOCOL if highest else PROTOCOL)
+    except Exception as e:
+        if bad_reduction_name is not None:
+            try:
+                if bad := find_bad_reduction(**{bad_reduction_name: o}):
+                    e.add_note(f"Perhaps unpickleable object in {bad}")
+            except Exception:
+                pass
+
+        raise
+
+
+# The python AST module changed significantly between python 2 and 3. Old-style
+# screenlang support records raw python ast nodes into the rpyc data, making these
+# impossible to load normally. This dict contains mappings of nodes that need to be
+# modified to wrapper classes with a custom __setstate__ implementation that will
+# cause the pickle machinery to do the right thing.
+# There are some things that cannot be handled by this
+# (as the type of the node to be emitted is not fixed at that point), so those
+# are handled by a NodeTransformer in the ast.Module replacement.
+# Note: this isn't a complete python 2 -> python 3 ast conversion, we just convert
+# what is needed to still support old-style screens (Ren'py 6.17 and below)
+# mapping of "classname": WrapperClass
+REWRITE_NODES = {}
+
+
+# NodeTransformer that runs after the ast has been instantiated in the ast.Module
+# handler, and allows us to fix some more difficult issues. Currently only
+# handles converting ast.Name nodes that contain True/False/None into the appropriate
+# ast.Constant nodes.
+class AstFixupTransformer(ast.NodeTransformer):
+    def visit_Name(self, node):
+        # in python 2 True, False, None are keywords, and get parsed as such.
+        if node.id == "True":
+            alt_node = ast.Constant(True)
+
+        elif node.id == "False":
+            alt_node = ast.Constant(False)
+
+        elif node.id == "None":
+            alt_node = ast.Constant(None)
+
+        else:
+            return node
+
+        alt_node.lineno = node.lineno
+        alt_node.col_offset = node.col_offset
+        return alt_node
+
+
+# wrapper classes. They all have __setstate__ defined to handle converting from the
+# py2 class, and __reduce__ implemented to convert to the underlying py3 class
+# if it gets repickled. Note that py3 ast classes will not hit the REWRITE_NODES check
+# as py3 classes report to be from "ast" instead of "_ast"
+class CallWrapper(ast.Call):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.Call, args, attrs
+
+    def __setstate__(self, state):
+        # source info
+        self.lineno = state["lineno"]
+        self.col_offset = state["col_offset"]
+
+        # contents
+        self.func = state["func"]
+        self.args = state["args"]
+        self.keywords = state["keywords"]
+
+        # these gained some extra info
+        for keyword in self.keywords:
+            keyword.lineno = self.lineno
+            keyword.col_offset = self.col_offset
+
+        # these are no longer an extra field, they're just part of args and keywords
+        # as you can now supply multiple of them.
+        if state["starargs"]:
+            node = ast.Starred(value=state["starargs"], ctx=ast.Load())
+            node.lineno = self.lineno
+            node.col_offset = self.col_offset
+            self.args.append(node)
+
+        if state["kwargs"]:
+            node = ast.keyword(None, state["kwargs"])
+            node.lineno = self.lineno
+            node.col_offset = self.col_offset
+            self.keywords.append(node)
+
+
+REWRITE_NODES["Call"] = CallWrapper
+
+
+class NumWrapper(ast.Constant):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.Constant, args, attrs
+
+    def __setstate__(self, state):
+        # source info
+        self.lineno = state["lineno"]
+        self.col_offset = state["col_offset"]
+
+        # contents
+        self.value = state["n"]
+
+
+REWRITE_NODES["Num"] = NumWrapper
+
+
+class StrWrapper(ast.Constant):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.Constant, args, attrs
+
+    def __setstate__(self, state):
+        # source info
+        self.lineno = state["lineno"]
+        self.col_offset = state["col_offset"]
+
+        # contents
+        self.value = state["s"]
+
+
+REWRITE_NODES["Str"] = StrWrapper
+
+
+class ModuleWrapper(ast.Module):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.Module, args, attrs
+
+    def __setstate__(self, state):
+        # contents
+        self.body = state["body"]
+        self.type_ignores = []
+
+        # this is the root node, so now is a good moment to do some transforms we couldn't
+        # do earlier because we weren't sure of the node type to be created.
+
+        transformer = AstFixupTransformer()
+        transformer.visit(self)
+
+
+REWRITE_NODES["Module"] = ModuleWrapper
+
+
+class ReprWrapper(ast.Call):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.Call, args, attrs
+
+    def __setstate__(self, state):
+        # we need to transform `thing` into repr(thing)
+        # source info
+        self.lineno = state["lineno"]
+        self.col_offset = state["col_offset"]
+
+        # contents
+        self.func = ast.Name("repr", ast.Load(), lineno=self.lineno, col_offset=self.col_offset)
+        self.args = [state["value"]]
+        self.keywords = []
+
+
+REWRITE_NODES["Repr"] = ReprWrapper
+
+
+class ArgumentsWrapper(ast.arguments):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.arguments, args, attrs
+
+    def __setstate__(self, state):
+        # source info: this node doesn't get source info
+
+        def make_arg(name):
+            # python 2 just uses bare ast.Name nodes as arguments
+            # technically it also can support more complex tuple destructuring
+            # expressions in here, but python 3 just doesn't support that,
+            # and there's really no good way of exactly handling that crazyness.
+            assert isinstance(name, ast.Name)
+            return ast.arg(name.id, lineno=name.lineno, col_offset=name.col_offset)
+
+        # contents. source doesn't record lineno/col_offset for vararg/kwarg
+        self.posonlyargs = []
+        self.args = [make_arg(i) for i in state["args"]]
+        self.vararg = ast.arg(state["vararg"], lineno=1, col_offset=0)
+        self.kwonlyargs = []
+        self.kw_defaults = []
+        self.kwarg = ast.arg(state["kwarg"], lineno=1, col_offset=0)
+        self.defaults = state["defaults"]
+
+
+REWRITE_NODES["arguments"] = ArgumentsWrapper
+
+
+class ParamWrapper(ast.Load):
+    def __reduce__(self):
+        _, args, attrs = super().__reduce__()
+        return ast.Load, args, attrs
+
+
+REWRITE_NODES["Param"] = ParamWrapper

@@ -1,0 +1,243 @@
+﻿# Copyright 2004-2026 Tom Rothamel <pytom@bishoujo.us>
+#
+# Permission is hereby granted, free of charge, to any person
+# obtaining a copy of this software and associated documentation files
+# (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge,
+# publish, distribute, sublicense, and/or sell copies of the Software,
+# and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be
+# included in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+# NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+# LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+# OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+# WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+init python:
+
+    renpy.register_shader("renpy.geometry", glsl=300, variables="""
+        uniform mat4 u_transform;
+        in vec4 a_position;
+    """,
+    vertex_0="""
+        gl_Position = a_position;
+    """,
+    vertex_100="""
+        gl_Position = u_transform * gl_Position;
+    """)
+
+    renpy.register_shader("renpy.movie_yuv", glsl=300, private_uniforms=True, variables="""
+        uniform sampler2D tex0;
+        uniform sampler2D tex1;
+        uniform mat3 u_movie_yuv_matrix;
+        uniform vec3 u_movie_yuv_offset;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+    """, vertex_200="""
+        v_tex_coord = a_tex_coord;
+    """, fragment_200="""
+        float l__luma = texture(tex0, v_tex_coord).r;
+        vec2 l__chroma = texture(tex1, v_tex_coord).ra;
+
+        vec3 l__yuv = vec3(l__luma, l__chroma);
+        vec3 l__rgb = u_movie_yuv_matrix * l__yuv + u_movie_yuv_offset;
+
+        fragment_color = vec4(clamp(l__rgb, 0.0, 1.0), 1.0);
+    """)
+
+    renpy.register_shader("renpy.texture", glsl=300, variables="""
+        uniform float u_lod_bias;
+        uniform sampler2D tex0;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+    """, vertex_200="""
+        v_tex_coord = a_tex_coord;
+    """, fragment_200="""
+        fragment_color = texture(tex0, v_tex_coord, u_lod_bias);
+    """)
+
+    renpy.register_shader("renpy.blur", glsl = 300, variables = """
+        uniform sampler2D tex0;
+        uniform vec2 res0;
+        uniform float u_renpy_blur_log2;
+
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+
+        out vec2 v__lod_blend;
+        out vec4 v__floor_size;
+        out vec4 v__ceil_size;
+    """, fragment_functions = """
+        vec4 l__cubic(float value) {
+            vec2 n = vec2(1.0 - value, value);
+            vec2 s = n * n;
+            vec2 outer = s * n * (1.0 / 6.0);
+            vec2 inner = vec2(2.0 / 3.0) - s * (2.0 - n) * 0.5;
+
+            return vec4(outer.x, inner.y, inner.x, outer.y);
+        }
+
+        vec4 l__sample_bicubic(sampler2D tex, vec2 uv, vec4 size, float lod) {
+            vec2 tex_coords = uv * size.xy - 0.5;
+            vec2 fraction = fract(tex_coords);
+            tex_coords -= fraction;
+
+            vec4 xcubic = l__cubic(fraction.x);
+            vec4 ycubic = l__cubic(fraction.y);
+
+            vec4 c = tex_coords.xxyy + vec2(-0.5, 1.5).xyxy;
+            vec4 s = vec4(xcubic.xz + xcubic.yw, ycubic.xz + ycubic.yw);
+            vec4 offset = c + vec4(xcubic.yw, ycubic.yw) / s;
+
+            offset *= size.zzww;
+
+            vec4 sample0 = textureLod(tex, offset.xz, lod);
+            vec4 sample1 = textureLod(tex, offset.yz, lod);
+            vec4 sample2 = textureLod(tex, offset.xw, lod);
+            vec4 sample3 = textureLod(tex, offset.yw, lod);
+
+            return mix(mix(sample3, sample2, s.x), mix(sample1, sample0, s.x), s.z);
+        }
+    """, vertex_200 = """
+        v_tex_coord = a_tex_coord;
+
+        float l__lod = floor(u_renpy_blur_log2);
+
+        v__lod_blend = vec2(l__lod, u_renpy_blur_log2 - l__lod);
+
+        vec2 l__floor_size = max(vec2(1.0), floor(res0 / exp2(l__lod)));
+        vec2 l__ceil_size = max(vec2(1.0), floor(l__floor_size * 0.5));
+
+        v__floor_size = vec4(l__floor_size, 1.0 / l__floor_size);
+        v__ceil_size = vec4(l__ceil_size, 1.0 / l__ceil_size);
+    """, fragment_200 = """
+        fragment_color = l__sample_bicubic(tex0, v_tex_coord, v__floor_size, v__lod_blend.x);
+
+        if (v__lod_blend.y > 0.0) {
+            vec4 l__next_mip = l__sample_bicubic(tex0, v_tex_coord, v__ceil_size, v__lod_blend.x + 1.0);
+            fragment_color = mix(fragment_color, l__next_mip, v__lod_blend.y);
+        }
+
+        float l__noise = (fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715)))) - 0.5) * (2.0 / 255.0);
+
+        fragment_color.rgb = clamp(fragment_color.rgb + vec3(l__noise * fragment_color.a), vec3(0.0), vec3(fragment_color.a));
+    """)
+
+    renpy.register_shader("renpy.solid", glsl=300, variables="""
+        uniform vec4 u_renpy_solid_color;
+    """, fragment_200="""
+        fragment_color = u_renpy_solid_color;
+    """)
+
+    renpy.register_shader("renpy.dissolve", glsl=300, variables="""
+        uniform float u_lod_bias;
+        uniform sampler2D tex0;
+        uniform sampler2D tex1;
+        uniform float u_renpy_dissolve;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+    """, vertex_200="""
+        v_tex_coord = a_tex_coord;
+    """, fragment_200="""
+        fragment_color = mix(
+            texture(tex0, v_tex_coord, u_lod_bias),
+            texture(tex1, v_tex_coord, u_lod_bias),
+            u_renpy_dissolve);
+    """)
+
+    renpy.register_shader("renpy.imagedissolve", glsl=300, variables="""
+        uniform float u_lod_bias;
+        uniform sampler2D tex0;
+        uniform sampler2D tex1;
+        uniform sampler2D tex2;
+        uniform float u_renpy_dissolve_offset;
+        uniform float u_renpy_dissolve_multiplier;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+    """, vertex_200="""
+        v_tex_coord = a_tex_coord;
+    """, fragment_200="""
+        float l__done = clamp(
+            (texture(tex0, v_tex_coord, u_lod_bias).a + u_renpy_dissolve_offset) * u_renpy_dissolve_multiplier,
+            0.0, 1.0);
+
+        fragment_color = mix(
+            texture(tex1, v_tex_coord, u_lod_bias),
+            texture(tex2, v_tex_coord, u_lod_bias),
+            l__done);
+    """)
+
+
+    renpy.register_shader("renpy.matrixcolor", glsl=300, variables="""
+        uniform mat4 u_renpy_matrixcolor;
+    """, fragment_400="""
+        fragment_color = u_renpy_matrixcolor * fragment_color;
+    """)
+
+    renpy.register_shader("renpy.red_to_alpha", glsl=300,
+        fragment_450="""
+        fragment_color = vec4(fragment_color.r);
+    """)
+
+    renpy.register_shader("renpy.alpha", glsl=300, variables="""
+        uniform float u_renpy_alpha;
+        uniform float u_renpy_over;
+    """, fragment_500="""
+        fragment_color *= u_renpy_alpha * vec4(1.0, 1.0, 1.0, u_renpy_over);
+    """)
+
+    renpy.register_shader("renpy.ftl", glsl=300, variables="""
+        in vec4 a_position;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+        uniform sampler2D tex0;
+    """, vertex_100="""
+        v_tex_coord = a_tex_coord;
+        gl_Position = a_position;
+    """, fragment_100="""
+        fragment_color = texture(tex0, v_tex_coord, -1.0);
+    """)
+
+    renpy.register_shader("renpy.alpha_mask", glsl=300, variables="""
+        uniform sampler2D tex0;
+        uniform sampler2D tex1;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+    """, vertex_200="""
+        v_tex_coord = a_tex_coord;
+    """, fragment_500="""
+        // The mask is in the red channel, and the result is premultiplied.
+        float l__mask = texture(tex1, v_tex_coord).r;
+
+        fragment_color = vec4(texture(tex0, v_tex_coord).rgb * l__mask, l__mask);
+    """)
+
+    renpy.register_shader("renpy.mask", glsl=300, variables="""
+        uniform float u_lod_bias;
+        uniform sampler2D tex0;
+        uniform sampler2D tex1;
+        uniform float u_renpy_mask_multiplier;
+        uniform float u_renpy_mask_offset;
+        in vec2 a_tex_coord;
+        out vec2 v_tex_coord;
+    """, vertex_200="""
+        v_tex_coord = a_tex_coord;
+    """, fragment_200="""
+        float l__mask = texture(tex1, v_tex_coord, u_lod_bias).a;
+
+        fragment_color = texture(tex0, v_tex_coord, u_lod_bias)
+            * (l__mask * u_renpy_mask_multiplier + u_renpy_mask_offset);
+    """)
+
+init python hide:
+    from operator import mul
+
+    config.merge_uniforms["u_renpy_alpha"] = mul
+    config.merge_uniforms["u_renpy_over"] = mul
+    config.merge_uniforms["u_renpy_matrixcolor"] = mul
