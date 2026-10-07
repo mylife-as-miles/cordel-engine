@@ -177,7 +177,7 @@ class TimingTests(unittest.TestCase):
 
     def test_metrics(self):
         metrics = Metrics()
-        metrics.record(clamp_delta(.01), .001, .002)
+        metrics.record(clamp_delta(.01), .001, .002, active=True)
         metrics.record(clamp_delta(.25), .003, .004)
         result = metrics.summary()
         self.assertEqual(result["frames"], 2)
@@ -185,6 +185,8 @@ class TimingTests(unittest.TestCase):
         self.assertEqual(result["interval_worst_ms"], 250)
         self.assertEqual(result["update_mean_cpu_ms"], 2)
         self.assertEqual(result["prep_mean_cpu_ms"], 3)
+        self.assertEqual(result["active_camera_updates"], 1)
+        self.assertEqual(result["active_update_mean_cpu_ms"], 1)
 
 
 class CoordinateTests(unittest.TestCase):
