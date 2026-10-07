@@ -46,8 +46,10 @@ class Metrics:
         self.discarded = 0.0
         self.last = Step(0, 0, 0)
         self.update_ms = self.prep_ms = 0.0
+        self.active_updates = 0
+        self.active_update_sum = self.active_update_worst = 0.0
 
-    def record(self, step, update_seconds, prep_seconds):
+    def record(self, step, update_seconds, prep_seconds, active=False):
         self.frames += 1
         self.last = step
         if step.raw > 0:
@@ -61,6 +63,10 @@ class Metrics:
         self.prep_sum += self.prep_ms
         self.prep_worst = max(self.prep_worst, self.prep_ms)
         self.discarded += step.discarded
+        if active:
+            self.active_updates += 1
+            self.active_update_sum += self.update_ms
+            self.active_update_worst = max(self.active_update_worst, self.update_ms)
 
     def summary(self):
         frames = max(1, self.frames)
@@ -72,4 +78,7 @@ class Metrics:
                     update_worst_cpu_ms=self.update_worst,
                     prep_mean_cpu_ms=self.prep_sum / frames,
                     prep_worst_cpu_ms=self.prep_worst,
+                    active_camera_updates=self.active_updates,
+                    active_update_mean_cpu_ms=self.active_update_sum / max(1, self.active_updates),
+                    active_update_worst_cpu_ms=self.active_update_worst,
                     discarded_seconds=self.discarded)
