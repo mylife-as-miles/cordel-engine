@@ -1,0 +1,34 @@
+test_other_process_waits_for_build (unittests.test_setuplib.TestBuildLock.test_other_process_waits_for_build) ... ok
+test_setup_holds_lock_through_build (unittests.test_setuplib.TestBuildLock.test_setup_holds_lock_through_build) ... ok
+test_budget_checks_clock_after_each_step (unittests.test_asynctask.TestAsyncTask.test_budget_checks_clock_after_each_step) ... ok
+test_cancel_before_start (unittests.test_asynctask.TestAsyncTask.test_cancel_before_start) ... ok
+test_cancel_closes_nested_yield_from (unittests.test_asynctask.TestAsyncTask.test_cancel_closes_nested_yield_from) ... ok
+test_cancel_different_queued_task_from_running_task (unittests.test_asynctask.TestAsyncTask.test_cancel_different_queued_task_from_running_task) ... ok
+test_cancel_only_started_task_clears_ready_queue (unittests.test_asynctask.TestAsyncTask.test_cancel_only_started_task_clears_ready_queue) ... ok
+test_cleanup_that_yields_is_error_but_other_tasks_are_closed (unittests.test_asynctask.TestAsyncTask.test_cleanup_that_yields_is_error_but_other_tasks_are_closed) ... ok
+test_empty_and_result (unittests.test_asynctask.TestAsyncTask.test_empty_and_result) ... ok
+test_exception_propagates_without_discarding_other_work (unittests.test_asynctask.TestAsyncTask.test_exception_propagates_without_discarding_other_work) ... ok
+test_nested_yield_from_result (unittests.test_asynctask.TestAsyncTask.test_nested_yield_from_result) ... ok
+test_reset_closes_all_pending_and_reusable (unittests.test_asynctask.TestAsyncTask.test_reset_closes_all_pending_and_reusable) ... ok
+test_reset_from_running_task_defers_its_close (unittests.test_asynctask.TestAsyncTask.test_reset_from_running_task_defers_its_close) ... ok
+test_round_robin_and_budget (unittests.test_asynctask.TestAsyncTask.test_round_robin_and_budget) ... ok
+test_run_sync_and_guard (unittests.test_asynctask.TestAsyncTask.test_run_sync_and_guard) ... ok
+test_run_sync_closes_on_exception (unittests.test_asynctask.TestAsyncTask.test_run_sync_closes_on_exception) ... ok
+test_slow_step_disabled_and_invalid_setting (unittests.test_asynctask.TestAsyncTask.test_slow_step_disabled_and_invalid_setting) ... ok
+test_slow_step_logs_nested_location_and_completed (unittests.test_asynctask.TestAsyncTask.test_slow_step_logs_nested_location_and_completed) ... ok
+test_slow_step_logs_single_frame_location (unittests.test_asynctask.TestAsyncTask.test_slow_step_logs_single_frame_location) ... ok
+test_der_pem_roundtrip (unittests.test_ecsign.TestECSign.test_der_pem_roundtrip) ... ok
+test_key_generation (unittests.test_ecsign.TestECSign.test_key_generation) ... ok
+test_p256_sec1_and_pkcs8_private_key_compatibility (unittests.test_ecsign.TestECSign.test_p256_sec1_and_pkcs8_private_key_compatibility) ... ok
+test_rejects_invalid_private_key_constructor_scalar (unittests.test_ecsign.TestECSign.test_rejects_invalid_private_key_constructor_scalar) ... ok
+test_rejects_invalid_private_key_der_and_pem (unittests.test_ecsign.TestECSign.test_rejects_invalid_private_key_der_and_pem) ... ok
+test_rejects_invalid_public_points (unittests.test_ecsign.TestECSign.test_rejects_invalid_public_points) ... ok
+test_rejects_noncanonical_or_invalid_spki (unittests.test_ecsign.TestECSign.test_rejects_noncanonical_or_invalid_spki) ... ok
+test_rejects_oversized_digests (unittests.test_ecsign.TestECSign.test_rejects_oversized_digests) ... ok
+test_sign_and_verify (unittests.test_ecsign.TestECSign.test_sign_and_verify) ... ok
+test_supported_hashfuncs (unittests.test_ecsign.TestECSign.test_supported_hashfuncs) ... ok
+
+----------------------------------------------------------------------
+Ran 29 tests in 0.345s
+
+OK

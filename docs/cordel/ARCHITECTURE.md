@@ -1,7 +1,8 @@
 # CORDEL architecture proposal
 
 Status: proposal based on [the source audit](ARCHITECTURE_AUDIT.md), now informed by
-the isolated [Phase 1.1 reference viewport](PHASE_1_1_VIEWPORT.md).
+the isolated [Phase 1.1 reference viewport](PHASE_1_1_VIEWPORT.md) and
+[Phase 1.2 native host](PHASE_1_2_NATIVE_HOST.md).
 The proposed production subsystems/interfaces below remain unimplemented.
 CORDEL's focus is cinematic third-person narrative games; budgets and integration
 cost must drive scope before feature breadth.
@@ -34,8 +35,19 @@ It also observes cached draws outnumbering simulation updates, prediction-owned
 asset eviction, coupled hover/controller input ownership and virtual-aspect resize/
 screenshot assumptions. The isolated adapter pins its own importer data and
 uses drawable aspect. These are comparison evidence, not a production API.
-Proceed to Phase 1.2's native host comparison; defer the final ownership decision
-to Phase 1.4. Desktop/device and GPU-lifetime evidence remain open.
+Phase 1.2's software gate now passes: a C++20/SDL3/OpenGL core reference host
+renders the same fixture with independent fixed ticking, interpolation and
+deterministic scene/GL owners. Controlled and uncapped render rates still service
+the same 60 Hz accumulator. Actual delete calls and zero owner counters are
+verified; driver memory reclamation is not. There is no narrative integration.
+
+Native ownership made offscreen EGL surface recreation and draw-queue backpressure
+explicit. An unbounded uncapped trial blocked simulation and grew RSS; diagnostic
+glFinish bounds work, with separately labeled CPU wait. This remains one thread,
+so fixed ticking does not eliminate driver stalls. Relative-mode request/event
+tests are not physical mouse evidence. Proceed to Phase 1.3's narrative ownership
+experiment; defer the final decision to Phase 1.4. Desktop/device, DPI, driver
+residency and production queue/platform evidence remain open.
 
 ## Proposed boundaries
 
@@ -156,7 +168,7 @@ The exact boundary and tests are in the [example README](../../examples/cordel_v
 Keep this as an explicit reference convention when comparing the native spike;
 do not silently promote it to a permanent serialized engine ABI.
 
-## Technology comparisons (no selections committed)
+## Technology comparisons (no production selections committed)
 
 | Area/options | Capability and integration | Maintenance, licensing and platform implications | Evaluation gate |
 | --- | --- | --- | --- |

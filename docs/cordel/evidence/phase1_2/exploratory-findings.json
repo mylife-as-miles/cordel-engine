@@ -1,0 +1,70 @@
+{
+  "records": [
+    {
+      "stage": "SDL 3.2.20 initial configure",
+      "failure": "Missing X11/Wayland refused console-only configuration",
+      "remediation": "Documented SDL_UNIX_CONSOLE_BUILD=ON, scoped to CORDEL_OFFSCREEN_ONLY"
+    },
+    {
+      "stage": "Initial core-profile graphics run",
+      "failure": "Legacy GL_DEPTH_BITS query did not establish a depth buffer",
+      "remediation": "GL_FRAMEBUFFER_ATTACHMENT_DEPTH_SIZE query; actual context depth 24 bits"
+    },
+    {
+      "stage": "Initial resize pixel probe",
+      "failure": "Readback bottom-left was ground [48,59,66,255], not background",
+      "remediation": "Read top-left with explicit GL lower-left pixel convention"
+    },
+    {
+      "stage": "SDL 3.2.20 unbounded uncapped trial",
+      "failure": "Offscreen swap did not bound pending GL work; final submission blocked loop; high process RSS",
+      "measurement": {
+        "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+        "drawable_size": [
+          850,
+          480
+        ],
+        "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+        "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+        "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+        "pacing": "uncapped",
+        "summary": {
+          "camera_mean_cpu_ms_per_tick": 0.00106569458987,
+          "cpu_core_equivalents": 2.01256452857,
+          "dropped_seconds": 0,
+          "event_mean_cpu_ms": 0.000844253337077,
+          "frame_interval_mean_ms": 0.155903066898,
+          "frame_interval_worst_ms": 36.344934997,
+          "gl_submission_mean_cpu_ms": 0.570794042261,
+          "gpu_timing": "unavailable",
+          "peak_rss_kib": 1564700,
+          "present_mean_cpu_ms": 0.00639088403988,
+          "process_cpu_seconds": 7.372308,
+          "render_fps": 1726.11419845,
+          "render_frames": 6323,
+          "render_prep_mean_cpu_ms": 0.000853110183186,
+          "simulation_mean_cpu_ms": 4.37627447233e-05,
+          "simulation_observed_hz": 16.1063953358,
+          "simulation_ticks": 59,
+          "wall_seconds": 3.663141179
+        },
+        "window_size": [
+          850,
+          480
+        ]
+      },
+      "remediation": "glFinish diagnostic backpressure each frame; separately measure CPU wait; SDL pin subsequently aligned to SDK 3.4.8"
+    },
+    {
+      "stage": "Unmodified Phase 1.1 first replay",
+      "failure": "Stall assertion passed at zero movement; assertion bounds displacement but does not require W to remain held",
+      "measurement": {
+        "raw_seconds": 0.3353219970013015,
+        "delta_seconds": 0.05,
+        "discarded_seconds": 0.2853219970013015,
+        "movement_metres": 0.0
+      },
+      "remediation": "No Phase 1.1 change; retain both replays. Native test requires actual .150m. Second replay restored .150m."
+    }
+  ]
+}

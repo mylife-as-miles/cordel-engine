@@ -1,0 +1,488 @@
+{
+  "schema": 1,
+  "evidence_kind": "functional software/offscreen; not hardware performance",
+  "environment": {
+    "os": "Debian 13.6 x86_64",
+    "renderer": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "native_gl": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "sdl_native": "3.4.8 stock pinned release",
+    "sdl_renpy": "3.4.8 queried from loaded SDK SDL_GetVersion",
+    "drawable": [
+      850,
+      480
+    ],
+    "camera": [
+      0,
+      2.5,
+      6
+    ],
+    "yaw": 0,
+    "pitch": -8,
+    "same_scene": "examples/cordel_viewport/game/assets/cordel_scene.gltf"
+  },
+  "accepted_phase1_1": {
+    "check_records": 83,
+    "steady": {
+      "frames": 131,
+      "fps": 42.74620735013858,
+      "interval_mean_ms": 23.1298376538549,
+      "interval_worst_ms": 54.87260299560148,
+      "update_mean_cpu_ms": 0.0016389312249259981,
+      "update_worst_cpu_ms": 0.17630599904805422,
+      "prep_mean_cpu_ms": 0.20722580927233958,
+      "prep_worst_cpu_ms": 0.5996170002617873,
+      "active_camera_updates": 0,
+      "active_update_mean_cpu_ms": 0.0,
+      "active_update_worst_cpu_ms": 0.0,
+      "discarded_seconds": 0.01873341199243439,
+      "wall_seconds": 3.009459736997087,
+      "process_cpu_seconds": 6.026816478000001,
+      "engine_drawn_frames": 1199,
+      "renderer": {
+        "resizable": true,
+        "additive": true,
+        "renderer": "gl2",
+        "models": true,
+        "max_window_size": [
+          922,
+          519
+        ],
+        "gpu_vendor": "Mesa",
+        "gpu_name": "llvmpipe (LLVM 19.1.7, 256 bits)",
+        "gpu_driver_version": "4.5 (Compatibility Profile) Mesa 25.0.7-2+deb13u1",
+        "glsl_version": 450,
+        "max_texture_size": 16384
+      },
+      "drawable": [
+        850,
+        480
+      ]
+    },
+    "active_camera": {
+      "active_camera_updates": 68,
+      "active_update_mean_cpu_ms": 0.025143765121944908,
+      "active_update_worst_cpu_ms": 0.12153400166425854
+    },
+    "stall": {
+      "raw_seconds": 0.2593367049994413,
+      "delta_seconds": 0.05,
+      "discarded_seconds": 0.2093367049994413,
+      "movement_metres": 0.15000000000000036
+    },
+    "narrative": {
+      "update_frames": 33,
+      "wall_seconds": 0.7806978450025781,
+      "held_actions": [],
+      "input_enabled": false,
+      "interval_ms": 18.918499001301825
+    }
+  },
+  "phase1_1_replays": [
+    {
+      "check_records": 83,
+      "steady": {
+        "frames": 127,
+        "fps": 41.95707301371218,
+        "interval_mean_ms": 23.71206275399475,
+        "interval_worst_ms": 57.75579399778508,
+        "update_mean_cpu_ms": 0.00027622021533050173,
+        "update_worst_cpu_ms": 0.0006409973138943315,
+        "prep_mean_cpu_ms": 0.19371231461464478,
+        "prep_worst_cpu_ms": 0.4211269988445565,
+        "active_camera_updates": 0,
+        "active_update_mean_cpu_ms": 0.0,
+        "active_update_worst_cpu_ms": 0.0,
+        "discarded_seconds": 0.020106062002014355,
+        "wall_seconds": 3.007198999999673,
+        "process_cpu_seconds": 6.022666756,
+        "engine_drawn_frames": 1232,
+        "renderer": {
+          "resizable": true,
+          "additive": true,
+          "renderer": "gl2",
+          "models": true,
+          "max_window_size": [
+            922,
+            519
+          ],
+          "gpu_vendor": "Mesa",
+          "gpu_name": "llvmpipe (LLVM 19.1.7, 256 bits)",
+          "gpu_driver_version": "4.5 (Compatibility Profile) Mesa 25.0.7-2+deb13u1",
+          "glsl_version": 450,
+          "max_texture_size": 16384
+        },
+        "drawable": [
+          850,
+          480
+        ]
+      },
+      "active_camera": {
+        "active_camera_updates": 67,
+        "active_update_mean_cpu_ms": 0.02539789572587487,
+        "active_update_worst_cpu_ms": 0.061974002164788544
+      },
+      "stall": {
+        "raw_seconds": 0.3353219970013015,
+        "delta_seconds": 0.05,
+        "discarded_seconds": 0.2853219970013015,
+        "movement_metres": 0.0
+      },
+      "narrative": {
+        "update_frames": 32,
+        "wall_seconds": 0.755925252000452,
+        "held_actions": [],
+        "input_enabled": false,
+        "interval_ms": 17.633088005823083
+      }
+    },
+    {
+      "check_records": 83,
+      "steady": {
+        "frames": 124,
+        "fps": 40.59211700780231,
+        "interval_mean_ms": 24.41895500001047,
+        "interval_worst_ms": 54.942128001130186,
+        "update_mean_cpu_ms": 0.00032471008683299465,
+        "update_worst_cpu_ms": 0.0008510032785125077,
+        "prep_mean_cpu_ms": 0.23413397584884096,
+        "prep_worst_cpu_ms": 0.3504489941406064,
+        "active_camera_updates": 0,
+        "active_update_mean_cpu_ms": 0.0,
+        "active_update_worst_cpu_ms": 0.0,
+        "discarded_seconds": 0.017775287004769755,
+        "wall_seconds": 3.0065719800040824,
+        "process_cpu_seconds": 6.0158181169999985,
+        "engine_drawn_frames": 1098,
+        "renderer": {
+          "resizable": true,
+          "additive": true,
+          "renderer": "gl2",
+          "models": true,
+          "max_window_size": [
+            922,
+            519
+          ],
+          "gpu_vendor": "Mesa",
+          "gpu_name": "llvmpipe (LLVM 19.1.7, 256 bits)",
+          "gpu_driver_version": "4.5 (Compatibility Profile) Mesa 25.0.7-2+deb13u1",
+          "glsl_version": 450,
+          "max_texture_size": 16384
+        },
+        "drawable": [
+          850,
+          480
+        ]
+      },
+      "active_camera": {
+        "active_camera_updates": 64,
+        "active_update_mean_cpu_ms": 0.02563776536135265,
+        "active_update_worst_cpu_ms": 0.09578400204190984
+      },
+      "stall": {
+        "raw_seconds": 0.2653192340003443,
+        "delta_seconds": 0.05,
+        "discarded_seconds": 0.2153192340003443,
+        "movement_metres": 0.15000000000000036
+      },
+      "narrative": {
+        "update_frames": 32,
+        "wall_seconds": 0.7897191390002263,
+        "held_actions": [],
+        "input_enabled": false,
+        "interval_ms": 22.00215999619104
+      }
+    }
+  ],
+  "native_self_test": {
+    "gpu_timing": "unavailable",
+    "graphics_runtime_checks": 112,
+    "hardware_verified": false,
+    "native_logic_checks": 304,
+    "scene_cycles": 5,
+    "success": true
+  },
+  "native_stall": {
+    "camera_position": [
+      0,
+      2.47912403486,
+      5.85145978969
+    ],
+    "camera_tick_cpu_ms": 0.00306499714497,
+    "drawable_size": [
+      850,
+      480
+    ],
+    "dropped_dt": 0.2,
+    "event_cpu_ms": 0.00174199522007,
+    "fixed_ticks": 3,
+    "focused": true,
+    "frame_id": 1,
+    "gl_completion_wait_cpu_ms": 0.953843002208,
+    "gl_submission_cpu_ms": 0.168935999682,
+    "gpu_timing": "unavailable",
+    "interpolation_alpha": 0.0085621800099,
+    "live_resources": {
+      "ebos": 7,
+      "programs": 1,
+      "scenes": 1,
+      "shader_stages": 0,
+      "textures": 0,
+      "vaos": 7,
+      "vbos": 7
+    },
+    "mouse_capture_status_semantics": "SDL window relative-mode request flag",
+    "mouse_captured": false,
+    "movement_metres": 0.15,
+    "pitch": -8,
+    "present_cpu_ms": 0.0157140020747,
+    "raw_dt": 0.250142703,
+    "render_interval": 0.250142703,
+    "render_prep_cpu_ms": 0.0155640009325,
+    "sdl_keyboard_focus": false,
+    "simulated_dt": 0.05,
+    "simulation_cpu_ms": 0.00339499820257,
+    "simulation_hz": 60,
+    "window_size": [
+      850,
+      480
+    ],
+    "yaw": 0
+  },
+  "native_input": {
+    "active_camera_mean_cpu_ms_per_tick": 0.00138199781456,
+    "active_camera_ticks": 6,
+    "active_camera_worst_cpu_ms_per_frame": 0.00204299431061,
+    "analog_logic_tested": true,
+    "capture_error": "",
+    "escape_released": true,
+    "focus_clear": true,
+    "keyboard": [
+      {
+        "camera_tick_cpu_ms": 0.00204299431061,
+        "displacement": [
+          0,
+          -0.006958655048,
+          -0.0495134034371
+        ],
+        "fixed_ticks": 1,
+        "scancode": 26,
+        "simulated_dt": 0.0166666666667
+      },
+      {
+        "camera_tick_cpu_ms": 0.000861000444274,
+        "displacement": [
+          0,
+          0.006958655048,
+          0.0495134034371
+        ],
+        "fixed_ticks": 1,
+        "scancode": 22,
+        "simulated_dt": 0.0166666666667
+      },
+      {
+        "camera_tick_cpu_ms": 0.000731000909582,
+        "displacement": [
+          -0.05,
+          0,
+          0
+        ],
+        "fixed_ticks": 1,
+        "scancode": 4,
+        "simulated_dt": 0.0166666666667
+      },
+      {
+        "camera_tick_cpu_ms": 0.00148199615069,
+        "displacement": [
+          0.05,
+          0,
+          0
+        ],
+        "fixed_ticks": 1,
+        "scancode": 7,
+        "simulated_dt": 0.0166666666667
+      },
+      {
+        "camera_tick_cpu_ms": 0.00144200021168,
+        "displacement": [
+          0,
+          0.05,
+          0
+        ],
+        "fixed_ticks": 1,
+        "scancode": 44,
+        "simulated_dt": 0.0166666666667
+      },
+      {
+        "camera_tick_cpu_ms": 0.0017329948605,
+        "displacement": [
+          0,
+          -0.05,
+          0
+        ],
+        "fixed_ticks": 1,
+        "scancode": 224,
+        "simulated_dt": 0.0166666666667
+      }
+    ],
+    "physical_controller_verified": false,
+    "physical_gamepads": 0,
+    "physical_mouse_verified": false,
+    "physical_relative_motion_verified": false,
+    "sdl_has_real_keyboard_focus": false,
+    "sdl_relative_window_flag": true,
+    "sprint_multiplier": 3,
+    "synthetic_relative_pitch": 6,
+    "synthetic_relative_yaw": 15
+  },
+  "native_controlled": {
+    "backpressure": "synchronous glFinish per frame; bounded diagnostic path, not production queue design",
+    "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+    "drawable_size": [
+      850,
+      480
+    ],
+    "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+    "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "pacing": "monotonic_sleep_fallback",
+    "summary": {
+      "camera_mean_cpu_ms_per_tick": 0.00272041880792,
+      "cpu_core_equivalents": 0.129607545924,
+      "dropped_seconds": 0,
+      "event_mean_cpu_ms": 0.0132890165939,
+      "frame_interval_mean_ms": 16.5746543833,
+      "frame_interval_worst_ms": 17.3087739968,
+      "gl_completion_wait_mean_cpu_ms": 0.781278588854,
+      "gl_submission_mean_cpu_ms": 0.124719900204,
+      "gpu_timing": "unavailable",
+      "peak_rss_kib": 67732,
+      "present_mean_cpu_ms": 0.0158064503113,
+      "process_cpu_seconds": 0.388835,
+      "render_fps": 59.9980924207,
+      "render_frames": 180,
+      "render_prep_mean_cpu_ms": 0.0106209886629,
+      "simulation_mean_cpu_ms": 0.00291702761185,
+      "simulation_observed_hz": 59.664769685,
+      "simulation_ticks": 179,
+      "wall_seconds": 3.000095382
+    },
+    "window_size": [
+      850,
+      480
+    ]
+  },
+  "native_uncapped": {
+    "backpressure": "synchronous glFinish per frame; bounded diagnostic path, not production queue design",
+    "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+    "drawable_size": [
+      850,
+      480
+    ],
+    "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+    "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "pacing": "uncapped",
+    "summary": {
+      "camera_mean_cpu_ms_per_tick": 0.0014437206708,
+      "cpu_core_equivalents": 1.99399743274,
+      "dropped_seconds": 0,
+      "event_mean_cpu_ms": 0.00235604578241,
+      "frame_interval_mean_ms": 0.847296763405,
+      "frame_interval_worst_ms": 28.5331850027,
+      "gl_completion_wait_mean_cpu_ms": 0.798306217894,
+      "gl_submission_mean_cpu_ms": 0.0473226152785,
+      "gpu_timing": "unavailable",
+      "peak_rss_kib": 68692,
+      "present_mean_cpu_ms": 0.0018121849445,
+      "process_cpu_seconds": 5.996735,
+      "render_fps": 1172.11131565,
+      "render_frames": 3525,
+      "render_prep_mean_cpu_ms": 0.00241759890799,
+      "simulation_mean_cpu_ms": 0.000154893669458,
+      "simulation_observed_hz": 59.5199788654,
+      "simulation_ticks": 179,
+      "wall_seconds": 3.007393541
+    },
+    "window_size": [
+      850,
+      480
+    ]
+  },
+  "architecture": [
+    {
+      "dimension": "main_loop_owner",
+      "renpy": "Ren'Py",
+      "native": "CORDEL"
+    },
+    {
+      "dimension": "simulation",
+      "renpy": "render invalidation/redraw driven",
+      "native": "bounded 60 Hz fixed accumulator"
+    },
+    {
+      "dimension": "interpolation",
+      "renpy": "none",
+      "native": "previous/current poses, shortest yaw arc"
+    },
+    {
+      "dimension": "stall",
+      "renpy": "50ms dt clamp",
+      "native": "3 fixed ticks, whole backlog dropped, fraction retained"
+    },
+    {
+      "dimension": "input_owner",
+      "renpy": "shared UI/story/hover/keymaps",
+      "native": "native held state, focus clear"
+    },
+    {
+      "dimension": "relative_mouse",
+      "renpy": "uncaptured drag",
+      "native": "SDL window relative-mode request; physical behavior unverified"
+    },
+    {
+      "dimension": "asset_lifetime",
+      "renpy": "prediction/cache coupled; session pin workaround",
+      "native": "deterministic scene/GL RAII"
+    },
+    {
+      "dimension": "scene_import",
+      "renpy": "Ren'Py/Assimp plus Y reflection cancellation",
+      "native": "cgltf, storage transpose only"
+    },
+    {
+      "dimension": "depth",
+      "renpy": "GL_LEQUAL",
+      "native": "GL_LEQUAL; identical numeric controls"
+    },
+    {
+      "dimension": "resize",
+      "renpy": "virtual/display coupling; oversized pbuffer unverified",
+      "native": "drawable-owned; offscreen surface recreation"
+    },
+    {
+      "dimension": "python_in_frame_loop",
+      "renpy": true,
+      "native": false
+    },
+    {
+      "dimension": "narrative",
+      "renpy": "full Ren'Py Say/Menu",
+      "native": "none in Phase 1.2"
+    },
+    {
+      "dimension": "teardown",
+      "renpy": "importer/caches observable; GPU deletion unproven",
+      "native": "GL delete calls / counters explicit; driver residency unmeasured"
+    }
+  ],
+  "comparability_limits": [
+    "Ren'Py viewport invalidations/updates, native completed render iterations, and Ren'Py cached draw counter are different metrics; no speedup ratio is valid.",
+    "Ren'Py requested 60Hz redraw, but retains fast cached draws. Native controlled mode sleeps to ~60Hz; native uncapped mode is a separate throughput sample.",
+    "Native glFinish bounds outstanding work. Ren'Py uses its existing compositing/cache/presentation policy; neither implementation was altered for favorable results.",
+    "Same scene/camera/light/llvmpipe/SDL version number; core versus compatibility contexts, SDL build options, importer, UI/HUD and shader plumbing still differ.",
+    "Both use monotonic CPU-code wall fragments, not exclusive thread CPU or GPU timing. Preparation and active camera scopes/samples are not identical.",
+    "The first render interval is near-zero after warm-up; final presentation/pacing tail is included in wall time but not a subsequent clock sample. 179 ticks over ~3s is a one-tick sample-boundary effect.",
+    "Ren'Py replay stall can clear held input before movement. Its existing assertion checks an upper bound and can pass at zero metres; include both replay results.",
+    "Short samples on a shared software-rendering host do not establish world-scale performance, hardware behavior or long-soak memory safety."
+  ]
+}

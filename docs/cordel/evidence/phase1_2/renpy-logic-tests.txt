@@ -1,0 +1,36 @@
+test_analog_magnitude_preserved (test_logic.CameraTests.test_analog_magnitude_preserved) ... ok
+test_diagonal_normalization (test_logic.CameraTests.test_diagonal_normalization) ... ok
+test_dt_consistency (test_logic.CameraTests.test_dt_consistency) ... ok
+test_forward (test_logic.CameraTests.test_forward) ... ok
+test_invalid_delta_cannot_move (test_logic.CameraTests.test_invalid_delta_cannot_move) ... ok
+test_opposed_actions_cancel (test_logic.CameraTests.test_opposed_actions_cancel) ... ok
+test_pitch_and_mouse_sign (test_logic.CameraTests.test_pitch_and_mouse_sign) ... ok
+test_pitch_clamp (test_logic.CameraTests.test_pitch_clamp) ... ok
+test_right (test_logic.CameraTests.test_right) ... ok
+test_vertical_and_sprint (test_logic.CameraTests.test_vertical_and_sprint) ... ok
+test_view_maps_camera_to_origin (test_logic.CameraTests.test_view_maps_camera_to_origin) ... ok
+test_yaw_right (test_logic.CameraTests.test_yaw_right) ... ok
+test_yaw_wrap (test_logic.CameraTests.test_yaw_wrap) ... ok
+test_aspect_preserves_pixel_proportions (test_logic.CoordinateTests.test_aspect_preserves_pixel_proportions) ... ok
+test_invalid_projection (test_logic.CoordinateTests.test_invalid_projection) ... ok
+test_matrix_multiplication_order (test_logic.CoordinateTests.test_matrix_multiplication_order) ... ok
+test_projection_near_far_and_front (test_logic.CoordinateTests.test_projection_near_far_and_front) ... ok
+test_reflection_boundary (test_logic.CoordinateTests.test_reflection_boundary) ... ok
+test_analog_deadzone_and_fraction (test_logic.InputTests.test_analog_deadzone_and_fraction) ... ok
+test_analog_diagonal_bounded (test_logic.InputTests.test_analog_diagonal_bounded) ... ok
+test_down_up_repeat (test_logic.InputTests.test_down_up_repeat) ... ok
+test_focus_loss_clear (test_logic.InputTests.test_focus_loss_clear) ... ok
+test_multiple_actions (test_logic.InputTests.test_multiple_actions) ... ok
+test_two_keys_for_same_action (test_logic.InputTests.test_two_keys_for_same_action) ... ok
+test_unknown_action_rejected (test_logic.InputTests.test_unknown_action_rejected) ... ok
+test_clock_first_and_backwards (test_logic.TimingTests.test_clock_first_and_backwards) ... ok
+test_delta_clamp_and_stall (test_logic.TimingTests.test_delta_clamp_and_stall) ... ok
+test_invalid_maximum (test_logic.TimingTests.test_invalid_maximum) ... ok
+test_metrics (test_logic.TimingTests.test_metrics) ... ok
+test_no_catchup_after_stall (test_logic.TimingTests.test_no_catchup_after_stall) ... ok
+test_nonpositive_nonfinite (test_logic.TimingTests.test_nonpositive_nonfinite) ... ok
+
+----------------------------------------------------------------------
+Ran 31 tests in 0.002s
+
+OK

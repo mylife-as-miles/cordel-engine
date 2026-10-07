@@ -215,6 +215,20 @@ retain the checksum-verified archive externally for repeatability.
 
 ## Native compilation remediation (not executed)
 
+The [Phase 1.2 native host](../../native/phase1_host/README.md) now builds and tests
+independently using project-local CMake 3.31.6, pinned SDL 3.4.8 and vendored cgltf.
+Its repeatable software command is:
+
+```sh
+bash native/phase1_host/tools/run_offscreen.sh tmp/my-native-run
+```
+
+That smaller experiment uses bundled GL/EGL declarations and an offscreen-only
+SDL build. It does not compile Ren'Py's native modules or supply the missing
+Assimp/FFmpeg/font/image development dependencies listed below. Phase 1.2 also
+replays the existing Phase 1.1 and baseline wrappers successfully; original
+full-suite failures remain unchanged. No root or host-wide installation was used.
+
 Use an isolated Linux development container/workstation with Python 3.12 and SDL3
 development packages. Compare `.devcontainer/Dockerfile` and the source requirements
 above; the existing container configuration assumes desktop GPU/display mounts

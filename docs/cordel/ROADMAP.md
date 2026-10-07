@@ -48,6 +48,17 @@ Keep the known history-click failure separate from CORDEL identity changes.
    plus render interpolation, resize/shutdown, and diagnostics. Exit: repeatable
    build on one desktop target, no Python hot-loop dependency, comparable trace
    and documented library/license footprint. One backend suffices for this spike.
+   Software reference gate **passed 2026-10-07**; see
+   [executed Phase 1.2 findings](PHASE_1_2_NATIVE_HOST.md). Isolated C++20,
+   pinned SDL3/OpenGL core, same seven-mesh/84-triangle fixture, 60 Hz accumulator,
+   interpolation, three-tick catch-up, queued controls/focus, numeric depth,
+   four drawable sizes including 1280×720, five zero-owner teardown cycles and
+   full host recreation pass. 304 native assertions, shared Python/C++ goldens,
+   112 graphics/runtime assertions and Phase 1.1/baseline replays pass.
+   **Open:** physical relative mouse/alt-tab/controllers, visible desktop/high-DPI,
+   hardware/GPU timing, driver residency, long soaks and production frame queue.
+   Offscreen resize recreates its EGL surface; glFinish is diagnostic backpressure.
+   Phase 1.1 was fast-forwarded into `main`; Phase 1.2 remains a review branch.
 3. **1.3 Narrative ownership experiment.** Run one line/choice/wait while the
    viewport continues updating. Compare adapter feasibility, UI/input/audio
    ownership, exception/restart and pause behavior. Exit: measurable continuous
@@ -57,14 +68,13 @@ Keep the known history-click failure separate from CORDEL identity changes.
    and performance test targets. Exit: reviewed decision with alternatives and
    known gaps, and one automated smoke path on the selected development target.
 
-**Exact next task:** **1.2 — Native Host Comparison Spike**. Create one isolated
-native desktop host with an explicitly experimental backend, load the same CC0
-scene and camera convention, and compare fixed update plus interpolation against
-the Ren'Py redraw-driven reference. Repeat focus/input, resize, forced stall and
-five enter/exit probes with comparable CPU diagnostics, documented dependencies/
-licenses and a reproducible build. Add desktop/hardware evidence when available.
-No production API decision, physics, ECS or editor yet. Keep Phase 1.1's open
-device/GPU checks visible; Phase 1.2 has not started.
+**Exact next task:** **1.3 — Narrative Ownership Experiment**. Exercise one real
+Ren'Py line/choice/wait while the native reference world's fixed ticks continue.
+Evaluate adapter/transport feasibility and input/window/audio ownership, cancellation,
+exceptions/restart and packaging cost against the intact Ren'Py reference. Preserve
+both experiments and their open device/driver gates. Phase 1.3 has not started;
+do not choose the final production runtime/backend until Phase 1.4. No physics,
+ECS, editor or broader engine rewrite at this gate.
 
 ## Phase 2 — Third-person character controller
 

@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "recorded_utc": "2026-10-07T21:30:29.263814+00:00",
+  "accepted_phase1_1": "74ff4155f6a831cf86b26823743ea7fa869ddb09",
+  "original_cordel_root": "3334167d44069604396eb1523a0374d475fa2117",
+  "branch": "cordel/phase1-native-host",
+  "code_commit": "cc8f0b9642b1eccfe701f974508122c015057cfa",
+  "host_commit": "948ccf10b1eed6391e1eab51376ffce2a0e01e40",
+  "main_fast_forward_pushed": true,
+  "phase1_2_merged": false,
+  "kind": "software SDL offscreen + Mesa llvmpipe; no visible accelerated desktop",
+  "commands": [
+    {
+      "command": "git switch main",
+      "exit_code": 0
+    },
+    {
+      "command": "git merge --ff-only cordel/phase1-viewport",
+      "exit_code": 0
+    },
+    {
+      "command": "git -c credential.helper= -c 'credential.helper=!gh auth git-credential' push origin main",
+      "exit_code": 0
+    },
+    {
+      "command": "git switch -c cordel/phase1-native-host",
+      "exit_code": 0
+    },
+    {
+      "command": "uv pip install --python .venv/bin/python cmake==3.31.6",
+      "exit_code": 0
+    },
+    {
+      "command": "bash native/phase1_host/tools/run_offscreen.sh tmp/phase1_2-sdl348-final",
+      "exit_code": 0
+    },
+    {
+      "command": "SDL_VIDEODRIVER=offscreen LIBGL_ALWAYS_SOFTWARE=1 build/phase1-host/cordel-native-host --seconds 3 --output tmp/phase1_2-sdl348-controlled",
+      "exit_code": 0
+    },
+    {
+      "command": "SDL_VIDEODRIVER=offscreen LIBGL_ALWAYS_SOFTWARE=1 build/phase1-host/cordel-native-host --uncapped --seconds 3 --output tmp/phase1_2-sdl348-uncapped",
+      "exit_code": 0
+    },
+    {
+      "command": "bash examples/cordel_viewport/tools/run_offscreen.sh tmp/phase1_2-renpy-regression",
+      "exit_code": 0
+    },
+    {
+      "command": "bash examples/cordel_viewport/tools/run_offscreen.sh tmp/phase1_2-renpy-repeat",
+      "exit_code": 0
+    },
+    {
+      "command": "bash examples/cordel_viewport/tools/check_baseline.sh tmp/phase1_2-renpy-baseline",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/cmake -S native/phase1_host -B build/phase1-host-clean -DCORDEL_OFFSCREEN_ONLY=ON",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/cmake --build build/phase1-host-clean -j 4",
+      "exit_code": 0
+    },
+    {
+      "command": ".venv/bin/ctest --test-dir build/phase1-host-clean --output-on-failure -V",
+      "exit_code": 0
+    },
+    {
+      "command": "SDL_VIDEODRIVER=offscreen LIBGL_ALWAYS_SOFTWARE=1 build/phase1-host-clean/cordel-native-host --self-test --output tmp/phase1_2-clean-selftest",
+      "exit_code": 0
+    }
+  ],
+  "native": {
+    "unit_assertions": 304,
+    "ctest_targets": 2,
+    "graphics_assertions": 112,
+    "scene_cycles": 5,
+    "full_host_recreation": true
+  },
+  "baseline": {
+    "viewport_helpers": 31,
+    "viewport_runtime": 83,
+    "ui_assertions": 8,
+    "source_tests": 29,
+    "sdk_tests": 89,
+    "selected_endings": 2,
+    "full_suites": "known failures unchanged"
+  },
+  "source_sha256": {
+    "native/phase1_host/tests/logic_suite.hpp": "3f96b866e818e5790ed2e8505f043ae7183a5b315ef2c49ecebc8a71880273c1",
+    "native/phase1_host/tests/goldens.json": "045ab2eb91fd87b08be50def3df3dc082d3d982bdf6511365f9090f4aa2623c5",
+    "native/phase1_host/tests/goldens.hpp": "8de992cc588cdecc727db3929fe504246ea95c85ee7be4c441baae07fe9c2b2e",
+    "native/phase1_host/tests/test_logic.cpp": "877302a7f9e11ef5f6968c4ccd6586c1a9a1dbb4ddcd1f60eaf94d33d9cb23c6",
+    "native/phase1_host/src/runtime.cpp": "5e2053ccb7e81fca11c1b8b1343b82a7f07032c22364fa33d42209a244926aad",
+    "native/phase1_host/src/main.cpp": "01f2c0a43c29c609d022e368bf1c5e3d7267c2497d721e49f5d49a42e00895ef",
+    "native/phase1_host/src/self_test.cpp": "46f629ee71549723e7702956a65b6e8398ff53e62d4289ade1fee8337d0e294f",
+    "native/phase1_host/third_party/dependency-manifest.json": "e295dbca38840e9c71a5e27819236fa3af7dac65b85905f1ac610b7105d971e0",
+    "native/phase1_host/third_party/cgltf.h": "e378a21c084bf1f288bb799de827bb26906efb024255f1ecf1705ea13f11c6ec",
+    "native/phase1_host/tools/goldens.py": "be605e903724d0924d377091e1d0d8482a024624e66e02c6de4dc83cb5aeb74a",
+    "native/phase1_host/tools/run_offscreen.sh": "c5d9f9cebdb6ba9b62c3061ff4d1807e2a4a819f24fb9aeeafde513e088b302b",
+    "native/phase1_host/tools/compare.py": "9c34941f8819c9a6869ececcb3ca76ece0ffd88716d4d1ec8cfd84ca76e7019d",
+    "native/phase1_host/tools/convert_images.py": "55f0ad05241d7ef934a54c9beac12ef92c245ba3ac5b57d86ff5615ec2488d85",
+    "native/phase1_host/src/diagnostics/diagnostics.cpp": "ff41f2561cfcaa8cfe3bf842dc928520fbae817a27e58df2a7b5c68882ea04a0",
+    "native/phase1_host/src/platform/platform.cpp": "51f4bea846c91db8da50d775fcf2affcd57449421299f3b9bc83e1bb6bea94d9",
+    "native/phase1_host/src/render/renderer.cpp": "cbe6781802d6135c956664adfbebb75d2ab766c00d8a00f21e7c0cbd755ef626",
+    "native/phase1_host/src/scene/scene.cpp": "cb7a4cf0afd97b48a98c916caa285d6eb3f68c8da73d84bc6efed529927ff1ad",
+    "native/phase1_host/include/cordel/renderer.hpp": "ef7190806f9d2679abcc434dd6c8a69bb15d8830096e15f29cf1cd320c628164",
+    "native/phase1_host/include/cordel/scene.hpp": "8602242bb53e84ff849af51f5cb66869966a004efe8827d820dc5010c66869b1",
+    "native/phase1_host/include/cordel/runtime.hpp": "ac42bcf5089d3d85c3812314faa72fa5b618d2e5d0a5611ac9f8a50e849bb99e",
+    "native/phase1_host/include/cordel/platform.hpp": "98c8e3370794367b146d8655dbbc25418155d1d2df6ccdbc868f77a8706ee426",
+    "native/phase1_host/include/cordel/diagnostics.hpp": "6ccc608b5183d0ca8b688d351f0f0c7d734e5c5a109c5d513227069f9e8435f2",
+    "native/phase1_host/include/cordel/logic.hpp": "9efb81a618184c9d04cfc857c4fbabb9e4d8354bf9543163da48094fc9e2fcb9",
+    "native/phase1_host/include/cordel/json.hpp": "1caa8ee3c9de51e103a075d581f37928ef2e51b74a6f268841ca1b9ec91b1e64",
+    "native/phase1_host/CMakeLists.txt": "6aede420ff23ebeb6109d91ba6352f4479f1512001392d4d741a3fb57345dd96",
+    "examples/cordel_viewport/game/assets/cordel_scene.gltf": "f2b2e9abf4d4715378a9b0b88ba62718aa62c08907ad0ac452b303ac83f07925"
+  },
+  "binary_sha256": "fc6d0c6cdfdf3854ce70cd28c01a2e5b7d48a125fb8f6f6ed738caf0bdc9efc3",
+  "clean_binary_sha256": "fc6d0c6cdfdf3854ce70cd28c01a2e5b7d48a125fb8f6f6ed738caf0bdc9efc3",
+  "sdk_archive_sha256": "75c926cfe3c7f9b6e6ff56adcc7adc79d207f035c019f5724e752bdc347a8583",
+  "notes": "Hashes identify exercised source; documentation commit follows code commit. Build directories differ; binary hashes can differ because SDL records build paths/revision strings. Native and reference frame units are not equivalent.",
+  "evidence_sha256": {
+    "resize-850x480.png": "e20a9d1451acb49bc887472c394255f378afe7b35d6efb7974d80c02463c26f2",
+    "baseline-question-tests.txt": "f55080271f6997a2631344154a36ab6eca267f1c2ad99533444ca70a47fe4a41",
+    "renpy-logic-tests.txt": "1c9f6ecca1e085d999c28ed68446f4c9d95171f6a1e6c6dc1b69d73afae7dd2b",
+    "self-test.txt": "105cb6e227f90401b7b48ab3ac441c7dfba3875b9b4a784b1e448af5a88a7431",
+    "clean-self-test.txt": "7b294b832762d5ef0a320ab5f6bea7ffe994d47419662369b7bed73a3458cf3a",
+    "uncapped.json": "60068f73d9b9194745dd5d83a6863d1b053efc72a39c999e6ba39943b1dc79e0",
+    "renpy-replay-2-trace.jsonl": "f64835cea6d20884e2687f80de009d897b1a5f67b32f5c68076a0e88cd839856",
+    "baseline-source-tests.txt": "4b6bb4c1911d96819c8d54dd736eb8dbb287060b636edb70bc8dfca5c1914d8d",
+    "depth-on.png": "83786ada3e7ca78ecdeafb970b1513ea15959d9be1e294c75f00b5ea019bdbaa",
+    "native-trace.jsonl": "105cb6e227f90401b7b48ab3ac441c7dfba3875b9b4a784b1e448af5a88a7431",
+    "footprint.json": "26e26bf8b7f869d5c7b6b0af68c7bc850869eb885d3906efe3fcb78c274c80fe",
+    "build-info.txt": "308668e00d6ef22352253b1854b37445a38103e3d68e72543dcec4598d9d25fd",
+    "resize-320x500.png": "f2f986ed147f62bd38ac5625488fa842277e63ef989e45126d5f4f67b6a5a891",
+    "native-tests.txt": "cb63f89012f20ab62c38991a4a6f7126c0f1e1306a2f48c56b9cb4defda1ac6e",
+    "clean-self-test.json": "c622376368c82cc5416275de2ce02f332903cb93d8fe3c1edbd6b8946332502d",
+    "self-test.json": "c622376368c82cc5416275de2ce02f332903cb93d8fe3c1edbd6b8946332502d",
+    "renpy-ui-tests.txt": "3139634ef59942fa1b04dfeee8dd75a86773a50800d6b02127c55b805dc970b9",
+    "clean-tests.txt": "becd8652871c7192f449bb2d642fd4325a9c5812c03993b11149a68b39af7c7d",
+    "input-probe.json": "c35108b2e90eefb1fcc0c90342573ee38787cbb9ef40d53075daa83dbae05271",
+    "viewport.png": "9011b637ab7b8bd8f4c67dcf2854ef87b1a80bbf51c6ade914c4a4adcd3b03d7",
+    "context-recreation.json": "bbca214cb06af00d50e85dfe2ef5f4934e7239f3a35596556d31d2ea1415fc5e",
+    "controlled-trace.jsonl": "7ad18e92532db12a2d805aed9528d4f50edc8b9bffdf06799cc895f61ea7351c",
+    "baseline-sdk-tests.txt": "1a970e5a196aee48634f6a0397ef34a9e7c01d56abc3a297a55e967efd4a7c74",
+    "exploratory-findings.json": "e99ca01b4b371ea422d9da270bc5f677f6adb18edd542bc92b94c75b636a08fe",
+    "depth-off.png": "ac81b376c500cbbdf65ab68f3cbe37666108dc05a1aa39277a0b805450893e9b",
+    "renpy-replay-1.json": "1ffb92fe3e2eddb014f04e108bfc408a73f87342226445a7702d068fbc15cc42",
+    "comparison.json": "3bfb3a7e7d09701529b961757654471a783193b9f0a3f9dae0e0fe6416936795",
+    "resize-1280x720.png": "c7e1653e3c28ef072e5fe1210d010ad3d366b5a7e9d0b2317bbeed534d5ec1e7",
+    "renpy-replay-2.json": "23928a257ed8e8bf5b9dc86e621450312fb4b40b09604f637df7ef9cc5054768",
+    "controlled.json": "78afda951db02a2042ed17d3b4b2e17cfc4196b0382dcdc0eb8b32275fee0f8d",
+    "viewport-lint.txt": "f0f006f99f0ff9f3f1288570bb0414043b06fb34eaf62b5ae3ca3ef9c4afc111",
+    "stall-probe.json": "996ca9cb0a7041a86de655687f5a3bbf4ee86b3975e379e6a563118909a77f7d",
+    "dependency-manifest.json": "e295dbca38840e9c71a5e27819236fa3af7dac65b85905f1ac610b7105d971e0",
+    "depth-probe.json": "68e9974b968e4404e1d0b886dbcd2709c6a6a9c9335d1db7b222b1d6a0105d21",
+    "lifecycle.json": "930d0c2a9e935524b6c8b6bcd2bc3108269f3fa780a59f8a732b997cd3b05d03",
+    "renpy-replay-1-trace.jsonl": "7d7ac6d4f2b0b1520bc84f2d78454f7e0bae042a23fe1f0d28440b1c27711341",
+    "resize-500x500.png": "25fdcad94698380670416788051714ff16f4021f8e497c9f364adbac9e3ab522",
+    "uncapped-trace.jsonl": "37c0afa1008c1ce2a04487cc9f42ba97ac98d1bc37879bea97548920bd10ed7c",
+    "resize-probe.json": "3891cd7891046409c2c60b8bc2225b7a832ed4b116f9a37ac81d0eb1f5ea01a2"
+  }
+}

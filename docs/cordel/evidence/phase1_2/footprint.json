@@ -1,0 +1,10 @@
+{
+  "native_executable_bytes": 3379448,
+  "fixture_bytes": 16216,
+  "sdk_python_launcher_bytes": 4760,
+  "sdk_librenpython_bytes": 42280504,
+  "sdk_lib_tree_logical_bytes": 184395369,
+  "renpy_peak_rss_kib": null,
+  "renpy_startup_seconds": null,
+  "notes": "Artifact sizes, not equivalent distributable packages. Native statically includes SDL/cgltf but dynamically needs system C++ and EGL/GL drivers. SDK tree contains other architectures/runtime features; RenPy reference RSS/startup not instrumented."
+}

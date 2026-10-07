@@ -3,9 +3,10 @@
 CORDEL is a cinematic, narrative-driven 3D engine project founded on the
 [Ren'Py repository](https://github.com/renpy/renpy). Phase 0 establishes an audited
 codebase, a reproducible development baseline, and an engineering direction.
-Phase 1.1 adds an isolated Ren'Py-backed 3D viewport reference experiment with
-executed software-rendering evidence. A production CORDEL world runtime remains
-proposed.
+Phase 1.1 adds an isolated Ren'Py-backed 3D viewport reference experiment. Phase
+1.2 adds a C++20 native host for the same scene, with executed software evidence
+for fixed updates, interpolation, input and deterministic GL ownership. A
+production CORDEL world/narrative runtime remains proposed.
 
 Our long-term focus is third-person gameplay, expressive character animation,
 interactive environments, branching dialogue, and seamless cinematic transitions.
@@ -32,6 +33,12 @@ Naughty Dog technology. This is a specialized narrative engine project.
   depth/perspective, fly camera, held input, uncaptured drag-look, resize and frame
   diagnostics. Headless checks and lifecycle/Say probes pass; desktop devices,
   hardware timing and GPU buffer release remain unverified.
+- [Native comparison](native/phase1_host/README.md): experimental SDL3/OpenGL core
+  host, 60 Hz fixed ticks/interpolation, seven-mesh fixture, depth/resize/stall
+  probes, five explicit GL teardown cycles and complete host recreation. Software
+  gate passes; physical relative input, controllers, desktop/DPI and driver memory
+  remain unverified. Phase 1.1 is accepted into `main`; Phase 1.2 stays on its
+  review branch. No narrative integration is implemented yet.
 
 The recommended direction is a native real-time runtime hosting a carefully
 isolated narrative adapter. That is a proposal to validate, not an implemented
@@ -48,6 +55,7 @@ environment limits, and test results. Other project documents:
 - [Upstream policy](docs/cordel/UPSTREAM.md): provenance, remotes, licenses, and synchronization.
 - [Project metadata](cordel/project.toml): machine-readable identity and foundation commit.
 - [Phase 1.1 findings](docs/cordel/PHASE_1_1_VIEWPORT.md): implementation, measurements and runtime limits.
+- [Phase 1.2 findings](docs/cordel/PHASE_1_2_NATIVE_HOST.md): native host, comparison measurements and open device gates.
 
 ## Identity and attribution
 
