@@ -179,6 +179,33 @@ The full sample failure is in checkout Python code:
 unmodified foundation. It was not patched as part of identity/bootstrap work.
 Its exact correction and regression test belong in a separate reviewed change.
 
+## Phase 1.1 baseline regression replay
+
+On 2026-10-07 the isolated viewport feature replayed the same selected workflows,
+using the existing `.venv`, pinned SDK symlink and host-stdlib runner workaround.
+No new native dependencies, privileged operations or upstream runtime changes:
+
+```sh
+bash examples/cordel_viewport/tools/check_baseline.sh tmp/phase1-accepted
+```
+
+Exit **0**: original source selection **29 passed**, SDK selection **89 passed**,
+The Question's two selected endings **2 passed** (history case unselected), and
+viewport lint exited 0 with generic conflicting-properties advice. The script
+contains the exact commands above, plus the new-project lint. Known full-suite
+failures remain unchanged and excluded; the unit selections still overlap.
+Transcripts are in [Phase 1.1 evidence](evidence/phase1_1/README.md).
+
+The new viewport runs on this same baseline. Its verification wrapper executes
+31 pure helper tests, 83 software runtime checks and the normal viewport UI test:
+
+```sh
+bash examples/cordel_viewport/tools/run_offscreen.sh tmp/my-viewport-run
+```
+
+Use a new output directory. See [the Phase 1.1 report](PHASE_1_1_VIEWPORT.md) for
+offscreen limits, real measurements and open desktop/device/resource checks.
+
 Captured execution records (trailing whitespace normalized) are in
 [evidence/](evidence/), with commands indexed in
 [evidence/README.md](evidence/README.md). Original session logs also remain under

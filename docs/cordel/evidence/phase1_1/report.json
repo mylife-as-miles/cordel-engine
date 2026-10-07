@@ -1,0 +1,1271 @@
+{
+  "success": true,
+  "evidence_kind": "offscreen software rendering and synthetic events",
+  "results": [
+    {
+      "name": "asset_loaded",
+      "passed": true,
+      "meshes": 7
+    },
+    {
+      "name": "actual_imported_node_conversion",
+      "passed": true,
+      "imported_to_world_origins": [
+        [
+          4.898587410340671e-16,
+          -0.15000000596046448,
+          -4.0
+        ],
+        [
+          -1.7999999523162842,
+          1.0,
+          -2.0
+        ],
+        [
+          -1.7999999523162842,
+          1.5,
+          -6.0
+        ],
+        [
+          3.0,
+          2.5,
+          -5.0
+        ],
+        [
+          -4.0,
+          0.6499999761581421,
+          -1.0
+        ],
+        [
+          1.2000000476837158,
+          0.5,
+          -1.0
+        ],
+        [
+          1.2000000476837158,
+          1.0,
+          -10.0
+        ]
+      ],
+      "authored_origins": [
+        [
+          0,
+          -0.15,
+          -4
+        ],
+        [
+          -1.8,
+          1,
+          -2
+        ],
+        [
+          -1.8,
+          1.5,
+          -6
+        ],
+        [
+          3,
+          2.5,
+          -5
+        ],
+        [
+          -4,
+          0.65,
+          -1
+        ],
+        [
+          1.2,
+          0.5,
+          -1
+        ],
+        [
+          1.2,
+          1,
+          -10
+        ]
+      ]
+    },
+    {
+      "name": "session_pin_survives_cache_eviction",
+      "passed": true,
+      "imports": 1
+    },
+    {
+      "name": "depth_near_red_in_both_orders",
+      "passed": true,
+      "pixels": {
+        "depth_True_reverse_False": {
+          "pixel": [
+            153,
+            20,
+            14,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        },
+        "depth_True_reverse_True": {
+          "pixel": [
+            153,
+            20,
+            14,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        },
+        "depth_False_reverse_False": {
+          "pixel": [
+            7,
+            27,
+            85,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        },
+        "depth_False_reverse_True": {
+          "pixel": [
+            80,
+            11,
+            7,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        }
+      }
+    },
+    {
+      "name": "disabled_depth_control_changes_occlusion",
+      "passed": true,
+      "pixels": {
+        "depth_True_reverse_False": {
+          "pixel": [
+            153,
+            20,
+            14,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        },
+        "depth_True_reverse_True": {
+          "pixel": [
+            153,
+            20,
+            14,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        },
+        "depth_False_reverse_False": {
+          "pixel": [
+            7,
+            27,
+            85,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        },
+        "depth_False_reverse_True": {
+          "pixel": [
+            80,
+            11,
+            7,
+            255
+          ],
+          "size": [
+            922,
+            519
+          ]
+        }
+      }
+    },
+    {
+      "name": "resize_framebuffer_clear_valid",
+      "passed": true,
+      "corner": [
+        24,
+        33,
+        43,
+        255
+      ],
+      "requested": [
+        850,
+        480
+      ]
+    },
+    {
+      "name": "resize_cream_cube_visible",
+      "passed": true,
+      "requested": [
+        850,
+        480
+      ]
+    },
+    {
+      "name": "resize_drawable_and_projection",
+      "passed": true,
+      "requested": [
+        850,
+        480
+      ],
+      "drawable": [
+        850,
+        480
+      ],
+      "screenshot": [
+        850,
+        480
+      ],
+      "cube_box": [
+        383,
+        198,
+        467,
+        282
+      ],
+      "cube_pixel_aspect": 1.0,
+      "centre_pixel": [
+        153,
+        146,
+        102,
+        255
+      ]
+    },
+    {
+      "name": "resize_depth_preserved",
+      "passed": true,
+      "drawable": [
+        850,
+        480
+      ],
+      "pixel": [
+        153,
+        20,
+        14,
+        255
+      ]
+    },
+    {
+      "name": "camera_moves_after_resize",
+      "passed": true,
+      "drawable": [
+        850,
+        480
+      ],
+      "position": [
+        1.2,
+        0.5,
+        3.735639624996111
+      ]
+    },
+    {
+      "name": "resize_framebuffer_clear_valid",
+      "passed": true,
+      "corner": [
+        24,
+        33,
+        43,
+        255
+      ],
+      "requested": [
+        500,
+        500
+      ]
+    },
+    {
+      "name": "resize_cream_cube_visible",
+      "passed": true,
+      "requested": [
+        500,
+        500
+      ]
+    },
+    {
+      "name": "resize_drawable_and_projection",
+      "passed": true,
+      "requested": [
+        500,
+        500
+      ],
+      "drawable": [
+        500,
+        500
+      ],
+      "screenshot": [
+        500,
+        500
+      ],
+      "cube_box": [
+        206,
+        206,
+        294,
+        294
+      ],
+      "cube_pixel_aspect": 1.0,
+      "centre_pixel": [
+        153,
+        146,
+        102,
+        255
+      ]
+    },
+    {
+      "name": "resize_depth_preserved",
+      "passed": true,
+      "drawable": [
+        500,
+        500
+      ],
+      "pixel": [
+        153,
+        20,
+        14,
+        255
+      ]
+    },
+    {
+      "name": "camera_moves_after_resize",
+      "passed": true,
+      "drawable": [
+        500,
+        500
+      ],
+      "position": [
+        1.2,
+        0.5,
+        3.7277015289946576
+      ]
+    },
+    {
+      "name": "resize_framebuffer_clear_valid",
+      "passed": true,
+      "corner": [
+        24,
+        33,
+        43,
+        255
+      ],
+      "requested": [
+        320,
+        500
+      ]
+    },
+    {
+      "name": "resize_cream_cube_visible",
+      "passed": true,
+      "requested": [
+        320,
+        500
+      ]
+    },
+    {
+      "name": "resize_drawable_and_projection",
+      "passed": true,
+      "requested": [
+        320,
+        500
+      ],
+      "drawable": [
+        320,
+        500
+      ],
+      "screenshot": [
+        320,
+        500
+      ],
+      "cube_box": [
+        116,
+        206,
+        204,
+        294
+      ],
+      "cube_pixel_aspect": 1.0,
+      "centre_pixel": [
+        153,
+        146,
+        102,
+        255
+      ]
+    },
+    {
+      "name": "resize_depth_preserved",
+      "passed": true,
+      "drawable": [
+        320,
+        500
+      ],
+      "pixel": [
+        153,
+        20,
+        14,
+        255
+      ]
+    },
+    {
+      "name": "camera_moves_after_resize",
+      "passed": true,
+      "drawable": [
+        320,
+        500
+      ],
+      "position": [
+        1.2,
+        0.5,
+        3.6986677989989403
+      ]
+    },
+    {
+      "name": "resize_framebuffer_clear_valid",
+      "passed": true,
+      "corner": [
+        24,
+        33,
+        43,
+        255
+      ],
+      "requested": [
+        800,
+        400
+      ]
+    },
+    {
+      "name": "resize_cream_cube_visible",
+      "passed": true,
+      "requested": [
+        800,
+        400
+      ]
+    },
+    {
+      "name": "resize_drawable_and_projection",
+      "passed": true,
+      "requested": [
+        800,
+        400
+      ],
+      "drawable": [
+        800,
+        400
+      ],
+      "screenshot": [
+        800,
+        400
+      ],
+      "cube_box": [
+        365,
+        165,
+        435,
+        235
+      ],
+      "cube_pixel_aspect": 1.0,
+      "centre_pixel": [
+        153,
+        146,
+        102,
+        255
+      ]
+    },
+    {
+      "name": "resize_depth_preserved",
+      "passed": true,
+      "drawable": [
+        800,
+        400
+      ],
+      "pixel": [
+        153,
+        20,
+        14,
+        255
+      ]
+    },
+    {
+      "name": "camera_moves_after_resize",
+      "passed": true,
+      "drawable": [
+        800,
+        400
+      ],
+      "position": [
+        1.2,
+        0.5,
+        3.6781879690024653
+      ]
+    },
+    {
+      "name": "held_w_d_movement",
+      "passed": true,
+      "position": [
+        0.6386635738945947,
+        2.5,
+        5.361336426105405
+      ],
+      "distance": 0.9032066879954075,
+      "actions": [
+        "forward",
+        "right"
+      ]
+    },
+    {
+      "name": "movement_bounded_diagonal",
+      "passed": true,
+      "distance": 0.9032066879954075
+    },
+    {
+      "name": "key_up_and_interaction_clear",
+      "passed": true
+    },
+    {
+      "name": "direction_115",
+      "passed": true,
+      "displacement": 0.3870015540072931
+    },
+    {
+      "name": "direction_97",
+      "passed": true,
+      "displacement": -0.38612321398977656
+    },
+    {
+      "name": "direction_32",
+      "passed": true,
+      "displacement": 0.4389841710071778
+    },
+    {
+      "name": "direction_1073742048",
+      "passed": true,
+      "displacement": -0.3822802530048648
+    },
+    {
+      "name": "sprint_vertical",
+      "passed": true,
+      "displacement": 1.2767550210555783
+    },
+    {
+      "name": "drag_mouse_yaw_pitch",
+      "passed": true,
+      "yaw": 15.0,
+      "pitch": 6.0,
+      "sdl_mouse_grab": false
+    },
+    {
+      "name": "escape_releases_focus",
+      "passed": true
+    },
+    {
+      "name": "focus_loss_clears_held",
+      "passed": true,
+      "loss": "WINDOWFOCUSLOST"
+    },
+    {
+      "name": "focus_loss_clears_held",
+      "passed": true,
+      "loss": "WINDOWMOUSELEAVE"
+    },
+    {
+      "name": "focus_loss_clears_held",
+      "passed": true,
+      "loss": "WINDOWMINIMIZED"
+    },
+    {
+      "name": "analog_raw_adapter_software_path",
+      "passed": true,
+      "axes": [
+        0.500015259254738,
+        0.0
+      ],
+      "scope": "direct event-handler check; controller ownership remains unresolved",
+      "physical_controllers": 0
+    },
+    {
+      "name": "controller_disconnect_adapter_clear",
+      "passed": true
+    },
+    {
+      "name": "controller_disconnect_clear",
+      "passed": true
+    },
+    {
+      "name": "forced_stall_clamped",
+      "passed": true,
+      "stall": {
+        "raw_seconds": 0.2593367049994413,
+        "delta_seconds": 0.05,
+        "discarded_seconds": 0.2093367049994413,
+        "movement_metres": 0.15000000000000036
+      }
+    },
+    {
+      "name": "stall_recovers_update_intervals",
+      "passed": true,
+      "following_intervals": [
+        0.05108703799487557,
+        0.01854265200381633,
+        0.01764579599694116,
+        0.019229349003580865,
+        0.044372128999384586
+      ],
+      "following_delta": 0.044372128999384586
+    },
+    {
+      "name": "real_say_continuous_redraw",
+      "passed": true,
+      "update_frames": 33,
+      "wall_seconds": 0.7806978450025781,
+      "held_actions": [],
+      "input_enabled": false,
+      "interval_ms": 18.918499001301825
+    },
+    {
+      "name": "say_owns_input",
+      "passed": true
+    },
+    {
+      "name": "return_from_say_redraw",
+      "passed": true
+    },
+    {
+      "name": "continuous_idle_updates",
+      "passed": true,
+      "frames": 131
+    },
+    {
+      "name": "lifecycle_no_active_importer",
+      "passed": true,
+      "resources": {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          3928232,
+          13
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      }
+    },
+    {
+      "name": "lifecycle_no_updates_after_exit",
+      "passed": true,
+      "frames_before": 131,
+      "frames_after": 131
+    },
+    {
+      "name": "lifecycle_input_cleared",
+      "passed": true
+    },
+    {
+      "name": "single_import_per_session",
+      "passed": true,
+      "imports": 1
+    },
+    {
+      "name": "importer_data_reference_released",
+      "passed": true
+    },
+    {
+      "name": "lifecycle_no_pending_viewport_redraw",
+      "passed": true
+    },
+    {
+      "name": "asset_loaded",
+      "passed": true,
+      "meshes": 7
+    },
+    {
+      "name": "lifecycle_no_active_importer",
+      "passed": true,
+      "resources": {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1634472,
+          3
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      }
+    },
+    {
+      "name": "lifecycle_no_updates_after_exit",
+      "passed": true,
+      "frames_before": 13,
+      "frames_after": 13
+    },
+    {
+      "name": "lifecycle_input_cleared",
+      "passed": true
+    },
+    {
+      "name": "single_import_per_session",
+      "passed": true,
+      "imports": 1
+    },
+    {
+      "name": "importer_data_reference_released",
+      "passed": true
+    },
+    {
+      "name": "lifecycle_no_pending_viewport_redraw",
+      "passed": true
+    },
+    {
+      "name": "asset_loaded",
+      "passed": true,
+      "meshes": 7
+    },
+    {
+      "name": "lifecycle_no_active_importer",
+      "passed": true,
+      "resources": {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1863848,
+          4
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      }
+    },
+    {
+      "name": "lifecycle_no_updates_after_exit",
+      "passed": true,
+      "frames_before": 14,
+      "frames_after": 14
+    },
+    {
+      "name": "lifecycle_input_cleared",
+      "passed": true
+    },
+    {
+      "name": "single_import_per_session",
+      "passed": true,
+      "imports": 1
+    },
+    {
+      "name": "importer_data_reference_released",
+      "passed": true
+    },
+    {
+      "name": "lifecycle_no_pending_viewport_redraw",
+      "passed": true
+    },
+    {
+      "name": "asset_loaded",
+      "passed": true,
+      "meshes": 7
+    },
+    {
+      "name": "lifecycle_no_active_importer",
+      "passed": true,
+      "resources": {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1634472,
+          3
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      }
+    },
+    {
+      "name": "lifecycle_no_updates_after_exit",
+      "passed": true,
+      "frames_before": 10,
+      "frames_after": 10
+    },
+    {
+      "name": "lifecycle_input_cleared",
+      "passed": true
+    },
+    {
+      "name": "single_import_per_session",
+      "passed": true,
+      "imports": 1
+    },
+    {
+      "name": "importer_data_reference_released",
+      "passed": true
+    },
+    {
+      "name": "lifecycle_no_pending_viewport_redraw",
+      "passed": true
+    },
+    {
+      "name": "asset_loaded",
+      "passed": true,
+      "meshes": 7
+    },
+    {
+      "name": "lifecycle_no_active_importer",
+      "passed": true,
+      "resources": {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1863848,
+          4
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      }
+    },
+    {
+      "name": "lifecycle_no_updates_after_exit",
+      "passed": true,
+      "frames_before": 11,
+      "frames_after": 11
+    },
+    {
+      "name": "lifecycle_input_cleared",
+      "passed": true
+    },
+    {
+      "name": "single_import_per_session",
+      "passed": true,
+      "imports": 1
+    },
+    {
+      "name": "importer_data_reference_released",
+      "passed": true
+    },
+    {
+      "name": "lifecycle_no_pending_viewport_redraw",
+      "passed": true
+    },
+    {
+      "name": "no_duplicate_shutdown_callbacks",
+      "passed": true,
+      "callback_count": 1
+    },
+    {
+      "name": "texture_cache_bounded_over_cycles",
+      "passed": true,
+      "texture_counts": [
+        13,
+        3,
+        4,
+        3,
+        4
+      ]
+    }
+  ],
+  "measurements": {
+    "coordinates": {
+      "converted_origins": [
+        [
+          4.898587410340671e-16,
+          -0.15000000596046448,
+          -4.0
+        ],
+        [
+          -1.7999999523162842,
+          1.0,
+          -2.0
+        ],
+        [
+          -1.7999999523162842,
+          1.5,
+          -6.0
+        ],
+        [
+          3.0,
+          2.5,
+          -5.0
+        ],
+        [
+          -4.0,
+          0.6499999761581421,
+          -1.0
+        ],
+        [
+          1.2000000476837158,
+          0.5,
+          -1.0
+        ],
+        [
+          1.2000000476837158,
+          1.0,
+          -10.0
+        ]
+      ],
+      "authored_origins": [
+        [
+          0,
+          -0.15,
+          -4
+        ],
+        [
+          -1.8,
+          1,
+          -2
+        ],
+        [
+          -1.8,
+          1.5,
+          -6
+        ],
+        [
+          3,
+          2.5,
+          -5
+        ],
+        [
+          -4,
+          0.65,
+          -1
+        ],
+        [
+          1.2,
+          0.5,
+          -1
+        ],
+        [
+          1.2,
+          1,
+          -10
+        ]
+      ]
+    },
+    "depth": {
+      "depth_True_reverse_False": {
+        "pixel": [
+          153,
+          20,
+          14,
+          255
+        ],
+        "size": [
+          922,
+          519
+        ]
+      },
+      "depth_True_reverse_True": {
+        "pixel": [
+          153,
+          20,
+          14,
+          255
+        ],
+        "size": [
+          922,
+          519
+        ]
+      },
+      "depth_False_reverse_False": {
+        "pixel": [
+          7,
+          27,
+          85,
+          255
+        ],
+        "size": [
+          922,
+          519
+        ]
+      },
+      "depth_False_reverse_True": {
+        "pixel": [
+          80,
+          11,
+          7,
+          255
+        ],
+        "size": [
+          922,
+          519
+        ]
+      }
+    },
+    "resize": [
+      {
+        "requested": [
+          850,
+          480
+        ],
+        "drawable": [
+          850,
+          480
+        ],
+        "screenshot": [
+          850,
+          480
+        ],
+        "cube_box": [
+          383,
+          198,
+          467,
+          282
+        ],
+        "cube_pixel_aspect": 1.0,
+        "centre_pixel": [
+          153,
+          146,
+          102,
+          255
+        ]
+      },
+      {
+        "requested": [
+          500,
+          500
+        ],
+        "drawable": [
+          500,
+          500
+        ],
+        "screenshot": [
+          500,
+          500
+        ],
+        "cube_box": [
+          206,
+          206,
+          294,
+          294
+        ],
+        "cube_pixel_aspect": 1.0,
+        "centre_pixel": [
+          153,
+          146,
+          102,
+          255
+        ]
+      },
+      {
+        "requested": [
+          320,
+          500
+        ],
+        "drawable": [
+          320,
+          500
+        ],
+        "screenshot": [
+          320,
+          500
+        ],
+        "cube_box": [
+          116,
+          206,
+          204,
+          294
+        ],
+        "cube_pixel_aspect": 1.0,
+        "centre_pixel": [
+          153,
+          146,
+          102,
+          255
+        ]
+      },
+      {
+        "requested": [
+          800,
+          400
+        ],
+        "drawable": [
+          800,
+          400
+        ],
+        "screenshot": [
+          800,
+          400
+        ],
+        "cube_box": [
+          365,
+          165,
+          435,
+          235
+        ],
+        "cube_pixel_aspect": 1.0,
+        "centre_pixel": [
+          153,
+          146,
+          102,
+          255
+        ]
+      }
+    ],
+    "focus_loss": [
+      {
+        "event": "WINDOWFOCUSLOST",
+        "actions": [],
+        "focused": false
+      },
+      {
+        "event": "WINDOWMOUSELEAVE",
+        "actions": [],
+        "focused": false
+      },
+      {
+        "event": "WINDOWMINIMIZED",
+        "actions": [],
+        "focused": false
+      }
+    ],
+    "controller_dispatch": {
+      "axes_after_engine_dispatch": [
+        0.0,
+        0.0
+      ],
+      "viewport_focus_after_dispatch": false,
+      "physical_controllers": 0,
+      "note": "synthetic axis through engine; default controller layer can take input focus"
+    },
+    "active_camera_cpu": {
+      "active_camera_updates": 68,
+      "active_update_mean_cpu_ms": 0.025143765121944908,
+      "active_update_worst_cpu_ms": 0.12153400166425854
+    },
+    "stall": {
+      "raw_seconds": 0.2593367049994413,
+      "delta_seconds": 0.05,
+      "discarded_seconds": 0.2093367049994413,
+      "movement_metres": 0.15000000000000036
+    },
+    "narrative": {
+      "update_frames": 33,
+      "wall_seconds": 0.7806978450025781,
+      "held_actions": [],
+      "input_enabled": false,
+      "interval_ms": 18.918499001301825
+    },
+    "steady_software": {
+      "frames": 131,
+      "fps": 42.74620735013858,
+      "interval_mean_ms": 23.1298376538549,
+      "interval_worst_ms": 54.87260299560148,
+      "update_mean_cpu_ms": 0.0016389312249259981,
+      "update_worst_cpu_ms": 0.17630599904805422,
+      "prep_mean_cpu_ms": 0.20722580927233958,
+      "prep_worst_cpu_ms": 0.5996170002617873,
+      "active_camera_updates": 0,
+      "active_update_mean_cpu_ms": 0.0,
+      "active_update_worst_cpu_ms": 0.0,
+      "discarded_seconds": 0.01873341199243439,
+      "wall_seconds": 3.009459736997087,
+      "process_cpu_seconds": 6.026816478000001,
+      "engine_drawn_frames": 1199,
+      "renderer": {
+        "resizable": true,
+        "additive": true,
+        "renderer": "gl2",
+        "models": true,
+        "max_window_size": [
+          922,
+          519
+        ],
+        "gpu_vendor": "Mesa",
+        "gpu_name": "llvmpipe (LLVM 19.1.7, 256 bits)",
+        "gpu_driver_version": "4.5 (Compatibility Profile) Mesa 25.0.7-2+deb13u1",
+        "glsl_version": 450,
+        "max_texture_size": 16384
+      },
+      "drawable": [
+        850,
+        480
+      ]
+    },
+    "five_cycles": [
+      {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          3928232,
+          13
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      },
+      {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1634472,
+          3
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      },
+      {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1863848,
+          4
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      },
+      {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1634472,
+          3
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      },
+      {
+        "active_sessions": 0,
+        "assimp_cache_entries": 0,
+        "assimp_predicted": 0,
+        "assimp_new_predicted": 0,
+        "texture_cache_size": [
+          1863848,
+          4
+        ],
+        "mesh_weakrefs_available": 0,
+        "mesh_weakrefs_alive": null,
+        "viewport_redraw_requests": 0
+      }
+    ]
+  }
+}

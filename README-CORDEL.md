@@ -3,7 +3,9 @@
 CORDEL is a cinematic, narrative-driven 3D engine project founded on the
 [Ren'Py repository](https://github.com/renpy/renpy). Phase 0 establishes an audited
 codebase, a reproducible development baseline, and an engineering direction.
-**A CORDEL 3D gameplay runtime has not been implemented.**
+Phase 1.1 adds an isolated Ren'Py-backed 3D viewport reference experiment with
+executed software-rendering evidence. A production CORDEL world runtime remains
+proposed.
 
 Our long-term focus is third-person gameplay, expressive character animation,
 interactive environments, branching dialogue, and seamless cinematic transitions.
@@ -26,6 +28,10 @@ Naughty Dog technology. This is a specialized narrative engine project.
   sets overlap. Full suites have documented failures and are not green.
 - No renderer, scripting, save-format, launcher, package-name, or license changes
   are part of Phase 0. The upstream runtime still identifies itself as Ren'Py.
+- [Viewport spike](examples/cordel_viewport/README.md): generated static glTF,
+  depth/perspective, fly camera, held input, uncaptured drag-look, resize and frame
+  diagnostics. Headless checks and lifecycle/Say probes pass; desktop devices,
+  hardware timing and GPU buffer release remain unverified.
 
 The recommended direction is a native real-time runtime hosting a carefully
 isolated narrative adapter. That is a proposal to validate, not an implemented
@@ -41,6 +47,7 @@ environment limits, and test results. Other project documents:
 - [Roadmap](docs/cordel/ROADMAP.md): independently testable milestones and Phase 1 task.
 - [Upstream policy](docs/cordel/UPSTREAM.md): provenance, remotes, licenses, and synchronization.
 - [Project metadata](cordel/project.toml): machine-readable identity and foundation commit.
+- [Phase 1.1 findings](docs/cordel/PHASE_1_1_VIEWPORT.md): implementation, measurements and runtime limits.
 
 ## Identity and attribution
 

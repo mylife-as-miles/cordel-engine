@@ -1,0 +1,220 @@
+[
+  {
+    "trial": "phase1-full1",
+    "context": "Public resize clamp and screenshot uniform-scaling assumption",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "resize_drawable_and_projection",
+        "passed": false,
+        "requested": [
+          1280,
+          720
+        ],
+        "drawable": [
+          922,
+          519
+        ],
+        "screenshot": [
+          922,
+          518
+        ],
+        "cube_box": [
+          416,
+          214,
+          506,
+          304
+        ],
+        "cube_pixel_aspect": 1.0,
+        "centre_pixel": [
+          153,
+          146,
+          102,
+          255
+        ]
+      }
+    ]
+  },
+  {
+    "trial": "phase1-full2",
+    "context": "Oversized offscreen framebuffer readback produced invalid pixels",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "resize_drawable_and_projection",
+        "passed": false,
+        "requested": [
+          1280,
+          720
+        ],
+        "drawable": [
+          1280,
+          720
+        ],
+        "screenshot": [
+          1280,
+          720
+        ],
+        "cube_box": [
+          279,
+          13,
+          1237,
+          648
+        ],
+        "cube_pixel_aspect": 1.5086614173228345,
+        "centre_pixel": [
+          153,
+          146,
+          102,
+          255
+        ]
+      }
+    ]
+  },
+  {
+    "trial": "phase1-full3",
+    "context": "LCtrl story-skip interception",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "direction_1073742048",
+        "passed": false,
+        "displacement": 0.0
+      }
+    ]
+  },
+  {
+    "trial": "phase1-full5",
+    "context": "Function restart cleared queued mouse motion",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "drag_mouse_yaw_pitch",
+        "passed": false,
+        "yaw": 0.0,
+        "pitch": 0.0,
+        "sdl_mouse_grab": false
+      }
+    ]
+  },
+  {
+    "trial": "phase1-full6",
+    "context": "Controller translation removed viewport focus",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "analog_raw_software_path",
+        "passed": false,
+        "axes": [
+          0.0,
+          0.0
+        ],
+        "physical_controllers": 0
+      }
+    ]
+  },
+  {
+    "trial": "phase1-verification",
+    "context": "Prediction-cache lifetime observation before session pin",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "asset_loaded",
+        "passed": false,
+        "meshes": 7
+      }
+    ]
+  },
+  {
+    "trial": "phase1-final",
+    "context": "Matrix.transform defaulted to two components in the initial coordinate probe",
+    "scope": "exploratory, before final corrections",
+    "reported_success": false,
+    "failed_checks": [
+      {
+        "name": "actual_imported_node_conversion",
+        "passed": false,
+        "imported_to_world_origins": [
+          [
+            4.898587410340671e-16,
+            -0.15000000596046448,
+            0.0
+          ],
+          [
+            -1.7999999523162842,
+            1.0,
+            0.0
+          ],
+          [
+            -1.7999999523162842,
+            1.5,
+            0.0
+          ],
+          [
+            3.0,
+            2.5,
+            0.0
+          ],
+          [
+            -4.0,
+            0.6499999761581421,
+            0.0
+          ],
+          [
+            1.2000000476837158,
+            0.5,
+            0.0
+          ],
+          [
+            1.2000000476837158,
+            1.0,
+            0.0
+          ]
+        ],
+        "authored_origins": [
+          [
+            0,
+            -0.15,
+            -4
+          ],
+          [
+            -1.8,
+            1,
+            -2
+          ],
+          [
+            -1.8,
+            1.5,
+            -6
+          ],
+          [
+            3,
+            2.5,
+            -5
+          ],
+          [
+            -4,
+            0.65,
+            -1
+          ],
+          [
+            1.2,
+            0.5,
+            -1
+          ],
+          [
+            1.2,
+            1,
+            -10
+          ]
+        ]
+      }
+    ]
+  }
+]

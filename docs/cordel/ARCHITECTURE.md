@@ -1,7 +1,8 @@
 # CORDEL architecture proposal
 
-Status: Phase 0 proposal, based on [the source audit](ARCHITECTURE_AUDIT.md).
-No proposed subsystem or interface below is implemented by this bootstrap commit.
+Status: proposal based on [the source audit](ARCHITECTURE_AUDIT.md), now informed by
+the isolated [Phase 1.1 reference viewport](PHASE_1_1_VIEWPORT.md).
+The proposed production subsystems/interfaces below remain unimplemented.
 CORDEL's focus is cinematic third-person narrative games; budgets and integration
 cost must drive scope before feature breadth.
 
@@ -26,6 +27,15 @@ a small native host spike, including dialogue wait/resume, window/input ownershi
 frame stalls, exception/restart handling and packaging. If adaptation cost exceeds
 available resources, retain Ren'Py as primary for a bounded prototype and document
 its limits. Do not silently weaken the long-term 3D requirements.
+
+Phase 1.1 demonstrates continuous static 3D rendering, real perspective/depth,
+time-based camera movement and an ordinary Say wait using existing Ren'Py facilities.
+It also observes cached draws outnumbering simulation updates, prediction-owned
+asset eviction, coupled hover/controller input ownership and virtual-aspect resize/
+screenshot assumptions. The isolated adapter pins its own importer data and
+uses drawable aspect. These are comparison evidence, not a production API.
+Proceed to Phase 1.2's native host comparison; defer the final ownership decision
+to Phase 1.4. Desktop/device and GPU-lifetime evidence remain open.
 
 ## Proposed boundaries
 
@@ -135,6 +145,16 @@ in the reference spike. Use glTF 2.0 as an initial interchange candidate, with
 offline validation and dependency hashes. Cooked schema versions must be independent
 of CORDEL's product version. Keep optional features and content complexity budgets
 visible to creators instead of accepting assets the runtime cannot support.
+
+The reference spike provisionally uses glTF's right-handed +Y-up world, -Z camera
+forward, metres, row-major matrices acting on column vectors (`P * V * M * p`).
+Yaw zero looks -Z; positive yaw turns toward +X (about -Y), positive pitch looks
+up. Its `ASSIMP_TO_WORLD` boundary cancels Ren'Py's imported Y reflection at zoom
+1; FlipUVs/FlipWindingOrder remain importer operations. glTF quaternion order is
+(x,y,z,w), but this translation-only fixture does not test quaternion imports.
+The exact boundary and tests are in the [example README](../../examples/cordel_viewport/README.md).
+Keep this as an explicit reference convention when comparing the native spike;
+do not silently promote it to a permanent serialized engine ABI.
 
 ## Technology comparisons (no selections committed)
 

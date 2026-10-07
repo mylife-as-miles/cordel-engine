@@ -1,0 +1,33 @@
+{
+  "captured_utc": "2026-10-07T15:59:59Z",
+  "code_commit": "816abef1bb8ba0c49a12873c0b6bd1982056dd2b",
+  "foundation_commit": "3334167d44069604396eb1523a0374d475fa2117",
+  "native_sdk": "8.6.0.26100601+nightly.dirty",
+  "sdk_archive_sha256": "75c926cfe3c7f9b6e6ff56adcc7adc79d207f035c019f5724e752bdc347a8583",
+  "executed_commands": [
+    "bash examples/cordel_viewport/tools/run_offscreen.sh tmp/phase1-accepted",
+    "bash examples/cordel_viewport/tools/check_baseline.sh tmp/phase1-accepted"
+  ],
+  "source_sha256": {
+    "examples/cordel_viewport/game/assets/cordel_scene.gltf": "f2b2e9abf4d4715378a9b0b88ba62718aa62c08907ad0ac452b303ac83f07925",
+    "examples/cordel_viewport/game/python-packages/cordel_spike/__init__.py": "d49f77ae3d51a25039c6cfe613d3039f06b68ece298f61220f1b8e79c2508800",
+    "examples/cordel_viewport/game/python-packages/cordel_spike/input_state.py": "c2ca57be0ce95798ecda9481a0d410c2256aa37498338d9b2d8601019579e327",
+    "examples/cordel_viewport/game/python-packages/cordel_spike/math3d.py": "2ddff2fb93cc44234014110feea8f51c8ac2bca562067b80e78312bf5e3103ef",
+    "examples/cordel_viewport/game/python-packages/cordel_spike/runtime.py": "d1399673d6898c76e7b81d03c6fb89f0cf7996c1a2d62b81151a347acc8bb3ce",
+    "examples/cordel_viewport/game/python-packages/cordel_spike/selftest.py": "00520d3396569879cac588bb90e6d2b7f39fa034e94e1285ccc2cdef581c82e8",
+    "examples/cordel_viewport/game/python-packages/cordel_spike/timing.py": "51ae2b4e2797e1ab5fc4bf8982592c8d4f1fad2869e502aadbd5c85d0f814b0a",
+    "examples/cordel_viewport/game/script.rpy": "80270a8323eb8792e793df426b4083c1fe21f410321dbe55239dcedf65139dab",
+    "examples/cordel_viewport/game/selftest.rpy": "b2bbf156b87e01b18fcbf15aa32389e0041626c460afab9af6e32715577a3ec8",
+    "examples/cordel_viewport/game/testcases.rpy": "44b772c9a994409ab6c08449cd55a4eb5e9a430b36ca613d8771a8e537ad753f",
+    "examples/cordel_viewport/tests/test_logic.py": "40634b78519bcf68a143c1ffa5fbe7ad43b8bfd4e96bad6f2b5c3ad982c48a52",
+    "examples/cordel_viewport/tools/check_baseline.sh": "8d2b0690440452d1c171ab317a1e8ee8dcdc31445f51516e212874388cc60410",
+    "examples/cordel_viewport/tools/generate_scene.py": "b354bcd5b0738e94f0fa872c23624cab88777f89d72b5c901b5d16b10b9c1532",
+    "examples/cordel_viewport/tools/run_offscreen.sh": "734937917ed15e7d519252a59ae89785facca8e362ebebd27304d87300ecb89c"
+  },
+  "limits": [
+    "Synthetic input, no physical device",
+    "Offscreen llvmpipe, no hardware presentation or GPU timing",
+    "Resize within initial offscreen drawable only",
+    "GPU buffer deletion unproven"
+  ]
+}

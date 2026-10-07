@@ -33,9 +33,16 @@ Keep the known history-click failure separate from CORDEL identity changes.
    facilities with minimal opaque materials. Establish coordinate conversion,
    held-key actions, analog input experiment, relative mouse policy and focus-loss
    clearing. Do not modify existing samples or imply a production backend choice.
-   Exit: launch on the pinned baseline; camera moves/rotates, depth ordering and
-   resize are correct; repeated enter/exit frees resources; CPU/frame-time logs
-   separate simulation and render work. Exercise a forced idle/stall case.
+   Software reference gate **passed 2026-10-07**; see
+   [executed Phase 1.1 findings](PHASE_1_1_VIEWPORT.md). Static glTF, perspective,
+   actual depth controls, held movement/drag-look/focus clearing, four drawable
+   aspects, forced stall, real Say idle and five enter/exit cycles pass on the
+   pinned offscreen baseline. CPU fragments/intervals and cache ownership are
+   measured. One import/session is retained across prediction eviction.
+   **Open:** desktop input/cursor testing, physical controller ownership, hardware
+   timing, window growth beyond the initial offscreen drawable, high-DPI behavior
+   and actual GPU buffer destruction/residency. Mouse is explicitly uncaptured;
+   raw-axis adapter verification does not certify end-to-end controller support.
 2. **1.2 Native host comparison spike.** Build a small isolated desktop host using
    one explicitly experimental backend. Show the same scene/camera, fixed update
    plus render interpolation, resize/shutdown, and diagnostics. Exit: repeatable
@@ -50,12 +57,14 @@ Keep the known history-click failure separate from CORDEL identity changes.
    and performance test targets. Exit: reviewed decision with alternatives and
    known gaps, and one automated smoke path on the selected development target.
 
-**Exact next task:** implement **1.1**, the isolated Ren'Py-backed static glTF
-viewport and controllable camera, plus a frame-scheduling trace. This tests the
-existing capability before committing to a replacement renderer. Test camera
-state/coordinate math, held-input clearing, depth and resize; capture frame behavior
-while narrative is idle. Use the verified offscreen baseline for automation and
-a desktop run for mouse capture/hardware evidence. No PBR/physics/editor in this task.
+**Exact next task:** **1.2 — Native Host Comparison Spike**. Create one isolated
+native desktop host with an explicitly experimental backend, load the same CC0
+scene and camera convention, and compare fixed update plus interpolation against
+the Ren'Py redraw-driven reference. Repeat focus/input, resize, forced stall and
+five enter/exit probes with comparable CPU diagnostics, documented dependencies/
+licenses and a reproducible build. Add desktop/hardware evidence when available.
+No production API decision, physics, ECS or editor yet. Keep Phase 1.1's open
+device/GPU checks visible; Phase 1.2 has not started.
 
 ## Phase 2 — Third-person character controller
 
