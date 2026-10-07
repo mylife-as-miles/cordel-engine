@@ -22,8 +22,7 @@
 [rpytest] Test suites:     1 |     1 passed |     0 xfailed |     0 failed |     0 xpassed |     0 skipped |     0 not run
 [rpytest] Test cases :     3 |     2 passed |     0 xfailed |     0 failed |     0 xpassed |     1 skipped |     0 not run
 [rpytest] Test hooks :     3 |     3 passed |     0 xfailed |     0 failed |     0 xpassed |     0 skipped |     0 not run
-[rpytest] Assertions :     2 |     2 passed |     0 xfailed |     0 failed |     0 xpassed | 
+[rpytest] Assertions :     2 |     2 passed |     0 xfailed |     0 failed |     0 xpassed |
 
 [rpytest] Time: 4.131 s
-[rpytest] Status: PASSED 
-
+[rpytest] Status: PASSED

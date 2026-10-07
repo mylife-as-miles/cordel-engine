@@ -2,6 +2,8 @@
 
 Captured 2026-10-07 UTC from the actual checkout using the pinned nightly-native
 workflow. See [the report](../../PHASE_1_1_VIEWPORT.md) for interpretation and limits.
+Archived console transcripts normalize trailing whitespace and final blank lines;
+test messages, counts and outcomes are unchanged. Original files remain in `tmp`.
 
 - `manifest.json`: source revision/hashes, baseline identity and executed commands.
 - `report.json`: final successful software experiments, 83 passing check records.
