@@ -1,5 +1,6 @@
 // Copyright (c) 2026 CORDEL contributors. MIT.
 #include "cordel/narrative_session.hpp"
+#include "cordel/motor_debug.hpp"
 #include <chrono>
 #include <functional>
 #include <iostream>
@@ -31,8 +32,9 @@ public:
     double dropped{},worst{};
     FrameSample last;
     Probe(Platform& p,Renderer& r,Trace& t,Gate& g,const std::filesystem::path& python,
-          const std::filesystem::path& output,const std::filesystem::path& bootstrap=CORDEL_NARRATIVE_BOOTSTRAP):
+          const std::filesystem::path& output,const std::filesystem::path& bootstrap=CORDEL_NARRATIVE_BOOTSTRAP,bool motor=false):
         platform_(p),renderer_(r),trace_(t),gate_(g),client(python,bootstrap,CORDEL_NARRATIVE_SCHEMA,output),session(client,t) {
+        if(motor) runner.enable_motor({0,4,4});
         runner.boundary=&session;
         platform_.input.clear();platform_.input.focused=true;
     }
@@ -61,12 +63,21 @@ public:
     void hold(std::string type,double duration=.4,bool paused=false) {
         pending(type);auto initial_frames=frames,initial_ticks=ticks;
         auto initial_dropped=dropped;auto initial_physics_ticks=runner.physics.ticks();Vec3 before=runner.simulation.current.position;
+        auto motor_ticks=runner.motor?runner.motor->state().ticks:0;
+        auto motor_before=runner.motor?runner.motor->state().position:physics::Vec3{};
         double start=monotonic_seconds(),local_worst=0;
         while(monotonic_seconds()-start<duration) {step();local_worst=std::max(local_worst,last.step.raw);}
         Json record=Json::Object{{"session_id",session.id},{"wait_type",type},{"wall_seconds",monotonic_seconds()-start},
             {"physics_ticks",std::size_t(runner.physics.ticks()-initial_physics_ticks)},{"simulation_ticks",ticks-initial_ticks},{"render_frames",frames-initial_frames},{"dropped_seconds",dropped-initial_dropped},
             {"worst_render_interval_ms",local_worst*1000},{"camera_distance",length(runner.simulation.current.position-before)},
             {"explicit_pause",paused},{"wait_still_pending",session.pending_type()==type}};
+        if(runner.motor) {auto fields=record.object();auto state=runner.motor->state();
+            fields["motor_ticks"]=std::size_t(state.ticks-motor_ticks);fields["motor_start"]=json_vector(native_vector(motor_before));fields["motor_end"]=json_vector(native_vector(state.position));
+            fields["motor_displacement"]=json_vector(native_vector(state.position-motor_before));
+            fields["motor_cpu_ms_last_frame"]=last.motor_ms;record=fields;
+            gate_.check(state.ticks-motor_ticks==ticks-initial_ticks,"motor follows world ticks during "+type,record);
+            if(!paused) gate_.check(state.position.y<motor_before.y,"gravity continues during "+type,record);
+        }
         gate_.continuity.push_back(record);session.log("continuity_sample",{{"sample",record}});
         gate_.check(frames-initial_frames>=10,"render continues during "+type,record);
         gate_.check(paused?ticks==initial_ticks:ticks-initial_ticks>=12,"simulation policy during "+type,record);
@@ -205,6 +216,25 @@ void normal_tests(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::fil
     probe.session.acknowledge();probe.until([&]{return probe.session.status=="completed";},"pause story completes");probe.collect_latency();
     probe.shutdown();
 }
+void motor_wait_tests(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::filesystem::path& python,const std::filesystem::path& out) {
+    Probe probe(p,r,trace,gate,python,out/"motor",CORDEL_NARRATIVE_BOOTSTRAP,true);probe.handshake();
+    probe.session.start("motor-continue");probe.pending("dialogue");
+    auto hold=[&](std::string type,bool paused=false) {
+        probe.runner.motor->reset({0,4,4});p.input.clear();p.input.focused=true;probe.key(SDL_SCANCODE_W);
+        auto before=probe.runner.motor->state().position;probe.hold(type,.4,paused);
+        auto after=probe.runner.motor->state().position;
+        gate.check(paused?physics::length(after-before)<1e-9:after.z<before.z-.7,"motor input policy during "+type);
+        gate.check(probe.last.step.dropped==0,"normal motor wait has no catch-up drop");p.input.clear();
+    };
+    hold("dialogue");probe.session.acknowledge();probe.pending("wait_for_event");
+    gate.check(probe.session.world.beacon_enabled,"world beacon command applied with motor active");
+    hold("wait_for_event");probe.session.event();probe.pending("dialogue");probe.session.acknowledge();probe.pending("choice");
+    hold("choice");probe.finish_story("continue");probe.collect_latency();
+    probe.session.start("motor-pause","pause");probe.pending("dialogue");gate.check(probe.session.world.paused,"explicit pause acknowledged");
+    hold("dialogue",true);probe.session.acknowledge();probe.pending("dialogue");
+    gate.check(!probe.session.world.paused,"explicit resume acknowledged");hold("dialogue");
+    gate.check(probe.last.step.dropped==0,"motor resume no catch-up debt");probe.session.acknowledge();probe.until([&]{return probe.session.status=="completed";},"motor pause fixture completes");probe.shutdown();
+}
 void death_test(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::filesystem::path& python,const std::filesystem::path& out) {
     Probe probe(p,r,trace,gate,python,out/"worker-death");probe.handshake();probe.session.start("worker-death");probe.pending("dialogue");
     double killed=monotonic_seconds();probe.client.terminate_for_test();probe.until([&]{return probe.session.status=="failed";},"detect worker death");
@@ -248,24 +278,27 @@ void malformed_tests(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::
 }
 }
 void run_narrative(Platform& p,Renderer& r,Counters& counters,Trace& trace,const std::filesystem::path& scene,
-                   const std::filesystem::path& output,const std::filesystem::path& python,bool self_test,double seconds) {
-    r.load(scene);SDL_GL_SetSwapInterval(0);Gate gate;
+                   const std::filesystem::path& output,const std::filesystem::path& python,bool self_test,double seconds,bool motor) {
+    if(motor) {auto data=load_scene(scene);auto debug=motor_debug_scene();for(auto& mesh:debug.meshes)data.meshes.push_back(std::move(mesh));r.load(std::move(data));}
+    else r.load(scene);
+    SDL_GL_SetSwapInterval(0);Gate gate;
     trace.event("native_started",{{"milestone","Phase 1.3 Narrative Ownership"},{"worker_transport","nonblocking anonymous pipes; dedicated I/O thread"},
         {"fixed_hz",60},{"native_authoritative",true},{"gpu_timing","unavailable"}});
     try {
-        if(self_test) {
+        if(self_test&&motor) {motor_wait_tests(p,r,trace,gate,python,output);}
+        else if(self_test) {
             gate.check(r.scene().meshes.size()==7&&r.scene().triangles()==84,"unchanged seven-mesh/84-triangle fixture");
             normal_tests(p,r,trace,gate,python,output);death_test(p,r,trace,gate,python,output);
             shutdown_wait_tests(p,r,trace,gate,python,output);stress_test(p,r,trace,gate,python,output);
             malformed_tests(p,r,trace,gate,python,output);
         } else {
-            Probe probe(p,r,trace,gate,python,output/"interactive");probe.handshake();r.set_visible("tall_gold",false);
+            Probe probe(p,r,trace,gate,python,output/"interactive",CORDEL_NARRATIVE_BOOTSTRAP,motor);probe.handshake();r.set_visible("tall_gold",false);
             probe.session.console=true;probe.session.start("interactive-story");double start=monotonic_seconds();
             while(!p.input.quit&&(seconds<=0||monotonic_seconds()-start<seconds)) {
                 probe.step();
                 if(probe.session.pending_type()=="wait_for_event") {
                     // Native world condition: camera within 2 m of the authored beacon.
-                    if(length(probe.runner.simulation.current.position-Vec3{3,2.5,-5})<2) probe.session.event();
+                    if(length((probe.runner.motor?native_vector(probe.runner.motor->state().position):probe.runner.simulation.current.position)-Vec3{3,2.5,-5})<2) probe.session.event();
                 }
                 p.title("CORDEL Phase 1.3 | "+std::string(mode_name(probe.session.input_mode))+" | Enter / 1 / 2 | WASD remains gameplay-owned");
             }

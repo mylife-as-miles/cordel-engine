@@ -104,3 +104,5 @@ string(TOLOWER ${CORDEL_PHYSICS_BACKEND} cordel_selected_physics)
 target_link_libraries(cordel-native-host PRIVATE cordel_physics_${cordel_selected_physics})
 
 add_subdirectory(../runtime/character character)
+target_link_libraries(cordel-native-host PRIVATE cordel_character)
+target_sources(cordel-native-host PRIVATE src/character/debug.cpp src/character/experiment.cpp)

@@ -32,6 +32,7 @@ Json::Object frame_record(const FrameSample& s,const Platform& platform,const Ca
     return {{"frame_id",s.id},{"raw_dt",s.step.raw},{"render_interval",s.step.raw},
         {"fixed_ticks",s.step.ticks},{"simulated_dt",s.step.simulated},{"dropped_dt",s.step.dropped},
         {"interpolation_alpha",s.step.alpha},{"event_cpu_ms",s.events_ms},
+        {"motor_cpu_ms",s.motor_ms},{"motor_ticks",std::size_t(s.motor_ticks)},{"motor_position",json_vector(s.motor_position)},{"motor_grounded",s.motor_grounded},
         {"physics_cpu_ms",s.physics_ms},{"physics_total_fixed_ticks",std::size_t(s.physics_ticks)},
         {"physics_live",Json::Array{s.physics_live.worlds,s.physics_live.shapes,s.physics_live.bodies}},
         {"physics_ground_distance",s.ground_distance},{"physics_overlaps",s.physics_overlaps},

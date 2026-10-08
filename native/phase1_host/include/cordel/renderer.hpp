@@ -65,6 +65,8 @@ class Renderer {
 public:
     explicit Renderer(Counters& counters);
     void load(const std::filesystem::path& path);
+    void load(SceneData data);
+    bool set_transform(const std::string&,const Mat4&,std::array<float,4>);
     void unload();
     bool set_visible(const std::string& target,bool visible);
     const SceneData& scene() const;

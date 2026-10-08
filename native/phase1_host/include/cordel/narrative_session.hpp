@@ -55,5 +55,5 @@ public:
     void log(std::string event,Json::Object fields={});
 };
 void run_narrative(Platform&,Renderer&,Counters&,Trace&,const std::filesystem::path& scene,
-    const std::filesystem::path& output,const std::filesystem::path& python,bool self_test,double seconds);
+    const std::filesystem::path& output,const std::filesystem::path& python,bool self_test,double seconds,bool motor=false);
 }

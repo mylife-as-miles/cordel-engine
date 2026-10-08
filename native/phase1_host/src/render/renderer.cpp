@@ -124,6 +124,16 @@ void Renderer::load(const std::filesystem::path& path) {
     if(scene_) throw std::logic_error("Scene already loaded");
     scene_=std::make_unique<GpuScene>(gl_,counters_,load_scene(path));
 }
+void Renderer::load(SceneData data) {
+    if(scene_) throw std::logic_error("Scene already loaded");
+    scene_=std::make_unique<GpuScene>(gl_,counters_,std::move(data));
+}
+bool Renderer::set_transform(const std::string& name,const Mat4& model,std::array<float,4> color) {
+    if(!scene_) return false;
+    for(std::size_t i=0;i<scene_->source.meshes.size();++i) if(scene_->source.meshes[i].name==name) {
+        scene_->meshes[i].model=model;scene_->meshes[i].color=color;return true;
+    }return false;
+}
 void Renderer::unload() {
     gl_.BindVertexArray(0);gl_.UseProgram(0);gl_.BindBuffer(GL_ARRAY_BUFFER,0);
     scene_.reset();gl_.check("scene unload");

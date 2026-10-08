@@ -2,6 +2,8 @@
 #pragma once
 #include "cordel/diagnostics.hpp"
 #include "cordel/physics_runtime.hpp"
+#include "cordel/character/motor.hpp"
+#include "cordel/character/demo_fixture.hpp"
 
 namespace cordel {
 class FrameBoundary {
@@ -20,7 +22,12 @@ class FrameRunner {
     std::size_t frames_{};
 public:
     PhysicsRuntime physics; // CPU world lifetime; independent of GL scene lifetime.
+    std::unique_ptr<character::CharacterMotor> motor; // destroyed before the world
     Simulation simulation;
+    void enable_motor(physics::Vec3 position={0,.903,4}) {
+        if(motor) throw std::logic_error("Motor mode already enabled");
+        physics.disable_camera_probe();character::load_motor_fixture_extensions(physics.world());motor=std::make_unique<character::CharacterMotor>(physics.world(),position);
+    }
     bool last_forced_stall{};
     double last_movement{};
     FrameBoundary* boundary{}; // Optional, non-owning; ordinary Phase 1.2 uses null.

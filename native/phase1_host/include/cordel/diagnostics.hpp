@@ -24,6 +24,7 @@ struct FrameSample {
     double events_ms{},simulation_ms{},camera_ms{},prep_ms{},submit_ms{},completion_ms{},present_ms{};
     double physics_ms{};std::uint64_t physics_ticks{};physics::LiveCounts physics_live;
     double ground_distance{-1};std::size_t physics_overlaps{};
+    double motor_ms{};std::uint64_t motor_ticks{};Vec3 motor_position{};bool motor_grounded{};
 };
 Json::Object frame_record(const FrameSample&,const Platform&,const Camera&,const Counters&);
 struct Statistics {

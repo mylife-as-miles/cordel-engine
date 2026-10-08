@@ -1,5 +1,6 @@
 // Copyright (c) 2026 CORDEL contributors. MIT.
 #include "cordel/runtime.hpp"
+#include "cordel/motor_debug.hpp"
 #include <chrono>
 #include <thread>
 
@@ -18,15 +19,26 @@ FrameSample FrameRunner::next(Platform& platform,Renderer& renderer) {
     if(paused) clock_.reset();
     auto step=clock_.advance(paused?0:raw);
     if(paused) step.raw=raw;
-    double camera_ms=0,physics_ms=0;
+    double camera_ms=0,physics_ms=0,motor_ms=0;
     unsigned scheduled=step.ticks;step.ticks=0;
     for(unsigned tick=0;tick<scheduled;++tick) {
         if(boundary&&boundary->paused()) break;
         double physics_start=monotonic_seconds();
         auto position=simulation.current.position;
-        physics.fixed_tick({position.x,position.y,position.z});
+        if(motor) {
+            auto input=motor_input(platform.input);
+            motor->simulate(physics.world(),input,FixedClock::dt);
+            motor_ms+=motor->diagnostics().cpu_ms;
+            physics_start=monotonic_seconds();
+            physics.motor_tick(motor->state().position);
+        } else physics.fixed_tick({position.x,position.y,position.z});
         physics_ms+=(monotonic_seconds()-physics_start)*1000;
-        double tick_start=monotonic_seconds();simulation.tick(platform.input);
+        double tick_start=monotonic_seconds();
+        if(motor) {
+            // Static inspection camera: look only; WASD belongs to the motor.
+            Input look=platform.input;look.actions.clear();look.axes={};simulation.tick(look);
+            platform.input.mouse_x=platform.input.mouse_y=0;
+        } else simulation.tick(platform.input);
         ++step.ticks;
         camera_ms+=(monotonic_seconds()-tick_start)*1000;
         if(boundary) boundary->fixed_tick(renderer,simulation);
@@ -37,6 +49,7 @@ FrameSample FrameRunner::next(Platform& platform,Renderer& renderer) {
     last_movement=length(simulation.current.position-before);
     double prep_start=monotonic_seconds();
     Camera render_camera=simulation.render_camera(step.alpha);
+    if(motor) update_motor_debug(renderer,*motor,step.alpha);
     auto size=platform.drawable_size();
     double extraction_ms=(monotonic_seconds()-prep_start)*1000;
     auto render=renderer.render(render_camera,size[0],size[1]);
@@ -45,6 +58,7 @@ FrameSample FrameRunner::next(Platform& platform,Renderer& renderer) {
     double present_start=monotonic_seconds();platform.present();
     return {++frames_,step,event_ms,sim_ms,camera_ms,render.prep_ms+extraction_ms,
             render.submit_ms,completion_ms,(monotonic_seconds()-present_start)*1000,
-            physics_ms,physics.ticks(),physics.live(),physics.ground?physics.ground->distance:-1.,physics.overlaps};
+            physics_ms,physics.ticks(),physics.live(),physics.ground?physics.ground->distance:-1.,physics.overlaps,motor_ms,
+            motor?motor->state().ticks:0,motor?native_vector(motor->state().position):Vec3{},motor&&motor->state().grounded};
 }
 }
