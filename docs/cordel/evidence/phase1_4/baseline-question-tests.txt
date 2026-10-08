@@ -1,0 +1,28 @@
+
+[rpytest] Starting test run
+[rpytest] Platform:      Linux-6.18.44-x86_64-with-glibc2.41
+[rpytest] Python:        3.12.8
+[rpytest] Ren'Py:        Ren'Py 8.6.0.26100816+unofficial.cordel/phase1-runtime-adr
+[rpytest] Game Version:  7.0
+
+[rpytest] [exc] + global
+[rpytest] [exc]   - bad_end
+[rpytest] [exc]   - bad_end (0.780 s)
+[rpytest] [exc]   - good_end
+[rpytest] [exc]   - good_end (3.090 s)
+
+[rpytest] Test outcomes (Detailed)
+[rpytest] PASSED  global               - (4.491 s)
+[rpytest]   PASSED  bad_end              - (0.780 s)
+[rpytest]   PASSED  good_end             - (3.090 s)
+
+====================
+
+[rpytest] Test outcomes (Summary)
+[rpytest] Test suites:     1 |     1 passed |     0 xfailed |     0 failed |     0 xpassed |     0 skipped |     0 not run
+[rpytest] Test cases :     3 |     2 passed |     0 xfailed |     0 failed |     0 xpassed |     1 skipped |     0 not run
+[rpytest] Test hooks :     3 |     3 passed |     0 xfailed |     0 failed |     0 xpassed |     0 skipped |     0 not run
+[rpytest] Assertions :     2 |     2 passed |     0 xfailed |     0 failed |     0 xpassed |
+
+[rpytest] Time: 4.492 s
+[rpytest] Status: PASSED

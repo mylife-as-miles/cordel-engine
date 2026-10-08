@@ -1,0 +1,16 @@
+{
+  "existing_directory_unchanged": true,
+  "files_checked": 54,
+  "checks": [
+    {
+      "command": "bash scripts/cordel_phase1_smoke.sh tmp/phase1_4-smoke",
+      "exit_code": 2,
+      "diagnostic": "Use a new or empty output directory: tmp/phase1_4-smoke"
+    },
+    {
+      "command": "bash scripts/cordel_phase1_smoke.sh a b",
+      "exit_code": 2,
+      "diagnostic": "Usage: bash scripts/cordel_phase1_smoke.sh [new-output-dir]"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+[
+  {
+    "event": "context_unwound",
+    "timestamp": 894.602497774,
+    "session_id": "story-continue",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 894.833531403,
+    "session_id": "choice-stay-0",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 895.05870128,
+    "session_id": "choice-stay-1",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 895.284236844,
+    "session_id": "choice-stay-2",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 895.510179193,
+    "session_id": "choice-stay-3",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 895.727794044,
+    "session_id": "duplicate-command",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 895.79941717,
+    "session_id": "cancel-dialogue",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 895.953770705,
+    "session_id": "cancel-wait_for_event",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 896.179115562,
+    "session_id": "cancel-choice",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 896.477345331,
+    "session_id": "checkpoint",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 896.61238575,
+    "session_id": "checkpoint",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 896.693397332,
+    "session_id": "failure-exception",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 897.094936299,
+    "session_id": "failure-invalid_target",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 898.392390499,
+    "session_id": "explicit-pause",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "normal"
+  },
+  {
+    "event": "context_unwound",
+    "timestamp": 899.769728286,
+    "session_id": "shutdown-wait",
+    "context_depth": 1,
+    "dynamic_roots_remaining": 0,
+    "worker_run": "shutdown-wait"
+  }
+]

@@ -1,0 +1,14 @@
+Ren'Py 8.6.0.26100816+unofficial.cordel/phase1-runtime-adr lint report, generated at: Thu Oct  8 16:51:43 2026
+It is advised to set config.check_conflicting_properties to True.
+
+
+Statistics:
+
+The game contains 1 dialogue blocks, containing 16 words and 93 characters,
+for an average of 16.0 words and 93 characters per block.
+
+The game contains 0 menus, 0 images, and 4 screens.
+
+
+Lint is not a substitute for thorough testing. Remember to update Ren'Py
+before releasing. New releases fix bugs and improve compatibility.

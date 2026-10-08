@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "success": true,
+  "evidence_class": "Linux SDL offscreen / Mesa software; no hardware certification",
+  "revision": "361b41079f0d1bbc4bb0fc3225a5017244f8787c",
+  "smoke_script_sha256": "bae83ea5579beeb85b460490fea79a47aa006371435eaae518b33c6fa0987c38",
+  "narrative_checks": 186,
+  "native_checks": 112,
+  "ordinary_renpy_reference_branches": 2,
+  "scene_cycles": 5,
+  "final_live_resources": {
+    "ebos": 0,
+    "programs": 0,
+    "scenes": 0,
+    "shader_stages": 0,
+    "textures": 0,
+    "vaos": 0,
+    "vbos": 0
+  },
+  "full_milestone_regressions": "Run separately; see Phase 1 conclusion"
+}

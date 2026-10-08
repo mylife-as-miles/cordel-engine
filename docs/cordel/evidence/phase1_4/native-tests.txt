@@ -1,0 +1,57 @@
+Internal ctest changing into directory: /workspace/cordel-engine/build/phase1-host
+UpdateCTestConfiguration  from :/workspace/cordel-engine/build/phase1-host/DartConfiguration.tcl
+Parse Config file:/workspace/cordel-engine/build/phase1-host/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/cordel-engine/build/phase1-host/DartConfiguration.tcl
+Parse Config file:/workspace/cordel-engine/build/phase1-host/DartConfiguration.tcl
+Test project /workspace/cordel-engine/build/phase1-host
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: native_logic
+
+1: Test command: /workspace/cordel-engine/build/phase1-host/cordel-native-tests
+1: Working Directory: /workspace/cordel-engine/build/phase1-host
+1: Test timeout computed to be: 1500
+1: Native math/input/fixed timing/ownership/shared golden checks: 304 passed
+1/4 Test #1: native_logic .....................   Passed    0.00 sec
+test 2
+    Start 2: shared_python_goldens
+
+2: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "/workspace/cordel-engine/native/phase1_host/tools/goldens.py" "--check"
+2: Working Directory: /workspace/cordel-engine/build/phase1-host
+2: Test timeout computed to be: 1500
+2: Phase 1.1 Python/shared JSON/native header agreement: 6 camera, 9 movement, 7 node vectors
+2/4 Test #2: shared_python_goldens ............   Passed    0.05 sec
+test 3
+    Start 3: narrative_protocol
+
+3: Test command: /workspace/cordel-engine/build/phase1-host/cordel-protocol-tests
+3: Working Directory: /workspace/cordel-engine/build/phase1-host
+3: Test timeout computed to be: 1500
+3: 23 native protocol/JSON assertions passed
+3/4 Test #3: narrative_protocol ...............   Passed    0.00 sec
+test 4
+    Start 4: narrative_python_protocol
+
+4: Test command: /opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3.12 "-m" "unittest" "discover" "-s" "/workspace/cordel-engine/native/phase1_host/../../narrative/phase1_adapter/tests" "-p" "test_protocol.py" "-v"
+4: Working Directory: /workspace/cordel-engine/build/phase1-host
+4: Test timeout computed to be: 1500
+4: test_correlation (test_protocol.ProtocolTests.test_correlation) ... ok
+4: test_envelope (test_protocol.ProtocolTests.test_envelope) ... ok
+4: test_json_and_framing (test_protocol.ProtocolTests.test_json_and_framing) ... ok
+4: test_payload (test_protocol.ProtocolTests.test_payload) ... ok
+4: test_round_trip (test_protocol.ProtocolTests.test_round_trip) ... ok
+4:
+4: ----------------------------------------------------------------------
+4: Ran 5 tests in 0.001s
+4:
+4: OK
+4/4 Test #4: narrative_python_protocol ........   Passed    0.07 sec
+
+100% tests passed, 0 tests failed out of 4
+
+Total Test time (real) =   0.13 sec

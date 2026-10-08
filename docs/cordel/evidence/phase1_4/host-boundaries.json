@@ -1,0 +1,194 @@
+[
+  {
+    "run": "narrative",
+    "record": {
+      "asset": "/workspace/cordel-engine/native/phase1_host/../../examples/cordel_viewport/game/assets/cordel_scene.gltf",
+      "backend": "SDL3 + OpenGL core",
+      "context_startup_seconds": 0.10611286400001063,
+      "coordinates": "RH +Y up -Z forward metre/unit; no Assimp reflection",
+      "core_profile": 1,
+      "depth_bits": 24,
+      "drawable_size": [
+        850,
+        480
+      ],
+      "driver": "offscreen",
+      "event": "host_initialized",
+      "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+      "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+      "gpu_timing": "unavailable",
+      "identity": "CORDEL ENGINE 0.1.0-dev",
+      "milestone": "Phase 1.2 Native Host",
+      "sdl_version": 3004008,
+      "timestamp_seconds": 0.10611315500000273,
+      "window_size": [
+        850,
+        480
+      ]
+    }
+  },
+  {
+    "run": "narrative",
+    "record": {
+      "driver_memory_release": "not measured",
+      "event": "host_shutdown",
+      "live_resources": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "timestamp_seconds": 8.872897607000027,
+      "window_context_destroyed": true
+    }
+  },
+  {
+    "run": "native",
+    "record": {
+      "asset": "/workspace/cordel-engine/native/phase1_host/../../examples/cordel_viewport/game/assets/cordel_scene.gltf",
+      "backend": "SDL3 + OpenGL core",
+      "context_startup_seconds": 0.0312783119999267,
+      "coordinates": "RH +Y up -Z forward metre/unit; no Assimp reflection",
+      "core_profile": 1,
+      "depth_bits": 24,
+      "drawable_size": [
+        850,
+        480
+      ],
+      "driver": "offscreen",
+      "event": "host_initialized",
+      "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+      "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+      "gpu_timing": "unavailable",
+      "identity": "CORDEL ENGINE 0.1.0-dev",
+      "milestone": "Phase 1.2 Native Host",
+      "sdl_version": 3004008,
+      "timestamp_seconds": 0.03128100599997197,
+      "window_size": [
+        850,
+        480
+      ]
+    }
+  },
+  {
+    "run": "native",
+    "record": {
+      "event": "self_test_passed",
+      "graphics_runtime_checks": 112,
+      "logic_checks": 304,
+      "scene_cycles": 5,
+      "timestamp_seconds": 1.2310787000000118
+    }
+  },
+  {
+    "run": "native",
+    "record": {
+      "after_full_host_destruction": true,
+      "event": "context_recreated",
+      "resources": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "timestamp_seconds": 1.2664327100000037
+    }
+  },
+  {
+    "run": "native",
+    "record": {
+      "driver_memory_release": "not measured",
+      "event": "host_shutdown",
+      "live_resources": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "timestamp_seconds": 1.2869461770000044,
+      "window_context_destroyed": true
+    }
+  },
+  {
+    "run": "smoke_native",
+    "record": {
+      "asset": "/workspace/cordel-engine/native/phase1_host/../../examples/cordel_viewport/game/assets/cordel_scene.gltf",
+      "backend": "SDL3 + OpenGL core",
+      "context_startup_seconds": 0.0299557979999463,
+      "coordinates": "RH +Y up -Z forward metre/unit; no Assimp reflection",
+      "core_profile": 1,
+      "depth_bits": 24,
+      "drawable_size": [
+        850,
+        480
+      ],
+      "driver": "offscreen",
+      "event": "host_initialized",
+      "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+      "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+      "gpu_timing": "unavailable",
+      "identity": "CORDEL ENGINE 0.1.0-dev",
+      "milestone": "Phase 1.2 Native Host",
+      "sdl_version": 3004008,
+      "timestamp_seconds": 0.029958851999936087,
+      "window_size": [
+        850,
+        480
+      ]
+    }
+  },
+  {
+    "run": "smoke_native",
+    "record": {
+      "event": "self_test_passed",
+      "graphics_runtime_checks": 112,
+      "logic_checks": 304,
+      "scene_cycles": 5,
+      "timestamp_seconds": 1.209498407999945
+    }
+  },
+  {
+    "run": "smoke_native",
+    "record": {
+      "after_full_host_destruction": true,
+      "event": "context_recreated",
+      "resources": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "timestamp_seconds": 1.2417355840000255
+    }
+  },
+  {
+    "run": "smoke_native",
+    "record": {
+      "driver_memory_release": "not measured",
+      "event": "host_shutdown",
+      "live_resources": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "timestamp_seconds": 1.2615796779999755,
+      "window_context_destroyed": true
+    }
+  }
+]

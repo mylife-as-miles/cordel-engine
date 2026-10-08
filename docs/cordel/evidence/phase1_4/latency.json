@@ -1,0 +1,71 @@
+{
+  "samples": 55,
+  "groups": {
+    "choice": {
+      "worker_emit_to_valid_response_including_deliberate_wait": {
+        "count": 8,
+        "mean_ms": 105.73721537500091,
+        "median_ms": 35.81280250000418,
+        "worst_ms": 518.3314359999258,
+        "p95_ms": null
+      },
+      "native_ack_to_worker_resume_observed": {
+        "count": 8,
+        "mean_ms": 17.330476749989998,
+        "median_ms": 17.300836499941852,
+        "worst_ms": 17.76646999996956,
+        "p95_ms": null
+      }
+    },
+    "dialogue": {
+      "worker_emit_to_valid_response_including_deliberate_wait": {
+        "count": 27,
+        "mean_ms": 80.42806544445166,
+        "median_ms": 30.884861000004094,
+        "worst_ms": 476.10834099998556,
+        "p95_ms": 445.3836710000587
+      },
+      "native_ack_to_worker_resume_observed": {
+        "count": 27,
+        "mean_ms": 17.459833407403696,
+        "median_ms": 17.257099999937964,
+        "worst_ms": 19.607551000035528,
+        "p95_ms": 19.29733299994041
+      }
+    },
+    "narrative_command": {
+      "worker_emit_to_valid_response_including_deliberate_wait": {
+        "count": 12,
+        "mean_ms": 18.68632025001678,
+        "median_ms": 20.345311500022945,
+        "worst_ms": 20.554287999971166,
+        "p95_ms": null
+      },
+      "native_ack_to_worker_resume_observed": {
+        "count": 12,
+        "mean_ms": 17.20291766667022,
+        "median_ms": 17.18301600004679,
+        "worst_ms": 17.488225000079183,
+        "p95_ms": null
+      }
+    },
+    "wait_for_event": {
+      "worker_emit_to_valid_response_including_deliberate_wait": {
+        "count": 8,
+        "mean_ms": 88.14873775001786,
+        "median_ms": 30.976533999989897,
+        "worst_ms": 477.11225400007606,
+        "p95_ms": null
+      },
+      "native_ack_to_worker_resume_observed": {
+        "count": 8,
+        "mean_ms": 17.906655999979648,
+        "median_ms": 17.34228649996794,
+        "worst_ms": 21.436601000004885,
+        "p95_ms": null
+      }
+    }
+  },
+  "clock_policy": "Each round trip is measured on one process monotonic clock. No clock subtraction between processes.",
+  "interpretation": "Worker RTT includes intentional presentation/event delay. Native RTT includes pipe and worker work plus next native queue-consumption interval; not bare wire latency. p95 omitted for groups below 20 samples."
+}

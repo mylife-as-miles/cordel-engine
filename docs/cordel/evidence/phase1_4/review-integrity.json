@@ -1,0 +1,23 @@
+[
+  {
+    "phase": "phase1_1",
+    "code_revision": "816abef1bb8ba0c49a12873c0b6bd1982056dd2b",
+    "source_hashes_verified": 14,
+    "artifact_hashes_verified": 0,
+    "trace_records_parsed": 176
+  },
+  {
+    "phase": "phase1_2",
+    "code_revision": "cc8f0b9642b1eccfe701f974508122c015057cfa",
+    "source_hashes_verified": 26,
+    "artifact_hashes_verified": 39,
+    "trace_records_parsed": 392
+  },
+  {
+    "phase": "phase1_3",
+    "code_revision": "5bc6596bb24f409e59e711d71b6401ca9ff9c2a9",
+    "source_hashes_verified": 45,
+    "artifact_hashes_verified": 33,
+    "trace_records_parsed": 961
+  }
+]
