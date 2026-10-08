@@ -53,6 +53,7 @@ bool Platform::capture() {
     return ok&&input.captured;
 }
 void Platform::release() {
+    narrative_choice=0;narrative_ack=false;narrative_cancel=false;
     sdl_require(SDL_SetWindowRelativeMouseMode(window_,false),"relative mouse release");
     input.captured=SDL_GetWindowRelativeMouseMode(window_);
     input.clear();
@@ -77,11 +78,18 @@ void Platform::process(const SDL_Event& ev) {
     switch(ev.type) {
         case SDL_EVENT_QUIT:case SDL_EVENT_WINDOW_CLOSE_REQUESTED:input.quit=true;release();break;
         case SDL_EVENT_WINDOW_FOCUS_LOST:case SDL_EVENT_WINDOW_MINIMIZED:case SDL_EVENT_WINDOW_HIDDEN:
+            narrative_choice=0;narrative_ack=false;narrative_cancel=false;
             release();input.lose_focus();break;
         case SDL_EVENT_WINDOW_FOCUS_GAINED:input.clear();input.focused=true;break;
         case SDL_EVENT_KEY_UP:
             input.actions.up(static_cast<int>(ev.key.scancode));break;
         case SDL_EVENT_KEY_DOWN:
+            if(input.focused&&!ev.key.repeat) {
+                if(ev.key.scancode==SDL_SCANCODE_1) narrative_choice=1;
+                if(ev.key.scancode==SDL_SCANCODE_2) narrative_choice=2;
+                if(ev.key.scancode==SDL_SCANCODE_RETURN) narrative_ack=true;
+                if(ev.key.scancode==SDL_SCANCODE_F9) narrative_cancel=true;
+            }
             if(ev.key.scancode==SDL_SCANCODE_ESCAPE) { release(); break; }
             if(ev.key.scancode==SDL_SCANCODE_F6&&!ev.key.repeat) input.stall=true;
             if(input.focused) if(auto action=binding(ev.key.scancode))

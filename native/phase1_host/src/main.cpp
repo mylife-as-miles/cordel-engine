@@ -1,6 +1,7 @@
 // Copyright (c) 2026 CORDEL contributors. MIT.
 #include "cordel/diagnostics.hpp"
 #include "cordel/runtime.hpp"
+#include "cordel/narrative_session.hpp"
 #include <chrono>
 #include <ctime>
 #include <iostream>
@@ -8,7 +9,7 @@
 
 namespace cordel {
 struct Options {
-    bool self_test{},uncapped{};
+    bool self_test{},uncapped{},narrative{},narrative_test{};
     double seconds{};
     std::filesystem::path scene{CORDEL_DEFAULT_SCENE},output{"tmp/native-host"};
 };
@@ -17,6 +18,8 @@ static Options parse(int argc,char** argv) {
     for(int i=1;i<argc;++i) {
         std::string arg=argv[i];
         if(arg=="--self-test") options.self_test=true;
+        else if(arg=="--narrative") options.narrative=true;
+        else if(arg=="--narrative-test") options.narrative_test=true;
         else if(arg=="--uncapped") options.uncapped=true;
         else if((arg=="--seconds"||arg=="--scene"||arg=="--output")&&i+1<argc) {
             std::string value=argv[++i];
@@ -113,7 +116,10 @@ int main(int argc,char** argv) {
                 {"drawable_size",cordel::json_size(platform.drawable_size())},{"asset",options.scene.string()},
                 {"coordinates","RH +Y up -Z forward metre/unit; no Assimp reflection"},
                 {"context_startup_seconds",cordel::monotonic_seconds()-startup},{"gpu_timing","unavailable"}});
-            if(options.self_test) cordel::run_self_test(platform,renderer,counters,trace,options.scene,options.output);
+            if(options.narrative||options.narrative_test)
+                cordel::narrative::run_narrative(platform,renderer,counters,trace,options.scene,options.output,
+                    CORDEL_NARRATIVE_PYTHON,options.narrative_test,options.seconds);
+            else if(options.self_test) cordel::run_self_test(platform,renderer,counters,trace,options.scene,options.output);
             else cordel::run(platform,renderer,counters,trace,options);
         }
         // Destroyed the complete original renderer/context/window and SDL state

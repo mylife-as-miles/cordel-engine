@@ -66,3 +66,27 @@ if(BUILD_TESTING)
   add_test(NAME shared_python_goldens COMMAND ${Python3_EXECUTABLE}
     ${CMAKE_CURRENT_SOURCE_DIR}/tools/goldens.py --check)
 endif()
+
+# Phase 1.3 optional narrative boundary. No interpreter is linked into the host.
+find_package(Threads REQUIRED)
+add_library(cordel_narrative
+  src/narrative/json.cpp src/narrative/protocol.cpp src/narrative/client.cpp)
+target_link_libraries(cordel_narrative PUBLIC cordel_logic Threads::Threads)
+target_sources(cordel-native-host PRIVATE src/narrative/session.cpp src/narrative/experiment.cpp)
+target_link_libraries(cordel-native-host PRIVATE cordel_narrative)
+target_compile_definitions(cordel-native-host PRIVATE
+  CORDEL_NARRATIVE_SCHEMA="${CMAKE_CURRENT_SOURCE_DIR}/../../narrative/phase1_adapter/protocol/schema.json"
+  CORDEL_NARRATIVE_BOOTSTRAP="${CMAKE_CURRENT_SOURCE_DIR}/../../narrative/phase1_adapter/worker/bootstrap.py"
+  CORDEL_NARRATIVE_PYTHON="${CMAKE_CURRENT_SOURCE_DIR}/../../lib/py3-linux-x86_64/python")
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+  target_compile_options(cordel_narrative PRIVATE -Wall -Wextra -Wpedantic -Wconversion)
+endif()
+if(BUILD_TESTING)
+  add_executable(cordel-protocol-tests tests/test_protocol.cpp)
+  target_link_libraries(cordel-protocol-tests PRIVATE cordel_narrative)
+  target_compile_definitions(cordel-protocol-tests PRIVATE
+    CORDEL_NARRATIVE_SCHEMA="${CMAKE_CURRENT_SOURCE_DIR}/../../narrative/phase1_adapter/protocol/schema.json")
+  add_test(NAME narrative_protocol COMMAND cordel-protocol-tests)
+  add_test(NAME narrative_python_protocol COMMAND ${Python3_EXECUTABLE} -m unittest discover
+    -s ${CMAKE_CURRENT_SOURCE_DIR}/../../narrative/phase1_adapter/tests -p test_protocol.py -v)
+endif()

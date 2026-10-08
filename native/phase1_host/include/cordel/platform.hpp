@@ -23,6 +23,8 @@ class Platform {
 public:
     Input input;
     std::string capture_error;
+    int narrative_choice{};
+    bool narrative_ack{},narrative_cancel{};
     Platform(int width,int height);
     ~Platform();
     Platform(const Platform&)=delete;

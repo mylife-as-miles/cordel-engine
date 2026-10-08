@@ -46,6 +46,7 @@ struct GpuMesh {
     Mat4 model;
     std::array<float,4> color;
     GLsizei indices{};
+    bool visible{true};
     GpuMesh(GL&,Counters&,const Mesh&);
 };
 struct GpuScene {
@@ -65,6 +66,7 @@ public:
     explicit Renderer(Counters& counters);
     void load(const std::filesystem::path& path);
     void unload();
+    bool set_visible(const std::string& target,bool visible);
     const SceneData& scene() const;
     RenderTimes render(const Camera&,int width,int height,bool depth=true,bool reverse=false);
     std::vector<unsigned char> read_pixels(int width,int height);

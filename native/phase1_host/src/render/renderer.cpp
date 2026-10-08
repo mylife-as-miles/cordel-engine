@@ -132,6 +132,12 @@ const SceneData& Renderer::scene() const {
     if(!scene_) throw std::logic_error("No loaded scene");
     return scene_->source;
 }
+bool Renderer::set_visible(const std::string& target,bool visible) {
+    if(!scene_) return false;
+    for(std::size_t i=0;i<scene_->source.meshes.size();++i)
+        if(scene_->source.meshes[i].name==target) {scene_->meshes[i].visible=visible;return true;}
+    return false;
+}
 RenderTimes Renderer::render(const Camera& camera,int width,int height,bool depth,bool reverse) {
     if(!scene_) throw std::logic_error("No loaded scene");
     RenderTimes timing;
@@ -153,6 +159,7 @@ RenderTimes Renderer::render(const Camera& camera,int width,int height,bool dept
     for(std::size_t n=0;n<scene_->meshes.size();++n) {
         auto i=reverse?scene_->meshes.size()-1-n:n;
         auto& mesh=scene_->meshes[i];
+        if(!mesh.visible) continue;
         gl_.UniformMatrix4fv(scene_->mvp_uniform,1,GL_FALSE,mvps[i].data());
         gl_.Uniform4fv(scene_->color_uniform,1,mesh.color.data());
         gl_.BindVertexArray(mesh.vao.id());
