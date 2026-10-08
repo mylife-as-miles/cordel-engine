@@ -1,5 +1,5 @@
 // Copyright (c) 2026 CORDEL contributors. MIT.
-// Output-only JSON values. No runtime parser or scripting dependency.
+// Small JSON values; bounded strict decoding lives in json.cpp.
 #pragma once
 #include <cmath>
 #include <iomanip>
@@ -37,6 +37,25 @@ public:
     Json(std::string v):data_(std::move(v)) {}
     Json(Array v):data_(std::move(v)) {}
     Json(Object v):data_(std::move(v)) {}
+    static Json parse(const std::string& text);
+    bool is(const std::string& kind) const {
+        if(kind=="object") return std::holds_alternative<Object>(data_);
+        if(kind=="array") return std::holds_alternative<Array>(data_);
+        if(kind=="string") return std::holds_alternative<std::string>(data_);
+        if(kind=="boolean") return std::holds_alternative<bool>(data_);
+        if(kind=="number"||kind=="integer") {
+            auto p=std::get_if<double>(&data_);
+            return p&&(kind=="number"||(*p==std::floor(*p)&&std::abs(*p)<=9007199254740991.));
+        }
+        return false;
+    }
+    const Object& object() const { return std::get<Object>(data_); }
+    const Array& array() const { return std::get<Array>(data_); }
+    const std::string& string() const { return std::get<std::string>(data_); }
+    double number() const { return std::get<double>(data_); }
+    bool boolean() const { return std::get<bool>(data_); }
+    bool contains(const std::string& key) const { return is("object")&&object().contains(key); }
+    const Json& at(const std::string& key) const { return object().at(key); }
     std::string dump() const {
         return std::visit([](const auto& v)->std::string {
             using T=std::decay_t<decltype(v)>;
