@@ -15,7 +15,7 @@ public:
     PhysicsBodyId create_static_body(const BodyDesc&);
     void destroy_body(PhysicsBodyId);
     void destroy_shape(PhysicsShapeId); // Reject while used by a body.
-    void set_position(PhysicsBodyId,Vec3); // Debug probe repositioning; not a character motor.
+    void set_position(PhysicsBodyId,Vec3); // Authoritative query-proxy repositioning; no backend movement semantics.
     bool valid(PhysicsBodyId) const;bool valid(PhysicsShapeId) const;
     std::optional<RayHit> raycast(const RayQuery&) const;
     std::optional<CapsuleCastHit> cast_capsule(const CapsuleCastQuery&) const;

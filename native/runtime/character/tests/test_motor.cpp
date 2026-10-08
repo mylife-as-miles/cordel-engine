@@ -145,7 +145,7 @@ int main(int argc,char**argv) {
     Vec3 in=phase==0?Vec3{1,0,-1}:phase==1?(k<20?Vec3{1,0,0}:k<40?Vec3{-1,0,0}:Vec3{}):phase==5?Vec3{}:Vec3{0,0,-1};
     m.simulate(w,{in,false},1./60);w.step();sensors+=w.take_contact_events().size();for(auto h:w.overlap({f.capsule,m.state().position,{}})) maxpen=std::max(maxpen,h.penetration);
     check(std::isfinite(m.state().position.y)&&w.live().bodies==baseline.bodies&&w.live().shapes==baseline.shapes,"soak bounded finite");
-   }check(maxpen<.0001,"soak no penetration accumulation");save("soak-results.json",Json::Object{{"simulated_seconds",60},{"fixed_ticks",ticks},{"reset_boundaries",resets},{"max_penetration_m",maxpen},{"sensor_events",sensors},{"diagnostics_capacity",6},{"normal_clock_drops",0},{"execution","deterministic tick-time soak, not 60s wall-time hardware soak"}});
+   }check(maxpen<.0001,"soak no penetration accumulation");save("soak-results.json",Json::Object{{"simulated_seconds",60},{"fixed_ticks",ticks},{"reset_boundaries",resets},{"max_penetration_m",maxpen},{"sensor_events",sensors},{"diagnostics_capacity",6},{"clock_policy","direct fixed ticks; backlog not applicable. Actual paced-loop drops measured separately"},{"execution","deterministic tick-time soak, not 60s wall-time hardware soak"}});
   }
   // Repeated representative tick fragments, excluding reset/fixture/test costs.
   {PhysicsWorld w;cordel::physics::load_fixture(w);extra_fixture(w);CharacterMotor m(w,{0,.903,0});
