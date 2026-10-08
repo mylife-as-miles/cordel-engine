@@ -156,7 +156,10 @@ void normal_tests(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::fil
         auto stale=probe.session.pending_id();auto frames=probe.frames,ticks=probe.ticks;
         probe.session.cancel();probe.until([&]{return probe.session.status=="cancelled";},"cancel during "+std::string(wait));
         gate.check(probe.session.input_mode==InputMode::Gameplay&&probe.session.pending_type().empty(),"cancellation releases ownership");
+        auto effects=probe.session.world.commands_applied;
         probe.client.send("dialogue_ack",{},id,stale);probe.step();probe.step();
+        gate.check(probe.session.status=="cancelled"&&probe.session.pending_type().empty()&&
+            probe.session.world.commands_applied==effects,"late acknowledgement cannot resurrect cancelled session");
         gate.cancellations.emplace_back(Json::Object{{"wait",wait},{"status",probe.session.status},{"pending_count",0},
             {"additional_frames",probe.frames-frames},{"additional_ticks",probe.ticks-ticks},{"late_ack_ignored",true}});
         bool rejected=false;
@@ -174,7 +177,9 @@ void normal_tests(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::fil
     probe.pending("choice"); // Restore unwinds worker Context and resumes only the named safe label.
     gate.check(probe.session.world.beacon_enabled&&probe.session.world.event_watermark==saved.event_watermark,"native checkpoint restore");
     gate.check(length(probe.runner.simulation.current.position-camera.position)<1e-8,"camera checkpoint restore");
-    probe.session.send("checkpoint_request");probe.until([&]{return probe.last_message("checkpoint_data").at("payload").at("checkpoint").dump()==captured.dump();},"narrative checkpoint restore values");
+    std::erase_if(probe.session.observed,[](const Json& m){return m.at("type").string()=="checkpoint_data";});
+    probe.session.send("checkpoint_request");probe.seen("checkpoint_data");
+    gate.check(probe.last_message("checkpoint_data").at("payload").at("checkpoint").dump()==captured.dump(),"fresh narrative checkpoint restore values");
     probe.session.send("rollback_request");probe.seen("rollback_rejected");
     gate.check(probe.session.world.commands_applied==saved.commands_applied,"restore never replays beacon command");
     gate.check(probe.last_message("rollback_rejected").at("payload").at("reason").string().find("world-effect")!=std::string::npos,"rollback stops at world-effect boundary");
