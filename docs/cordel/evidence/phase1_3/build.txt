@@ -1,0 +1,8 @@
+[  1%] Built target cordel_scene
+[  3%] Built target cordel_narrative
+[  3%] Built target cordel-native-tests
+[  4%] Built target cordel-protocol-tests
+[ 96%] Built target SDL3-static
+[ 96%] Building CXX object CMakeFiles/cordel-native-host.dir/src/narrative/experiment.cpp.o
+[ 97%] Linking CXX executable cordel-native-host
+[100%] Built target cordel-native-host

@@ -1,0 +1,21 @@
+{
+  "dialogue": [
+    "Can you still hear me?",
+    "Good.",
+    "We stay."
+  ],
+  "events": [
+    {
+      "command": "set_beacon_enabled",
+      "target": "tall_gold",
+      "value": true
+    },
+    {
+      "wait": "beacon_reached"
+    }
+  ],
+  "outcome": "stay",
+  "counter": 2,
+  "completed": true,
+  "display_started": true
+}

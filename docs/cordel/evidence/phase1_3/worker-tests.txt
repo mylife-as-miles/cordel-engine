@@ -1,0 +1,19 @@
+test_correlation (test_protocol.ProtocolTests.test_correlation) ... ok
+test_envelope (test_protocol.ProtocolTests.test_envelope) ... ok
+test_json_and_framing (test_protocol.ProtocolTests.test_json_and_framing) ... ok
+test_payload (test_protocol.ProtocolTests.test_payload) ... ok
+test_round_trip (test_protocol.ProtocolTests.test_round_trip) ... ok
+test_both_branches_real_ast (test_worker.WorkerTests.test_both_branches_real_ast) ... ok
+test_cancel_each_wait (test_worker.WorkerTests.test_cancel_each_wait) ... ok
+test_event_stale_duplicate_sequence (test_worker.WorkerTests.test_event_stale_duplicate_sequence) ... ok
+test_exception_is_protocol_error (test_worker.WorkerTests.test_exception_is_protocol_error) ... ok
+test_invalid_choice_and_correlation (test_worker.WorkerTests.test_invalid_choice_and_correlation) ... ok
+test_malformed_suite_worker_survives (test_worker.WorkerTests.test_malformed_suite_worker_survives) ... ok
+test_oversized_worker_closes_safely (test_worker.WorkerTests.test_oversized_worker_closes_safely) ... ok
+test_retired_session_cannot_restart (test_worker.WorkerTests.test_retired_session_cannot_restart) ... ok
+test_shutdown_waiting (test_worker.WorkerTests.test_shutdown_waiting) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 3.567s
+
+OK

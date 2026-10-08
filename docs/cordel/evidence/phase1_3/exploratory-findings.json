@@ -1,0 +1,27 @@
+[
+  {
+    "issue": "Headless Menu initially returned ChoiceReturn UI action objects",
+    "observed": "TypeError: list indices must be integers or slices, not ChoiceReturn",
+    "resolution": "Use existing config.menu_actions=False only in worker; ordinary reference retains UI actions"
+  },
+  {
+    "issue": "Context control exceptions bypass normal Exception dynamic cleanup",
+    "observed": "Source review of run_context/call_in_new_context; no memory-leak claim",
+    "resolution": "Explicit context tracking/pop_all_dynamic; 15 executed unwinds leave zero roots"
+  },
+  {
+    "issue": "Finite flood cleanup initially used one-second teardown grace",
+    "observed": "Earlier probe cleanup_seconds=1.006263602 between test episodes",
+    "resolution": "Transport corruption/overflow now requests kill on world thread without waiting, then reaps at teardown"
+  },
+  {
+    "issue": "Checkpoint assertion could inspect a prior observation",
+    "observed": "Test review found cached checkpoint_data could satisfy recheck immediately",
+    "resolution": "Remove old observations and require fresh post-restore checkpoint_data before equality assertion"
+  },
+  {
+    "issue": "I/O stop diagnostic initially conflated local failure with EOF",
+    "observed": "Overflow stops reader before observing worker EOF",
+    "resolution": "Separate worker_eof and io_stopped flags; final overflow records false/true"
+  }
+]

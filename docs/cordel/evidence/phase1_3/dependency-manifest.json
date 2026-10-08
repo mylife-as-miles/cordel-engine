@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "dependencies": [
+    {
+      "project": "SDL",
+      "version": "3.4.8",
+      "revision": "d9d5536704d585616d4db3c8ba3c4ff6fc2757e1",
+      "url": "https://github.com/libsdl-org/SDL",
+      "source_archive": "https://codeload.github.com/libsdl-org/SDL/tar.gz/d9d5536704d585616d4db3c8ba3c4ff6fc2757e1",
+      "archive_sha256": "44b617821ea70cb6515a05f962d4133a5e32c1011c98a2f1daea01a187279a43",
+      "license": "Zlib",
+      "license_file": "SDL-LICENSE.txt",
+      "purpose": "Window, input, clock/platform APIs and bundled GL/EGL declarations",
+      "acquisition": "CMake FetchContent into ignored build tree",
+      "ships_in_executable": true,
+      "linkage": "static",
+      "source_modified": false
+    },
+    {
+      "project": "HIDAPI (embedded in SDL)",
+      "revision": "SDL d9d5536704d585616d4db3c8ba3c4ff6fc2757e1, src/hidapi",
+      "url": "https://github.com/libsdl-org/SDL/tree/d9d5536704d585616d4db3c8ba3c4ff6fc2757e1/src/hidapi",
+      "license": "BSD-style alternative selected from triple license",
+      "license_file": "HIDAPI-LICENSE-bsd.txt",
+      "purpose": "SDL gamepad/HID device path",
+      "acquisition": "Included in pinned SDL source archive",
+      "ships_in_executable": true
+    },
+    {
+      "project": "cgltf",
+      "version": "1.15",
+      "revision": "360db1a95480fe102ae9c69b27c5d101167ff5ba",
+      "url": "https://github.com/jkuhlmann/cgltf",
+      "header_url": "https://raw.githubusercontent.com/jkuhlmann/cgltf/360db1a95480fe102ae9c69b27c5d101167ff5ba/cgltf.h",
+      "header_sha256": "e378a21c084bf1f288bb799de827bb26906efb024255f1ecf1705ea13f11c6ec",
+      "license": "MIT",
+      "license_file": "cgltf-LICENSE",
+      "purpose": "Parse existing embedded-buffer glTF fixture without Assimp",
+      "acquisition": "Unmodified single-header vendor",
+      "ships_in_executable": true
+    },
+    {
+      "project": "CMake",
+      "version": "3.31.6",
+      "url": "https://pypi.org/project/cmake/3.31.6/",
+      "license": "BSD-3-Clause (CMake); Apache-2.0 (Python wheel packaging)",
+      "purpose": "Build/test tooling on a host with no preinstalled CMake",
+      "acquisition": "uv pip install --python .venv/bin/python cmake==3.31.6",
+      "ships_in_executable": false
+    }
+  ],
+  "system_runtime": [
+    "C++ standard library, C runtime, math and dynamic loader",
+    "OpenGL/EGL driver dynamically loaded by SDL; observed Mesa llvmpipe"
+  ],
+  "notes": "Experimental spike only. SDL GPU, Vulkan, audio and SDL renderers are disabled. No Python runtime linked. Driver/system-library distribution requires its own applicable notices; this manifest is not a complete installer."
+}

@@ -1,0 +1,9 @@
+All commands exited 0:
+bash native/phase1_host/tools/run_offscreen.sh tmp/phase1_3-native-gate-regression
+bash examples/cordel_viewport/tools/run_offscreen.sh tmp/phase1_3-renpy-regression
+bash examples/cordel_viewport/tools/check_baseline.sh tmp/phase1_3-renpy-baseline
+
+Native: 304 logic assertions; shared goldens; 112 graphics/runtime assertions; five lifecycle cycles and host recreation.
+RenPy viewport: 31 helpers; 83 runtime checks; one UI testcase with 8 assertions and 2 hooks.
+Baseline: 29 source tests; 89 selected SDK tests (overlaps source); two ending tests, 2 assertions, 3 hooks.
+Lint exit 0; generic advice unchanged. Known full-suite failures not modified or claimed passing.

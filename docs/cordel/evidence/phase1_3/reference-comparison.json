@@ -1,0 +1,24 @@
+[
+  {
+    "branch": "continue",
+    "dialogue": [
+      "Can you still hear me?",
+      "Good.",
+      "We continue."
+    ],
+    "outcome": "continue",
+    "counter": 1,
+    "matches_reference": true
+  },
+  {
+    "branch": "stay",
+    "dialogue": [
+      "Can you still hear me?",
+      "Good.",
+      "We stay."
+    ],
+    "outcome": "stay",
+    "counter": 2,
+    "matches_reference": true
+  }
+]
