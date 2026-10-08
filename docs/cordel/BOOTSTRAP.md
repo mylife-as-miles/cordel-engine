@@ -282,3 +282,20 @@ The 1.2, 1.1 and focused baseline wrappers pass afterward; known full suites sta
 separate. See [Phase 1.3 findings](PHASE_1_3_NARRATIVE_OWNERSHIP.md) and archived
 [evidence](evidence/phase1_3/README.md). Linux/POSIX transport is verified;
 visible desktop/devices and in-process embedding are not.
+
+## Canonical Phase 1 architecture smoke
+
+After the same pinned environment is configured, use a new or empty directory:
+
+```sh
+bash scripts/cordel_phase1_smoke.sh tmp/new-phase1-smoke
+```
+
+Verified 2026-10-08: native narrative ownership gate, both ordinary displayed Ren'Py
+reference branches and native graphics/lifecycle probe pass. The wrapper reuses one
+native build, bounds its stages with GNU timeout and writes an aggregate JSON summary
+only after checks pass. It is a Linux software/offscreen gate. The full viewport
+and focused baseline wrappers remain separate regressions; their known full-suite
+exclusions are unchanged. See [Phase 1 conclusion](PHASE_1_ARCHITECTURE_DECISION.md)
+and [ADR 0001](adr/0001-runtime-narrative-ownership.md) for the accepted ownership
+architecture, current worker/default renderer and remaining production gates.

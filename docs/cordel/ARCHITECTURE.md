@@ -138,7 +138,8 @@ versioned values, never native handles. Coordinate writes atomically through a
 manifest/checkpoint record and reject incompatible schema/asset revisions before
 mutating the live scene. Native state and Ren'Py pickle/rollback state need distinct
 serialization and coordinated restore. Narrative rollback either restores a world
-checkpoint/compensates effects or stops at a declared boundary. Durable transaction/restore behavior remains future work. Phase 1.3's primitive
+checkpoint/compensates effects or stops at a declared boundary. Durable transaction/
+restore behavior remains future work. Phase 1.3's primitive
 fixture checkpoint is feasibility evidence, not legacy Ren'Py save compatibility.
 Default rollback is only inside explicitly rollback-safe narrative regions; stop
 at irreversible world effects unless coordinated restore or explicit compensation

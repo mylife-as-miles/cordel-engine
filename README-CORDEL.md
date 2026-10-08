@@ -6,9 +6,12 @@ codebase, a reproducible development baseline, and an engineering direction.
 Phase 1.1 adds an isolated Ren'Py-backed 3D viewport reference experiment. Phase
 1.2 adds a C++20 native host for the same scene, with executed software evidence
 for fixed updates, interpolation, input and deterministic GL ownership. A
-production CORDEL world/narrative runtime remains proposed. Phase 1.3 adds a
+production CORDEL world/narrative runtime remains unimplemented. Phase 1.3 adds a
 fixture-scoped isolated Ren'Py worker; executed software evidence confirms story
-waits and failures leave the native world clock authoritative.
+waits and failures leave the native world clock authoritative. Phase 1 is now
+architecturally complete: [ADR 0001](docs/cordel/adr/0001-runtime-narrative-ownership.md)
+accepts a native real-time runtime and independent narrative service boundary.
+The isolated worker is the development default; deployment remains replaceable.
 
 Our long-term focus is third-person gameplay, expressive character animation,
 interactive environments, branching dialogue, and seamless cinematic transitions.
@@ -43,12 +46,19 @@ Naughty Dog technology. This is a specialized narrative engine project.
 - [Narrative ownership](narrative/phase1_adapter/README.md): real Ren'Py AST worker,
   bounded JSONL, native-owned presentation/input, beacon commands/events/facts,
   cancellation/failure isolation and one fixture checkpoint. Software gate passes;
-  production narrative compatibility and hosting choice remain open. Phase 1.3
-  stays on its review branch.
+  production compatibility and permanent deployment remain open. Phase 1.3
+  is accepted into `main`; Phase 1.4 decision work stays on its review branch.
 
-The recommended direction is a native real-time runtime hosting a carefully
-isolated narrative adapter. That is a proposal to validate, not an implemented
-integration or a final choice of renderer, physics library, ECS, or editor.
+CORDEL owns the native world loop, input, simulation and GPU resources. Ren'Py
+contributes narrative technology behind a transport-independent interface.
+OpenGL Core is the development/reference renderer; the production backend is
+undecided. Native production UI/future audio and coordinated checkpoint/rollback
+ownership are accepted rules, not implemented production systems.
+
+Linux x86_64 offscreen software is verified; Windows x86_64 is the next platform
+qualification target. Hardware/devices, full narrative compatibility, in-process
+hosting and durable saves remain open. **Next: Phase 2.1 — Collision / Query Adapter**,
+comparing Jolt and Bullet; Phase 2 has not begun. Version remains `0.1.0-dev`.
 
 ## Development and design
 
@@ -56,13 +66,23 @@ Start with [BOOTSTRAP](docs/cordel/BOOTSTRAP.md) for verified commands, SDK chec
 environment limits, and test results. Other project documents:
 
 - [Architecture audit](docs/cordel/ARCHITECTURE_AUDIT.md): source evidence and reuse decisions.
-- [Architecture proposal](docs/cordel/ARCHITECTURE.md): ownership, interfaces, and technology trade-offs.
-- [Roadmap](docs/cordel/ROADMAP.md): independently testable milestones and Phase 1 task.
+- [Accepted architecture](docs/cordel/ARCHITECTURE.md): ownership, interfaces, deferred technologies and qualification gates.
+- [Roadmap](docs/cordel/ROADMAP.md): completed Phase 1 gates and next collision/query comparison.
 - [Upstream policy](docs/cordel/UPSTREAM.md): provenance, remotes, licenses, and synchronization.
 - [Project metadata](cordel/project.toml): machine-readable identity and foundation commit.
 - [Phase 1.1 findings](docs/cordel/PHASE_1_1_VIEWPORT.md): implementation, measurements and runtime limits.
 - [Phase 1.2 findings](docs/cordel/PHASE_1_2_NATIVE_HOST.md): native host, comparison measurements and open device gates.
 - [Phase 1.3 findings](docs/cordel/PHASE_1_3_NARRATIVE_OWNERSHIP.md): narrative boundary, continuity/failure evidence and compatibility limits.
+
+Canonical software smoke after BOOTSTRAP setup (use a new or empty directory):
+
+```sh
+bash scripts/cordel_phase1_smoke.sh tmp/new-phase1-smoke
+```
+
+See [Phase 1 conclusion](docs/cordel/PHASE_1_ARCHITECTURE_DECISION.md) for exact
+executed regressions, evidence and limits. Original Ren'Py remains the behavioral
+reference; no physics, ECS, audio/UI engine or production renderer is added by ADR 0001.
 
 ## Identity and attribution
 

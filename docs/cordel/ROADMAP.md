@@ -72,29 +72,65 @@ Keep the known history-click failure separate from CORDEL identity changes.
    fixture checkpoint and declared rollback boundary pass. 186 native gate checks,
    14 Python tests, 23 native protocol assertions and both ordinary reference
    branches pass; accepted 1.2/1.1/baseline regressions pass. Native GL counts end
-   at zero. Phase 1.3 remains its review branch.
+   at zero. Phase 1.3 was fast-forwarded into `main` at accepted `8d685666`
+   and pushed on 2026-10-08 before ADR work; no squash or history rewrite.
    **Open:** production script/Character/UI/audio/localization/save compatibility,
    in-process Python/GIL evidence, other-OS transport, device/hardware/DPI,
    long soaks, general rollback and durable coordinated saves. Separate-process
    hosting is an experimental isolation boundary, not the production decision.
-4. **1.4 Runtime/backend ADR.** Choose ownership and next prototype backend based
-   on 1.1–1.3 evidence, maintenance effort and platform constraints. Set hardware
-   and performance test targets. Exit: reviewed decision with alternatives and
-   known gaps, and one automated smoke path on the selected development target.
+4. **1.4 Runtime / Narrative Architecture Decision Record.** **Complete at the
+   Linux software/reference gate, 2026-10-08.** [ADR 0001](adr/0001-runtime-narrative-ownership.md)
+   accepts native runtime authority and an explicit transport-independent narrative
+   service. Isolated Ren'Py worker is the current development default; embedded
+   hosting is deferred, not certified. OpenGL Core is the reference backend, not
+   the permanent production renderer. Native input/UI/future audio, thread and
+   checkpoint/rollback ownership, typed IDs, provisional budgets and platform/device
+   gates are documented. All four accepted regressions and the canonical smoke
+   command pass; see [Phase 1 conclusion](PHASE_1_ARCHITECTURE_DECISION.md) and
+   [fresh evidence](evidence/phase1_4/README.md). Only software/offscreen and
+   synthetic-input behavior is verified. Hardware/devices, Windows transport,
+   full narrative compatibility, packaging and durable saves remain open.
 
-**Exact next task:** **1.4 — Runtime / Narrative Architecture Decision Record**.
-Review the executed 1.1–1.3 evidence and decide among Ren'Py-primary, native with
-in-process adaptation, native with an isolated worker, and deeper narrative
-refactor/replacement. Weigh compatibility, input/UI/audio, SDK/deployment cost,
-context maintenance, reply latency and failure isolation. Set remaining desktop,
-hardware and packaging gates. Phase 1.4 has not begun; no renderer, physics, ECS,
-editor or generalized scripting implementation belongs in this review milestone.
+**Phase 1 architectural foundation is complete.** Production runtime qualification
+is not. Preserve all three references; do not turn passing software probes into
+hardware, arbitrary-script compatibility or AAA performance claims.
+
+**Exact next task:** **Phase 2.1 — Collision / Query Adapter**. Compare Jolt and
+Bullet behind native-owned query/ID boundaries before choosing a provider.
+A minimal no-full-physics baseline is optional if it clarifies query cost/behavior.
+Phase 2.1 has not begun; no physics dependency is added in Phase 1.4.
+
+Canonical selected architecture smoke, using BOOTSTRAP's existing environment:
+
+```sh
+bash scripts/cordel_phase1_smoke.sh tmp/new-phase1-smoke
+```
+
+Use a new or empty directory. This composes the narrative gate and both ordinary
+Ren'Py reference branches, then runs native graphics/lifecycle on the same binary
+without another build. Full 1.1 and baseline checks stay separate regression gates.
 
 ## Phase 2 — Third-person character controller
 
-1. **2.1 Collision/query adapter:** choose one physics candidate after capsule
-   sweep/raycast/contact experiments. Exit: blocked walls, ground, slopes and
-   steps with documented limits and reproducible collision tests.
+1. **2.1 Collision / Query Adapter:** compare at least **Jolt and Bullet**.
+   No provider is selected yet. Independently testable steps:
+
+   - **Candidate/build inventory:** pin exact revisions/URLs, enabled features,
+     transitive licenses and build/runtime footprint; assess Linux/Windows viability.
+     Do not claim Windows success without executing its build/tests.
+   - **Query boundary:** stable typed body/shape/world IDs, validated lifetimes,
+     collision layers; raycast and capsule-sweep probes against a static scene.
+     Gameplay does not retain library pointers or OpenGL IDs.
+   - **Traversal/contact probes:** reproducible walls/ground/slopes/stairs/steps,
+     triggers and contacts, including expected limitations and penetration margins;
+     ordered events delivered on the authoritative 60 Hz world thread.
+   - **Comparison/selection gate:** identical query vectors and workload for both
+     candidates, measured fixed-tick costs/bounded catch-up, integration effort,
+     footprint and licensing; decision report and accepted Phase 1 regressions.
+     Target world/physics <4 ms on a documented development machine, total main
+     thread <16.67 ms at 60 fps, zero normal dropped time; targets require profiling.
+     Exit: select a provider with evidence and explicit open platform/device gates.
+     Do not fold animation, combat or a full character motor into the comparison.
 2. **2.2 Character motor:** movement, gravity, ground state and a capsule player;
    one fixed update owns motion. Exit: consistent travel at different presentation
    rates, no wall penetration in test scenes, focus loss stops input.
@@ -166,8 +202,8 @@ editor or generalized scripting implementation belongs in this review milestone.
 
 ## Progress gates and deferred scope
 
-Require full native-build evidence before native ABI changes; measured hosting
-evidence before replacing the main loop; coordinated save tests before migrating
+Require matching Ren'Py source-native build evidence before changing its extension
+ABI; preserve the accepted native ownership ADR and measured hosting boundary; coordinated save tests before migrating
 production story state; runtime schemas before editor technology choice. Update
 known baseline failures whenever upstream changes.
 
