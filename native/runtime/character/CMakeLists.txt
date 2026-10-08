@@ -1,0 +1,10 @@
+# CORDEL-owned movement semantics; no backend headers in this target.
+add_library(cordel_character src/motor.cpp src/demo_fixture.cpp)
+target_include_directories(cordel_character PUBLIC include)
+target_link_libraries(cordel_character PUBLIC cordel_physics_${cordel_selected_physics})
+target_compile_options(cordel_character PRIVATE -Wall -Wextra -Wpedantic)
+if(BUILD_TESTING)
+  add_executable(cordel-motor-tests tests/test_motor.cpp)
+  target_link_libraries(cordel-motor-tests PRIVATE cordel_character cordel_narrative)
+  add_test(NAME character_motor COMMAND cordel-motor-tests)
+endif()

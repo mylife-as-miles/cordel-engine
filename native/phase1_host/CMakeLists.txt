@@ -102,3 +102,5 @@ set(CORDEL_PHYSICS_TESTS OFF CACHE BOOL "Standalone physics gate tests both cand
 add_subdirectory(../physics physics)
 string(TOLOWER ${CORDEL_PHYSICS_BACKEND} cordel_selected_physics)
 target_link_libraries(cordel-native-host PRIVATE cordel_physics_${cordel_selected_physics})
+
+add_subdirectory(../runtime/character character)

@@ -21,6 +21,7 @@ template<class T> std::uint32_t free_slot(std::vector<Slot<T>>& slots) {
 }
 }
 struct PhysicsWorld::Impl {
+    std::shared_ptr<const void> lifetime{std::make_shared<int>(0)};
     std::uint64_t owner{next_world++},ticks{};
     std::thread::id thread{std::this_thread::get_id()};
     std::unique_ptr<Backend> backend{make_backend()};
@@ -44,6 +45,7 @@ struct PhysicsWorld::Impl {
 };
 PhysicsWorld::PhysicsWorld():impl_(std::make_unique<Impl>()) {++worlds;}
 PhysicsWorld::~PhysicsWorld() {clear();impl_.reset();--worlds;}
+std::weak_ptr<const void> PhysicsWorld::lifetime_token() const {impl_->check_thread();return impl_->lifetime;}
 const char* PhysicsWorld::backend_name() const {impl_->check_thread();return impl_->backend->name();}
 PhysicsShapeId PhysicsWorld::create_shape(const ShapeDesc& s) {
     auto& p=*impl_;p.check_thread();

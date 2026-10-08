@@ -24,6 +24,8 @@ public:
     std::vector<ContactEvent> take_contact_events(); // Query-derived capsule/sensor pairs.
     std::uint64_t ticks() const;
     LiveCounts live() const;static LiveCounts global_live();
+    // Expiration guard for non-owning runtime services; authoritative-thread only.
+    std::weak_ptr<const void> lifetime_token() const;
     void clear();
 };
 }
