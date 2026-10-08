@@ -1,0 +1,188 @@
+{
+  "protocol_version": "cordel.narrative/0.1",
+  "maximum_line_bytes": 16384,
+  "envelope": {
+    "protocol_version": "string",
+    "session_id": "string",
+    "message_id": "string",
+    "type": "string",
+    "payload": "object",
+    "sequence": "integer"
+  },
+  "messages": {
+    "hello": {
+      "required": {
+        "client": "string"
+      },
+      "correlated": false
+    },
+    "hello_ack": {
+      "required": {
+        "runtime": "string",
+        "display_started": "boolean"
+      },
+      "correlated": true
+    },
+    "start_session": {
+      "required": {
+        "scenario": "string"
+      },
+      "correlated": false
+    },
+    "session_started": {
+      "required": {
+        "label": "string"
+      },
+      "correlated": true
+    },
+    "dialogue": {
+      "required": {
+        "speaker": "string",
+        "text": "string",
+        "text_id": "string",
+        "emit_time": "number"
+      },
+      "correlated": false
+    },
+    "dialogue_ack": {
+      "required": {},
+      "correlated": true
+    },
+    "choice": {
+      "required": {
+        "choices": "array",
+        "emit_time": "number"
+      },
+      "correlated": false
+    },
+    "choice_result": {
+      "required": {
+        "choice_id": "string"
+      },
+      "correlated": true
+    },
+    "narrative_command": {
+      "required": {
+        "command": "string",
+        "target": "string",
+        "value": "boolean",
+        "emit_time": "number"
+      },
+      "correlated": false
+    },
+    "command_result": {
+      "required": {
+        "success": "boolean",
+        "simulation_tick": "integer"
+      },
+      "correlated": true
+    },
+    "wait_for_event": {
+      "required": {
+        "event_id": "string",
+        "emit_time": "number"
+      },
+      "correlated": false
+    },
+    "gameplay_event": {
+      "required": {
+        "event_id": "string",
+        "simulation_tick": "integer",
+        "watermark": "integer"
+      },
+      "correlated": true
+    },
+    "world_fact": {
+      "required": {
+        "fact_id": "string",
+        "revision": "integer",
+        "value_type": "string",
+        "value": "boolean",
+        "simulation_tick": "integer"
+      },
+      "correlated": false
+    },
+    "resumed": {
+      "required": {
+        "request_type": "string",
+        "round_trip_ms": "number",
+        "resume_time": "number"
+      },
+      "correlated": true
+    },
+    "session_completed": {
+      "required": {
+        "outcome": "string",
+        "counter": "integer",
+        "beacon_fact": "boolean"
+      },
+      "correlated": true
+    },
+    "cancel_session": {
+      "required": {},
+      "correlated": false
+    },
+    "session_cancelled": {
+      "required": {
+        "pending_count": "integer"
+      },
+      "correlated": true
+    },
+    "checkpoint_request": {
+      "required": {},
+      "correlated": false
+    },
+    "checkpoint_data": {
+      "required": {
+        "checkpoint": "object"
+      },
+      "correlated": true
+    },
+    "checkpoint_restore": {
+      "required": {
+        "checkpoint": "object"
+      },
+      "correlated": false
+    },
+    "checkpoint_restored": {
+      "required": {
+        "checkpoint": "object"
+      },
+      "correlated": true
+    },
+    "rollback_request": {
+      "required": {},
+      "correlated": false
+    },
+    "rollback_rejected": {
+      "required": {
+        "reason": "string"
+      },
+      "correlated": true
+    },
+    "shutdown": {
+      "required": {},
+      "correlated": false
+    },
+    "shutdown_ack": {
+      "required": {
+        "pending_count": "integer"
+      },
+      "correlated": true
+    },
+    "error": {
+      "required": {
+        "code": "string",
+        "detail": "string",
+        "fatal": "boolean"
+      },
+      "correlated": false
+    },
+    "diagnostic": {
+      "required": {
+        "index": "integer"
+      },
+      "correlated": false
+    }
+  }
+}
