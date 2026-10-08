@@ -159,6 +159,9 @@ void normal_tests(Platform& p,Renderer& r,Trace& trace,Gate& gate,const std::fil
         probe.client.send("dialogue_ack",{},id,stale);probe.step();probe.step();
         gate.cancellations.emplace_back(Json::Object{{"wait",wait},{"status",probe.session.status},{"pending_count",0},
             {"additional_frames",probe.frames-frames},{"additional_ticks",probe.ticks-ticks},{"late_ack_ignored",true}});
+        bool rejected=false;
+        try {probe.session.start(id);} catch(const std::invalid_argument&) {rejected=true;}
+        gate.check(rejected,"native rejects retired session ID reuse");
     }
     probe.session.observed.clear();probe.story_to_choice("checkpoint");
     probe.session.send("checkpoint_request");probe.until([&]{return probe.session.has_checkpoint;},"checkpoint capture");

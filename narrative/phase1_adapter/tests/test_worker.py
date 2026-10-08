@@ -146,6 +146,12 @@ class WorkerTests(unittest.TestCase):
         self.peer.send('shutdown',session='control')
         self.assertEqual(self.peer.receive('shutdown_ack')['payload']['pending_count'],0)
         self.assertEqual(self.peer.process.wait(timeout=3),0)
+    def test_retired_session_cannot_restart(self):
+        self.peer.start();self.peer.receive('dialogue')
+        retired=self.peer.session
+        self.peer.send('cancel_session');self.peer.receive('session_cancelled')
+        self.peer.send('start_session',{'scenario':'story'},session=retired)
+        self.assertEqual(self.peer.receive('error')['payload']['code'],'stale_session')
 
 if __name__=='__main__':
     unittest.main()
