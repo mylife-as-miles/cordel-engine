@@ -1,91 +1,65 @@
-# CORDEL architecture proposal
+# CORDEL architecture
 
-Status: proposal based on [the source audit](ARCHITECTURE_AUDIT.md), now informed by
-the isolated [Phase 1.1 reference viewport](PHASE_1_1_VIEWPORT.md) and
-[Phase 1.2 native host](PHASE_1_2_NATIVE_HOST.md) and
-[Phase 1.3 narrative boundary](PHASE_1_3_NARRATIVE_OWNERSHIP.md).
-The proposed production subsystems/interfaces below remain unimplemented.
-CORDEL's focus is cinematic third-person narrative games; budgets and integration
-cost must drive scope before feature breadth.
+Status: **accepted runtime/narrative ownership architecture** under
+[ADR 0001](adr/0001-runtime-narrative-ownership.md), dated 2026-10-08.
+The [Phase 1 conclusion](PHASE_1_ARCHITECTURE_DECISION.md) indexes fresh validation.
+Production subsystems below remain future work unless their reference implementation
+is explicitly named. CORDEL focuses on cinematic third-person narrative games.
 
-## Runtime ownership decision
+## Accepted decisions
 
-| Direction | Strengths | Costs and risks | Assessment |
-| --- | --- | --- | --- |
-| Ren'Py remains primary runtime; expand displayables/GL renderer | Lowest initial disruption; dialogue, UI, packaging and saves continue working; existing static glTF gives a short viewport path | Nested blocking interactions, global stores, idle/redraw policy, display-tree rendering, no world culling; growing native gameplay integration can become tightly coupled | Useful Phase 1 comparison and near-term prototype; weakest fit for large continuous 3D worlds |
-| New native runtime hosts adapted Ren'Py narrative in process | Explicit simulation/render ownership; native scene/physics/animation performance; Python retained for story/tools | Ren'Py is not an externally pumped library; UI/character execution, restart, GIL, save/rollback and native module packaging need adapters or controlled refactoring | Recommended long-term direction, conditional on integration spike results |
-| New native runtime and separate Ren'Py process | Strong failure/lifetime isolation; preserve an independently running original engine | IPC latency, input/window/audio ownership, compositing, two-process packaging, coordinated saves and deterministic command acknowledgments | Viable development/reference harness; production use needs measured UX and packaging justification |
-| Replace narrative implementation with a new runtime | Small purpose-built integration surface | Loses much of the stated reason for Ren'Py; parser compatibility, rollback, translation and authoring semantics become a new project | Do not choose without evidence that adaptation is more expensive than replacement |
+**CORDEL is a native real-time engine with an independent narrative service
+boundary. Ren'Py contributes narrative technology; it does not own CORDEL.**
 
-**Recommendation:** make CORDEL's world runtime authoritative for continuous
-gameplay and use a Ren'Py-derived narrative subsystem behind an explicit boundary.
-Retain the original Ren'Py application as the behavioral reference during migration.
-Do not claim existing Ren'Py can simply be called once per frame: Say/Menu execute
-interactions synchronously today. Hosting requires an explicit resumable execution
-adapter or a measured separate-process bridge.
+| Decision | Status |
+| --- | --- |
+| Runtime authority | Native CORDEL owns lifecycle, platform/input, clock, world/scene/camera, gameplay, rendering/GPU resources and future physics/animation/AI/cinematics |
+| Narrative contract | Accepted: explicit transport-independent typed requests, commands/results, events, facts, checkpoints and cancellation using stable IDs |
+| Current narrative hosting | Native runtime + isolated Ren'Py worker is the default/reference implementation for subsequent development; permanent two-process shipping is not required |
+| Embedded Ren'Py/Python | Deferred candidate optimization/deployment architecture; no GIL/lifecycle/ABI/reentrancy/restart evidence yet |
+| Ren'Py-primary runtime | Rejected for production real-time 3D world ownership; retain original application/source as the behavioral reference |
+| Narrative rewrite/replacement | Rejected for current scope; reconsider only with measured adapter-maintenance cost exceeding replacement of the supported subset |
+| Development renderer | OpenGL Core, executed C++20/SDL3 native reference |
+| Production renderer | Undecided; no permanent OpenGL/API commitment |
+| Production presentation/audio | CORDEL owns in-game UI/input routing and future real-time audio device/world mix; narrative supplies semantic cues |
 
-Accept this ownership decision only after comparing a Ren'Py viewport spike with
-a small native host spike, including dialogue wait/resume, window/input ownership,
-frame stalls, exception/restart handling and packaging. If adaptation cost exceeds
-available resources, retain Ren'Py as primary for a bounded prototype and document
-its limits. Do not silently weaken the long-term 3D requirements.
+[Source audit](ARCHITECTURE_AUDIT.md) and executed [1.1](PHASE_1_1_VIEWPORT.md),
+[1.2](PHASE_1_2_NATIVE_HOST.md), [1.3](PHASE_1_3_NARRATIVE_OWNERSHIP.md) experiments
+support this decision. Ren'Py rendered a meaningful continuously updated viewport,
+but simulation followed render invalidation, assets followed prediction/cache,
+and gameplay shared UI input and virtual-screen assumptions. Native ownership
+proved independent fixed ticking/interpolation and explicit GL deletion. The real
+AST worker waits/branches/fails while the world retains its clock and resources.
 
-Phase 1.1 demonstrates continuous static 3D rendering, real perspective/depth,
-time-based camera movement and an ordinary Say wait using existing Ren'Py facilities.
-It also observes cached draws outnumbering simulation updates, prediction-owned
-asset eviction, coupled hover/controller input ownership and virtual-aspect resize/
-screenshot assumptions. The isolated adapter pins its own importer data and
-uses drawable aspect. These are comparison evidence, not a production API.
-Phase 1.2's software gate now passes: a C++20/SDL3/OpenGL core reference host
-renders the same fixture with independent fixed ticking, interpolation and
-deterministic scene/GL owners. Controlled and uncapped render rates still service
-the same 60 Hz accumulator. Actual delete calls and zero owner counters are
-verified; driver memory reclamation is not. There is no narrative integration.
+These are software, tiny-fixture results. Native authority does not eliminate
+single-thread GL stalls: per-frame diagnostic glFinish bounds submissions, and
+SDL offscreen resize recreates an EGL surface. Neither is a production GPU queue
+or visible desktop test. The worker still loads Ren'Py globals/common scripts and
+SDK modules, uses explicit dynamic-context cleanup, and lacks full Character,
+localization, UI/audio and save compatibility. All device/hardware, durable-save,
+other-OS transport and long-soak gates remain open. Historical experiment reports
+retain their original recommendations; ADR 0001 is the current decision authority.
 
-Native ownership made offscreen EGL surface recreation and draw-queue backpressure
-explicit. An unbounded uncapped trial blocked simulation and grew RSS; diagnostic
-glFinish bounds work, with separately labeled CPU wait. This remains one thread,
-so fixed ticking does not eliminate driver stalls. Relative-mode request/event
-tests are not physical mouse evidence. Proceed to Phase 1.3's narrative ownership
-experiment; defer the final decision to Phase 1.4. Desktop/device, DPI, driver
-residency and production queue/platform evidence remain open.
-
-Phase 1.3 now passes its Linux software ownership gate. A real headless Ren'Py
-AST worker communicates through versioned bounded JSONL pipes while the native
-60 Hz world keeps its clock, SDL input, GL context and resource ownership. Dialogue,
-choice and gameplay-event waits show 24–25 ticks and 24 rendered frames over roughly
-0.4 s, without dropped simulation time. Script exceptions, worker death, cancellation
-and finite queue overflow release narrative ownership without stopping the world.
-A fixture checkpoint restores native+narrative primitive state without replaying its
-world command; rollback across that command is rejected.
-
-This is an isolated, serial, fixture-scoped adapter. It still initializes Ren'Py
-common scripts/globals and SDK modules, uses explicit context cleanup, lacks full
-Character/UI/audio/save compatibility, and adds process/packaging/queue latency.
-There is no in-process/GIL evidence yet. Phase 1.4 must compare all four alternatives
-above; no production hosting choice is made by this experiment. Device/hardware,
-other-OS transport, long-soak, arbitrary-script and durable-save gates remain open.
-
-## Proposed boundaries
+## Accepted ownership and future subsystem boundaries
 
 ```mermaid
 flowchart TD
-    Editor[Editor and asset tools] --> Assets[Versioned asset pipeline]
-    Editor --> World[Scene and gameplay runtime]
-    Platform[Desktop platform services] --> Core[Core lifecycle and scheduler]
-    Core --> World
-    World --> Physics[Physics and character simulation]
-    World --> Animation[Animation and AI]
-    World --> Render[Render extraction and backend]
-    Assets --> World
-    Assets --> Render
-    World <-->|Commands, events, checkpoints| Narrative[Ren'Py narrative adapter]
-    Narrative --> UI[Dialogue and UI presentation]
-    World --> Cinematics[Cinematic sequencer]
-    Cinematics --> Audio[Audio service]
-    Cinematics --> Render
-    Narrative --> Audio
-    UI --> Render
+    subgraph CORDEL[CORDEL native runtime]
+        Platform[Platform and lifecycle] --> Input[Native input snapshot]
+        Input --> World[Fixed world and gameplay]
+        World --> Extraction[Interpolated render extraction]
+        Extraction --> Renderer[Renderer: current OpenGL Core]
+        World --> Physics[Future physics]
+        World --> Animation[Future animation and AI]
+        World --> Cinematics[Future cinematics]
+        World --> Audio[Future native audio mix]
+        World --> UI[Future native in-game presentation]
+        World <--> Service[Narrative service boundary]
+        UI <--> Service
+        Service --> Audio
+    end
+    Service <-->|Typed requests, commands, events, facts| Narrative[RenPy-derived narrative runtime]
+    Narrative --> Hosting[Current worker; replaceable transport and hosting]
 ```
 
 All subsystem contracts start as internal interfaces. A stable public plugin ABI
@@ -109,29 +83,38 @@ is premature. No dependency is introduced merely to make this diagram real.
 
 ### Scheduling, memory and ownership
 
-Proposed frame order: collect OS events → update action snapshots → process queued
-narrative commands → bounded fixed world/physics ticks → animation/AI/cinematic
-updates → publish scene render snapshot → compose UI and submit rendering/audio
-cues → service bounded asset/background jobs. A presentation rate different from
-the fixed tick uses interpolation. Use a monotonic clock, cap catch-up after long
-stalls, and clear held inputs on focus loss. The initial fixed-rate candidate is
-60 Hz; measure before adopting it as a content contract.
+Accepted frame order: platform events → native action snapshot → bounded narrative
+message pump → fixed world ticks (gameplay / future physics / AI / command application)
+→ animation/cinematic state → interpolated render extraction → renderer submission
+→ presentation → bounded service/background work. Commands mutate world only on its
+authoritative thread/boundary; an I/O callback cannot apply them. Pause/resume/cancel
+and checkpoint control use an explicit world-thread safe boundary while ticks pause.
+Narrative waiting itself never pauses the world.
 
-Renderer owns GPU handles and fence-delayed destruction; simulation owns world
-objects and generational IDs; asset service owns immutable cooked data and refcounts;
-Python owns narrative state. Explicit RAII lifetimes and memory budgets are more
-valuable initially than a custom global allocator. Native systems must not depend
-on Python GC finalizers for GPU/physics teardown. Keep Python out of per-vertex,
-per-bone and per-contact hot loops; batch facts/commands across the boundary.
+Initial fixed development target: **60 Hz**, max **three catch-up ticks/frame**,
+whole excess backlog dropped with diagnostics and a retained sub-tick interpolation
+remainder. Physics must use this fixed clock, never presentation delta. Previous/
+current snapshots interpolate position/pitch and shortest-arc yaw; no extrapolation.
+Pause keeps events, presentation and narrative communication running; reset clock
+debt so resume cannot trigger giant catch-up. Tick rate is not a permanent content ABI.
 
-Begin with one simulation thread and controlled graphics ownership. Add job/thread
-parallelism only after profiling. No worker thread calls Ren'Py UI/global state.
-Treat Python GIL ownership and reentrancy as explicit embedding rules; a
-background thread does not make its synchronous interactions nonblocking.
+The main/world thread owns SDL, simulation and the current GL context, including
+GL creation/deletion. The narrative I/O thread owns transport/framing/queues only;
+Ren'Py executes in its worker process. Renderer resources die before context/window
+teardown. Joins/reaping are bounded teardown work, never active simulation waits.
+Do not add a render/physics thread, job system, task graph or pool before profiling.
+Embedded hosting remains deferred and requires explicit GIL/thread/reentrancy rules.
+
+Renderer owns GPU objects/synchronization; world owns transforms and generation-safe
+identities; future assets own immutable runtime data; narrative owns story state.
+Use stable typed IDs across world↔narrative/renderer/physics/editor. No raw pointers,
+GL handles or mutable scene references cross those subsystem contracts. Python GC
+must not determine GPU/physics teardown. Start with RAII/accounting rather than a
+custom allocator. Keep Python out of world per-vertex/per-bone/per-contact loops.
 
 ### Narrative/gameplay protocol
 
-Define versioned logical messages, independent of in-process versus IPC transport:
+The accepted interface uses versioned logical messages, independent of transport:
 
 - `WorldFact`: stable object/story ID, revision, typed value and simulation tick.
 - `NarrativeCommand`: session/sequence ID, command ID, target ID, typed payload,
@@ -155,8 +138,11 @@ versioned values, never native handles. Coordinate writes atomically through a
 manifest/checkpoint record and reject incompatible schema/asset revisions before
 mutating the live scene. Native state and Ren'Py pickle/rollback state need distinct
 serialization and coordinated restore. Narrative rollback either restores a world
-checkpoint/compensates effects or stops at a declared boundary. Exact behavior
-for gameplay autosaves and legacy Ren'Py save compatibility remains unresolved.
+checkpoint/compensates effects or stops at a declared boundary. Durable transaction/restore behavior remains future work. Phase 1.3's primitive
+fixture checkpoint is feasibility evidence, not legacy Ren'Py save compatibility.
+Default rollback is only inside explicitly rollback-safe narrative regions; stop
+at irreversible world effects unless coordinated restore or explicit compensation
+is implemented. Do not automatically reverse arbitrary gameplay commands.
 
 ### Cinematic handoff and asset contracts
 
@@ -167,15 +153,15 @@ possible. Animation root motion, camera blends, dialogue cues and audio clocks
 need a shared timeline; wall-clock callbacks alone are insufficient. Seek/skip
 must not repeat side effects or leave camera/input locked.
 
-Choose a documented coordinate convention before the first mesh import: handedness,
-up axis, meters, quaternion layout, transform multiplication and color spaces.
+Keep import/storage conversions explicit: handedness, up axis, metres, quaternion
+layout, transform multiplication and color spaces require documented contracts.
 Ren'Py's glTF importer applies its own axis/scale conversion; isolate that conversion
 in the reference spike. Use glTF 2.0 as an initial interchange candidate, with
 offline validation and dependency hashes. Cooked schema versions must be independent
 of CORDEL's product version. Keep optional features and content complexity budgets
 visible to creators instead of accepting assets the runtime cannot support.
 
-The reference spike provisionally uses glTF's right-handed +Y-up world, -Z camera
+The verified reference convention uses glTF's right-handed +Y-up world, -Z camera
 forward, metres, row-major matrices acting on column vectors (`P * V * M * p`).
 Yaw zero looks -Z; positive yaw turns toward +X (about -Y), positive pitch looks
 up. Its `ASSIMP_TO_WORLD` boundary cancels Ren'Py's imported Y reflection at zoom
@@ -185,7 +171,7 @@ The exact boundary and tests are in the [example README](../../examples/cordel_v
 Keep this as an explicit reference convention when comparing the native spike;
 do not silently promote it to a permanent serialized engine ABI.
 
-## Technology comparisons (no production selections committed)
+## Deferred technology comparisons
 
 | Area/options | Capability and integration | Maintenance, licensing and platform implications | Evaluation gate |
 | --- | --- | --- | --- |
@@ -205,20 +191,72 @@ Verify exact revisions, transitive dependencies, enabled features and distributi
 terms when selecting anything. Compare team effort, source availability and target
 hardware as well as feature lists. Do not introduce all candidate libraries.
 
-## Decisions retained for review
+## Transport, renderer and presentation boundaries
 
-1. **Accepted for Phase 0:** additive CORDEL identity/docs; retain upstream packages,
-   behavior and notices; no full renderer implementation. Upstream history was
-   originally retained, then replaced with fresh CORDEL history at the owner's
-   explicit request; the source foundation hash remains documented.
-2. **Recommended, provisional:** native world authority with a narrative adapter.
-   Decide after scheduling/hosting experiments; record an ADR with measured evidence.
-3. **Open:** renderer API/abstraction and minimum hardware; physics/character library;
-   scene registry; bindings/CPython packaging; in-process versus IPC adapter; audio
-   ownership; animation import/cooking; editor technology; supported desktop matrix.
-4. **Open:** narrative rollback in gameplay, atomic checkpoint schema, legacy save
-   support, cinematic skip/seek policy, content budgets and target frame rate.
+Conceptual NarrativeService operations: start/cancel session, bounded poll of
+semantic events, dialogue ACK, stable choice result, command completion, fact/event
+publication and checkpoint request/restore. ProcessNarrativeTransport,
+InProcessNarrativeTransport and TestNarrativeTransport must preserve the same
+session/correlation/order/cancellation/failure semantics. JSONL and POSIX pipes
+are the current encoding/transport, not required by world/gameplay code.
 
-Progress by vertical slices. Phase 1's viewport is not a promise of PBR, full
-skeletal animation, collision, editor, or production platform support. Those
-features each require their own implementation, measurement and exit criteria.
+Current prototype debt is explicit: Session holds Client&; Client combines Linux
+process/framing/queues; Session applies beacon visibility directly through Renderer;
+FrameBoundary takes Renderer&; Renderer stores CPU scene state and exposes GL types.
+No interchangeable transport or render-packet abstraction is implemented yet.
+Before wider Phase 2 integration, extract only the needed logical service seam and
+authoritative world/render extraction seam with reference regressions intact.
+Gameplay collision code must not learn OpenGL IDs or physics-library pointers.
+
+Conceptual renderer data: RenderFrame, ViewData, VisibleMesh, MaterialHandle,
+LightData and DebugDraw. The renderer owns buffers, programs, textures, targets,
+fences/synchronization and submission; world submits immutable extracted state.
+Production synchronization/recovery remains undecided. glFinish is diagnostic;
+zero owner counters/deletion calls do not prove physical driver memory release.
+
+CORDEL owns production HUD/dialogue/subtitle/accessibility/cinematic presentation
+and its input modes. Narrative supplies speaker/text IDs/options/hints, then waits
+for CORDEL completion. Current Gameplay/NarrativeAcknowledge/NarrativeChoice modes
+retain WASD gameplay ownership and route Enter/1/2 separately. Focus loss clears
+held/analog/presentation input; Escape releases capture. Native owns the future
+audio device/world mix: narrative voice/music/dialogue/cinematic cues feed that
+service rather than starting a competing Ren'Py mixer. UI/audio are not implemented.
+
+## Platform, budgets and open qualification
+
+Linux x86_64 is the primary engineering environment; verified scope is Debian
+13.6, SDL offscreen and Mesa llvmpipe. Windows x86_64 is the next platform
+qualification target; current POSIX transport/build paths are not Windows-certified.
+macOS is planned after a viable backend path. No minimum hardware specification
+follows from software rendering.
+
+Provisional Phase 2 development targets: fixed 60 Hz; world/physics <4 ms on a
+future documented reference machine; total main-thread CPU frame <16.67 ms at
+60 fps; bounded/nonblocking narrative processing; no dropped simulation during
+normal operation. Forced-stall drop is measured separately. Profile before
+changing targets; CPU wall fragments/process CPU are not GPU timings.
+
+Open production gates: visible accelerated desktop GPU/pacing/GPU queries,
+resource lifetime, resize/fullscreen/DPI/context failure; physical keyboard,
+relative mouse/Escape/alt-tab, multiple controllers/hotplug/focus loss; longer
+scripts, localization/voice/Character/large choices, worker restart and durable
+checkpoint/save; Linux and Windows deployment, eventual macOS. Dedicated embedding
+must prove GIL/interpreter/global/restart/ABI/thread/exception/device suppression/
+shutdown/packaging behavior. These gates do not all block Phase 2 experiments.
+
+## Decisions retained and deferred
+
+1. **Retained:** additive CORDEL code, original Ren'Py reference/packages/notices,
+   fresh CORDEL history at the owner's request; upstream hash remains provenance.
+2. **Accepted by ADR 0001:** native runtime authority, transport-independent narrative
+   service, current isolated-worker default, native input/UI/future audio ownership,
+   coordinated checkpoint direction and explicit rollback-safe boundaries.
+3. **Deferred:** production renderer/API, physics selection, scene registry/ECS,
+   animation, audio/UI implementation, editor, embedding/permanent narrative deployment,
+   full save/legacy compatibility and cinematic skip/seek semantics.
+
+**Next: Phase 2.1 — Collision / Query Adapter.** Compare Jolt and Bullet using
+capsule sweeps/raycasts/static collision, slopes/steps/triggers/layers/contacts,
+ordered native events, fixed-clock cost, build footprint, exact licenses and
+Linux/Windows viability. Optional query-only baseline if informative. Do not
+begin physics, character motor or animation during the ADR milestone.
