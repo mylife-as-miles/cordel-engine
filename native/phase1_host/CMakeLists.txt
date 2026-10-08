@@ -90,3 +90,15 @@ if(BUILD_TESTING)
   add_test(NAME narrative_python_protocol COMMAND ${Python3_EXECUTABLE} -m unittest discover
     -s ${CMAKE_CURRENT_SOURCE_DIR}/../../narrative/phase1_adapter/tests -p test_protocol.py -v)
 endif()
+
+# Phase 2.1: exactly one CPU collision backend in the native world host.
+set(CORDEL_PHYSICS_BACKEND "Jolt" CACHE STRING "Selected development query backend")
+set_property(CACHE CORDEL_PHYSICS_BACKEND PROPERTY STRINGS Jolt Bullet)
+if(NOT CORDEL_PHYSICS_BACKEND MATCHES "^(Jolt|Bullet)$")
+  message(FATAL_ERROR "CORDEL_PHYSICS_BACKEND must be Jolt or Bullet")
+endif()
+set(CORDEL_PHYSICS_BACKENDS "${CORDEL_PHYSICS_BACKEND}" CACHE STRING "Host links one adapter" FORCE)
+set(CORDEL_PHYSICS_TESTS OFF CACHE BOOL "Standalone physics gate tests both candidates" FORCE)
+add_subdirectory(../physics physics)
+string(TOLOWER ${CORDEL_PHYSICS_BACKEND} cordel_selected_physics)
+target_link_libraries(cordel-native-host PRIVATE cordel_physics_${cordel_selected_physics})

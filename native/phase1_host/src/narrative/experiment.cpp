@@ -60,16 +60,17 @@ public:
     }
     void hold(std::string type,double duration=.4,bool paused=false) {
         pending(type);auto initial_frames=frames,initial_ticks=ticks;
-        auto initial_dropped=dropped;Vec3 before=runner.simulation.current.position;
+        auto initial_dropped=dropped;auto initial_physics_ticks=runner.physics.ticks();Vec3 before=runner.simulation.current.position;
         double start=monotonic_seconds(),local_worst=0;
         while(monotonic_seconds()-start<duration) {step();local_worst=std::max(local_worst,last.step.raw);}
         Json record=Json::Object{{"session_id",session.id},{"wait_type",type},{"wall_seconds",monotonic_seconds()-start},
-            {"simulation_ticks",ticks-initial_ticks},{"render_frames",frames-initial_frames},{"dropped_seconds",dropped-initial_dropped},
+            {"physics_ticks",std::size_t(runner.physics.ticks()-initial_physics_ticks)},{"simulation_ticks",ticks-initial_ticks},{"render_frames",frames-initial_frames},{"dropped_seconds",dropped-initial_dropped},
             {"worst_render_interval_ms",local_worst*1000},{"camera_distance",length(runner.simulation.current.position-before)},
             {"explicit_pause",paused},{"wait_still_pending",session.pending_type()==type}};
         gate_.continuity.push_back(record);session.log("continuity_sample",{{"sample",record}});
         gate_.check(frames-initial_frames>=10,"render continues during "+type,record);
         gate_.check(paused?ticks==initial_ticks:ticks-initial_ticks>=12,"simulation policy during "+type,record);
+        gate_.check(runner.physics.ticks()-initial_physics_ticks==ticks-initial_ticks,"physics follows native ticks during "+type,record);
         gate_.check(session.pending_type()==type,"wait remains unacknowledged during continuity sample");
     }
     void handshake() {until([&]{return session.ready();},"headless RenPy handshake");}

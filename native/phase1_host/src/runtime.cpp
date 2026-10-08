@@ -18,10 +18,14 @@ FrameSample FrameRunner::next(Platform& platform,Renderer& renderer) {
     if(paused) clock_.reset();
     auto step=clock_.advance(paused?0:raw);
     if(paused) step.raw=raw;
-    double camera_ms=0;
+    double camera_ms=0,physics_ms=0;
     unsigned scheduled=step.ticks;step.ticks=0;
     for(unsigned tick=0;tick<scheduled;++tick) {
         if(boundary&&boundary->paused()) break;
+        double physics_start=monotonic_seconds();
+        auto position=simulation.current.position;
+        physics.fixed_tick({position.x,position.y,position.z});
+        physics_ms+=(monotonic_seconds()-physics_start)*1000;
         double tick_start=monotonic_seconds();simulation.tick(platform.input);
         ++step.ticks;
         camera_ms+=(monotonic_seconds()-tick_start)*1000;
@@ -40,6 +44,7 @@ FrameSample FrameRunner::next(Platform& platform,Renderer& renderer) {
     double completion_ms=(monotonic_seconds()-completion_start)*1000;
     double present_start=monotonic_seconds();platform.present();
     return {++frames_,step,event_ms,sim_ms,camera_ms,render.prep_ms+extraction_ms,
-            render.submit_ms,completion_ms,(monotonic_seconds()-present_start)*1000};
+            render.submit_ms,completion_ms,(monotonic_seconds()-present_start)*1000,
+            physics_ms,physics.ticks(),physics.live(),physics.ground?physics.ground->distance:-1.,physics.overlaps};
 }
 }

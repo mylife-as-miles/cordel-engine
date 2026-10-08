@@ -1,6 +1,7 @@
 // Copyright (c) 2026 CORDEL contributors. MIT.
 #pragma once
 #include "cordel/diagnostics.hpp"
+#include "cordel/physics_runtime.hpp"
 
 namespace cordel {
 class FrameBoundary {
@@ -18,6 +19,7 @@ class FrameRunner {
     double previous_time_{monotonic_seconds()};
     std::size_t frames_{};
 public:
+    PhysicsRuntime physics; // CPU world lifetime; independent of GL scene lifetime.
     Simulation simulation;
     bool last_forced_stall{};
     double last_movement{};

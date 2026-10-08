@@ -62,7 +62,7 @@ void run_self_test(Platform& p,Renderer& r,Counters& counters,Trace& trace,
     auto logic=logic_checks(scene);
     trace.event("logic_checks",{{"passed",logic},{"context_independent",true}});
     Json::Array cycles,resize_results;
-    Json depth;
+    Json depth;Json::Array physics_cycles;
     for(int cycle=0;cycle<5;++cycle) {
         check.require(counters.empty(),"zero counters before scene load");
         r.load(scene);
@@ -163,9 +163,10 @@ void run_self_test(Platform& p,Renderer& r,Counters& counters,Trace& trace,
                 {"analog_logic_tested",true},{"physical_controller_verified",false}});
             // Actual F6 -> common loop sleep -> clock -> ticks -> render path.
             push_window(SDL_EVENT_WINDOW_FOCUS_GAINED);push_key(SDL_SCANCODE_W);push_key(SDL_SCANCODE_F6);
-            runner.reset();auto stall=runner.next(p,r);
+            runner.reset();auto physics_stall_before=runner.physics.ticks();auto stall=runner.next(p,r);
             check.require(runner.last_forced_stall&&stall.step.raw>=.25,"actual F6 250ms forced stall");
             check.require(stall.step.ticks==3,"F6 bounded three ticks");
+            check.require(stall.physics_ticks-physics_stall_before==3,"F6 physics executes exactly three fixed steps");
             check.near(stall.step.simulated,.05,"F6 50ms simulated");
             check.near(runner.last_movement,.15,"F6 W displacement .150m");
             check.require(stall.step.dropped>.18,"F6 discarded excess backlog");
@@ -179,12 +180,18 @@ void run_self_test(Platform& p,Renderer& r,Counters& counters,Trace& trace,
         // Five sessions actually render and move, then unload all per-scene GL objects.
         p.release();push_window(SDL_EVENT_WINDOW_FOCUS_GAINED);push_key(SDL_SCANCODE_W);
         runner.reset();
+        auto physics_before=runner.physics.ticks();
         unsigned tick_count=0;
         for(int f=0;f<6;++f) {
             std::this_thread::sleep_for(std::chrono::milliseconds(17));
             auto frame=runner.next(p,r);tick_count+=frame.step.ticks;
         }
         check.require(tick_count>=6,"lifecycle session executed fixed ticks");
+        check.require(runner.physics.ticks()-physics_before==tick_count,"physics and world fixed tick counts agree");
+        check.require(runner.physics.live().bodies==26&&runner.physics.live().shapes==26,"native collision fixture plus capsule body live");
+        runner.physics.clear();
+        check.require(runner.physics.live().bodies==0&&runner.physics.live().shapes==0,"native physics explicit unload zero handles");
+        physics_cycles.emplace_back(Json::Object{{"cycle",cycle+1},{"physics_ticks",std::size_t(runner.physics.ticks()-physics_before)},{"live_bodies_after_clear",runner.physics.live().bodies},{"live_shapes_after_clear",runner.physics.live().shapes}});
         p.release();r.unload();r.check();
         check.require(counters.empty(),"all per-scene GL objects destroyed");
         check.require(counters.created==counters.destroyed,"GL creation/destruction balanced");
@@ -196,6 +203,9 @@ void run_self_test(Platform& p,Renderer& r,Counters& counters,Trace& trace,
     }
     write_json(out/"lifecycle.json",Json::Object{{"cycles",cycles},{"per_scene_program",true},
         {"host_global_gl_objects",0},{"final_live_resources",json_resources(counters)}});
+    auto physics_live=physics::PhysicsWorld::global_live();
+    check.require(physics_live.worlds==0&&physics_live.bodies==0&&physics_live.shapes==0,"native host physics worlds destroyed");
+    write_json(out/"physics-integration.json",Json::Object{{"success",true},{"cycles",physics_cycles},{"final_live",Json::Array{physics_live.worlds,physics_live.shapes,physics_live.bodies}},{"fixed_hz",60},{"max_catchup_ticks",3},{"camera_collision_response",false}});
     write_json(out/"self-test.json",Json::Object{{"success",true},{"native_logic_checks",logic},
         {"graphics_runtime_checks",check.passed},{"scene_cycles",5},
         {"hardware_verified",false},{"gpu_timing","unavailable"}});

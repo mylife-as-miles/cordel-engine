@@ -4,6 +4,7 @@
 #include "cordel/platform.hpp"
 #include "cordel/renderer.hpp"
 #include <fstream>
+#include "cordel/physics/types.hpp"
 
 namespace cordel {
 Json json_vector(Vec3 v);
@@ -21,6 +22,8 @@ struct FrameSample {
     std::size_t id{};
     FixedStep step;
     double events_ms{},simulation_ms{},camera_ms{},prep_ms{},submit_ms{},completion_ms{},present_ms{};
+    double physics_ms{};std::uint64_t physics_ticks{};physics::LiveCounts physics_live;
+    double ground_distance{-1};std::size_t physics_overlaps{};
 };
 Json::Object frame_record(const FrameSample&,const Platform&,const Camera&,const Counters&);
 struct Statistics {

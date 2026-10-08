@@ -136,6 +136,9 @@ int main(int argc,char** argv) {
                 {"success",true},{"after_full_host_destruction",true},{"resources",cordel::json_resources(counters)}});
         }
         if(!counters.empty()) throw std::runtime_error("Live resources at final shutdown");
+        auto physics_live=cordel::physics::PhysicsWorld::global_live();
+        if(physics_live.worlds||physics_live.bodies||physics_live.shapes) throw std::runtime_error("Live physics handles at host shutdown");
+        trace.event("physics_shutdown",{{"live_worlds",physics_live.worlds},{"live_shapes",physics_live.shapes},{"live_bodies",physics_live.bodies},{"allocator_reclamation_measured",false}});
         trace.event("host_shutdown",{{"live_resources",cordel::json_resources(counters)},
             {"window_context_destroyed",true},{"driver_memory_release","not measured"}});
         return 0;
