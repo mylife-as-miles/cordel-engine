@@ -61,7 +61,7 @@ public:
             using T=std::decay_t<decltype(v)>;
             if constexpr(std::is_same_v<T,std::nullptr_t>) return "null";
             else if constexpr(std::is_same_v<T,bool>) return v?"true":"false";
-            else if constexpr(std::is_same_v<T,double>) { std::ostringstream o; o<<std::setprecision(12)<<v; return o.str(); }
+            else if constexpr(std::is_same_v<T,double>) { std::ostringstream o; o<<std::setprecision(17)<<v; return o.str(); }
             else if constexpr(std::is_same_v<T,std::string>) return quote(v);
             else {
                 std::string s=std::is_same_v<T,Array>?"[":"{";

@@ -96,7 +96,8 @@ class WorkerTests(unittest.TestCase):
             done=self.peer.receive('session_completed')['payload']
             self.assertEqual(done,dict(outcome=branch,counter=counter,beacon_fact=True))
     def test_malformed_suite_worker_survives(self):
-        for line in [b'{broken\n',b'{}\n',b'{"protocol_version":"wrong"}\n']:
+        for line in [b'{broken\n',b'{}\n',b'{"protocol_version":"wrong"}\n',
+                     b'{"x":'+b'9'*1000+b'}\n']:
             self.peer.raw(line)
             self.assertEqual(self.peer.receive('error')['payload']['code'],'malformed')
         base=dict(protocol_version=VERSION,session_id='control',message_id='bad',sequence=200,type='hello',payload={'client':'tests'})

@@ -11,6 +11,7 @@ int main() {
         Json m=Json::Object{{"protocol_version",narrative::version},{"session_id","control"},{"message_id","n-1"},
             {"sequence",1},{"type","hello"},{"payload",Json::Object{{"client","CORDEL"}}}};
         check(protocol.decode(m.dump()).dump()==m.dump());
+        check(Json::parse(Json(9007199254740991.).dump()).number()==9007199254740991.);
         check(Json::parse("\"\\u00e9\\ud83d\\ude00\"").string()=="é😀");
         check(Json::parse("[-1.5e2,true,false,null,{}]").array().size()==5);
         for(const auto& s:{"{","[1,]","01","NaN","1e9999","\"\\ud800\"","\"\\udc00\"","{\"a\":1,\"a\":2}","true false"}) invalid(s);

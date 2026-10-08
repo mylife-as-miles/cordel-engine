@@ -53,7 +53,9 @@ def bounded(value, depth=0):
         raise ValueError("JSON depth limit exceeded")
     if type(value) is str:
         value.encode("utf-8", errors="strict")
-    elif type(value) in (int, float) and not math.isfinite(value):
+    elif type(value) is int and abs(value) > 2**53 - 1:
+        raise ValueError("integer outside exact protocol range")
+    elif type(value) is float and not math.isfinite(value):
         raise ValueError("nonfinite number")
     elif type(value) is dict:
         for key, child in value.items():
