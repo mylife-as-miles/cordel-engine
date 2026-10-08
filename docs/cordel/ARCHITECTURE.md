@@ -2,7 +2,8 @@
 
 Status: proposal based on [the source audit](ARCHITECTURE_AUDIT.md), now informed by
 the isolated [Phase 1.1 reference viewport](PHASE_1_1_VIEWPORT.md) and
-[Phase 1.2 native host](PHASE_1_2_NATIVE_HOST.md).
+[Phase 1.2 native host](PHASE_1_2_NATIVE_HOST.md) and
+[Phase 1.3 narrative boundary](PHASE_1_3_NARRATIVE_OWNERSHIP.md).
 The proposed production subsystems/interfaces below remain unimplemented.
 CORDEL's focus is cinematic third-person narrative games; budgets and integration
 cost must drive scope before feature breadth.
@@ -48,6 +49,22 @@ so fixed ticking does not eliminate driver stalls. Relative-mode request/event
 tests are not physical mouse evidence. Proceed to Phase 1.3's narrative ownership
 experiment; defer the final decision to Phase 1.4. Desktop/device, DPI, driver
 residency and production queue/platform evidence remain open.
+
+Phase 1.3 now passes its Linux software ownership gate. A real headless Ren'Py
+AST worker communicates through versioned bounded JSONL pipes while the native
+60 Hz world keeps its clock, SDL input, GL context and resource ownership. Dialogue,
+choice and gameplay-event waits show 24–25 ticks and 24 rendered frames over roughly
+0.4 s, without dropped simulation time. Script exceptions, worker death, cancellation
+and finite queue overflow release narrative ownership without stopping the world.
+A fixture checkpoint restores native+narrative primitive state without replaying its
+world command; rollback across that command is rejected.
+
+This is an isolated, serial, fixture-scoped adapter. It still initializes Ren'Py
+common scripts/globals and SDK modules, uses explicit context cleanup, lacks full
+Character/UI/audio/save compatibility, and adds process/packaging/queue latency.
+There is no in-process/GIL evidence yet. Phase 1.4 must compare all four alternatives
+above; no production hosting choice is made by this experiment. Device/hardware,
+other-OS transport, long-soak, arbitrary-script and durable-save gates remain open.
 
 ## Proposed boundaries
 

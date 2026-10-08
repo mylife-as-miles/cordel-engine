@@ -6,7 +6,9 @@ codebase, a reproducible development baseline, and an engineering direction.
 Phase 1.1 adds an isolated Ren'Py-backed 3D viewport reference experiment. Phase
 1.2 adds a C++20 native host for the same scene, with executed software evidence
 for fixed updates, interpolation, input and deterministic GL ownership. A
-production CORDEL world/narrative runtime remains proposed.
+production CORDEL world/narrative runtime remains proposed. Phase 1.3 adds a
+fixture-scoped isolated Ren'Py worker; executed software evidence confirms story
+waits and failures leave the native world clock authoritative.
 
 Our long-term focus is third-person gameplay, expressive character animation,
 interactive environments, branching dialogue, and seamless cinematic transitions.
@@ -37,8 +39,12 @@ Naughty Dog technology. This is a specialized narrative engine project.
   host, 60 Hz fixed ticks/interpolation, seven-mesh fixture, depth/resize/stall
   probes, five explicit GL teardown cycles and complete host recreation. Software
   gate passes; physical relative input, controllers, desktop/DPI and driver memory
-  remain unverified. Phase 1.1 is accepted into `main`; Phase 1.2 stays on its
-  review branch. No narrative integration is implemented yet.
+  remain unverified. Phase 1.1 and 1.2 are accepted into `main`.
+- [Narrative ownership](narrative/phase1_adapter/README.md): real Ren'Py AST worker,
+  bounded JSONL, native-owned presentation/input, beacon commands/events/facts,
+  cancellation/failure isolation and one fixture checkpoint. Software gate passes;
+  production narrative compatibility and hosting choice remain open. Phase 1.3
+  stays on its review branch.
 
 The recommended direction is a native real-time runtime hosting a carefully
 isolated narrative adapter. That is a proposal to validate, not an implemented
@@ -56,6 +62,7 @@ environment limits, and test results. Other project documents:
 - [Project metadata](cordel/project.toml): machine-readable identity and foundation commit.
 - [Phase 1.1 findings](docs/cordel/PHASE_1_1_VIEWPORT.md): implementation, measurements and runtime limits.
 - [Phase 1.2 findings](docs/cordel/PHASE_1_2_NATIVE_HOST.md): native host, comparison measurements and open device gates.
+- [Phase 1.3 findings](docs/cordel/PHASE_1_3_NARRATIVE_OWNERSHIP.md): narrative boundary, continuity/failure evidence and compatibility limits.
 
 ## Identity and attribution
 

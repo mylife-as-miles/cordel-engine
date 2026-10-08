@@ -58,23 +58,37 @@ Keep the known history-click failure separate from CORDEL identity changes.
    **Open:** physical relative mouse/alt-tab/controllers, visible desktop/high-DPI,
    hardware/GPU timing, driver residency, long soaks and production frame queue.
    Offscreen resize recreates its EGL surface; glFinish is diagnostic backpressure.
-   Phase 1.1 was fast-forwarded into `main`; Phase 1.2 remains a review branch.
+   Phase 1.1 and Phase 1.2 were fast-forwarded into `main`; Phase 1.2 acceptance
+   into main was verified/pushed on 2026-10-08.
 3. **1.3 Narrative ownership experiment.** Run one line/choice/wait while the
    viewport continues updating. Compare adapter feasibility, UI/input/audio
    ownership, exception/restart and pause behavior. Exit: measurable continuous
    frames during story wait and correct cancellation; keep Ren'Py reference output.
+   Linux software ownership gate **passed 2026-10-08**; see
+   [executed Phase 1.3 findings](PHASE_1_3_NARRATIVE_OWNERSHIP.md). Real headless
+   Ren'Py AST worker, strict versioned JSONL, bounded asynchronous native queues,
+   dialogue/choice/event waits, explicit input routing, actual beacon command/fact,
+   cancellation in three wait states, exception/death/malformed/overflow survival,
+   fixture checkpoint and declared rollback boundary pass. 186 native gate checks,
+   14 Python tests, 23 native protocol assertions and both ordinary reference
+   branches pass; accepted 1.2/1.1/baseline regressions pass. Native GL counts end
+   at zero. Phase 1.3 remains its review branch.
+   **Open:** production script/Character/UI/audio/localization/save compatibility,
+   in-process Python/GIL evidence, other-OS transport, device/hardware/DPI,
+   long soaks, general rollback and durable coordinated saves. Separate-process
+   hosting is an experimental isolation boundary, not the production decision.
 4. **1.4 Runtime/backend ADR.** Choose ownership and next prototype backend based
    on 1.1–1.3 evidence, maintenance effort and platform constraints. Set hardware
    and performance test targets. Exit: reviewed decision with alternatives and
    known gaps, and one automated smoke path on the selected development target.
 
-**Exact next task:** **1.3 — Narrative Ownership Experiment**. Exercise one real
-Ren'Py line/choice/wait while the native reference world's fixed ticks continue.
-Evaluate adapter/transport feasibility and input/window/audio ownership, cancellation,
-exceptions/restart and packaging cost against the intact Ren'Py reference. Preserve
-both experiments and their open device/driver gates. Phase 1.3 has not started;
-do not choose the final production runtime/backend until Phase 1.4. No physics,
-ECS, editor or broader engine rewrite at this gate.
+**Exact next task:** **1.4 — Runtime / Narrative Architecture Decision Record**.
+Review the executed 1.1–1.3 evidence and decide among Ren'Py-primary, native with
+in-process adaptation, native with an isolated worker, and deeper narrative
+refactor/replacement. Weigh compatibility, input/UI/audio, SDK/deployment cost,
+context maintenance, reply latency and failure isolation. Set remaining desktop,
+hardware and packaging gates. Phase 1.4 has not begun; no renderer, physics, ECS,
+editor or generalized scripting implementation belongs in this review milestone.
 
 ## Phase 2 — Third-person character controller
 

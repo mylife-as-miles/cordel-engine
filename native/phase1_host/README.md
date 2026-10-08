@@ -138,3 +138,14 @@ are monotonic durations of CPU code and may include preemption/driver waiting.
 
 See [Phase 1.2 report](../../docs/cordel/PHASE_1_2_NATIVE_HOST.md) for measured
 software results, baseline replay, direct comparison and remaining limits.
+
+## Optional Phase 1.3 narrative experiment
+
+The original no-narrative CLI/reference remains runnable. This branch adds
+`--narrative-test` and `--narrative` (console presentation) through an isolated
+[narrative client](../../narrative/phase1_adapter/README.md). Only those modes spawn
+a separate SDK Python worker; no interpreter is linked into the native world loop.
+Optional `FrameBoundary` hooks pump bounded messages and apply world commands
+outside rendering. Ordinary runs leave the hook null. The new process transport
+uses Linux/POSIX APIs; other-OS builds of this addition have not been validated.
+The current CTest flow includes two additional protocol targets.

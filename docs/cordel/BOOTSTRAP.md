@@ -263,3 +263,22 @@ SDL_VIDEODRIVER=offscreen SDL_AUDIODRIVER=dummy LIBGL_ALWAYS_SOFTWARE=1 \
 it on constrained hosts. Reconcile known test failures separately. A full native
 build, hardware graphics run, audible audio, interactive launcher, all sample
 projects, mobile/web packaging, and full game save/load remain unverified.
+
+## Narrative ownership experiment (Phase 1.3)
+
+The [isolated adapter](../../narrative/phase1_adapter/README.md) uses this same
+pinned SDK/Python and Phase 1.2 CMake/SDL/cgltf setup. No extra dependency or system
+installation is required. It does not resolve the source-native build blockers.
+
+```sh
+bash narrative/phase1_adapter/tools/run_offscreen.sh tmp/my-narrative-run
+```
+
+Verified 2026-10-08: four CTest targets, 14 Python protocol/real-worker tests,
+186 native ownership checks and both ordinary Ren'Py reference branches pass.
+Worker executes checkout AST using the SDK with dummy drivers and never starts
+a display interaction. World uses the original native offscreen scene/clock.
+The 1.2, 1.1 and focused baseline wrappers pass afterward; known full suites stay
+separate. See [Phase 1.3 findings](PHASE_1_3_NARRATIVE_OWNERSHIP.md) and archived
+[evidence](evidence/phase1_3/README.md). Linux/POSIX transport is verified;
+visible desktop/devices and in-process embedding are not.

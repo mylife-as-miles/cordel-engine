@@ -3,8 +3,8 @@ schema_version = 1
 name = "CORDEL ENGINE"
 version = "0.1.0-dev"
 display_name = "CORDEL ENGINE — 0.1.0-dev"
-milestone = "Phase 1.2 — Native Host Comparison Spike"
-status = "native-comparison-software-verified-desktop-pending"
+milestone = "Phase 1.3 — Narrative Ownership Experiment"
+status = "narrative-ownership-fixture-software-verified"
 
 [repository]
 url = "https://github.com/mylife-as-miles/cordel-engine"
@@ -27,3 +27,5 @@ viewport_reference = "examples/cordel_viewport"
 report = "docs/cordel/PHASE_1_1_VIEWPORT.md"
 native_reference = "native/phase1_host"
 native_report = "docs/cordel/PHASE_1_2_NATIVE_HOST.md"
+narrative_reference = "narrative/phase1_adapter"
+narrative_report = "docs/cordel/PHASE_1_3_NARRATIVE_OWNERSHIP.md"
