@@ -1,0 +1,179 @@
+{
+  "selected_development_backend": "Jolt",
+  "correctness": "Both candidates pass the same scenarios; no Bullet correctness failure found",
+  "rationale": "Jolt's explicit penetration/subshape shape-query results and inspected character-query facilities fit the next motor experiment; warmed capsule/ray medians and fixed-step cost are measured, not an exclusive performance win. Larger executable and build are accepted. Bullet remains a tested comparison adapter.",
+  "categories": {
+    "capsule_sweeps": "both pass",
+    "raycasts_overlaps": "both pass",
+    "contact_normals": "both pass outward/unit and analytic checks",
+    "step_slope_suitability": "both pass 5 slopes, 5 steps, blocked/clear doors and ceiling",
+    "sensors": "both pass query-derived begin/persist/end",
+    "lifetime": "both pass five cycles and stale/cross-world IDs",
+    "fixed_step": "both 60Hz, three catch-up ticks",
+    "linux": "both verified GCC14.2",
+    "windows": "pending both",
+    "adapter_complexity": "two small private adapters, Jolt additionally registers process-global types; Bullet uses synchronous callbacks",
+    "production_motor": "not implemented or certified"
+  },
+  "measurements": {
+    "jolt": {
+      "metrics": [
+        {
+          "name": "ray",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 0.6926520127308322,
+          "median_of_medians_us": 0.6910004231031053,
+          "worst_observed_us": 0.7610005923197605
+        },
+        {
+          "name": "capsule_sweep",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 1.2674500121647725,
+          "median_of_medians_us": 1.1920001270482317,
+          "worst_observed_us": 26.18000053189462
+        },
+        {
+          "name": "overlap",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 4.59686599788256,
+          "median_of_medians_us": 4.417000127432402,
+          "worst_observed_us": 26.94100021471968
+        },
+        {
+          "name": "fixed_step_static",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 0.20190800205455162,
+          "median_of_medians_us": 0.20000061340397224,
+          "worst_observed_us": 0.41100065573118627
+        },
+        {
+          "name": "ray",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 0.4204113933155895,
+          "median_of_medians_us": 0.4109997462364845,
+          "worst_observed_us": 19.78999989660224
+        },
+        {
+          "name": "capsule_sweep",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 0.9260528002414503,
+          "median_of_medians_us": 0.8910001270123757,
+          "worst_observed_us": 57.64700017607538
+        },
+        {
+          "name": "overlap",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 4.6118665937683545,
+          "median_of_medians_us": 4.356000317784492,
+          "worst_observed_us": 213.60299979278352
+        },
+        {
+          "name": "fixed_step_static",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 0.2053168023849139,
+          "median_of_medians_us": 0.19999970390927047,
+          "worst_observed_us": 19.3089999811491
+        }
+      ],
+      "initialization_mean_ms": 0.250801199763373,
+      "initialization_median_ms": 0.2643489997353754,
+      "initialization_worst_ms": 0.31599799967807485,
+      "peak_rss_kib": 13440,
+      "build": {
+        "build_seconds": 51.06644466899979,
+        "clean_target_build": true,
+        "binary_bytes": 2492304,
+        "linked_dependency_archive_bytes": 4509818,
+        "dependency_source_bytes": 34234883
+      }
+    },
+    "bullet": {
+      "metrics": [
+        {
+          "name": "ray",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 0.5522280061995843,
+          "median_of_medians_us": 0.5510000846697949,
+          "worst_observed_us": 0.6909995136084035
+        },
+        {
+          "name": "capsule_sweep",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 1.7009899765980663,
+          "median_of_medians_us": 1.702000190562103,
+          "worst_observed_us": 1.8229993656859733
+        },
+        {
+          "name": "overlap",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 6.856179987153155,
+          "median_of_medians_us": 6.454500180552714,
+          "worst_observed_us": 68.88400002935668
+        },
+        {
+          "name": "fixed_step_static",
+          "count_per_repeat": 100,
+          "repetitions": 5,
+          "mean_of_means_us": 4.048511993460124,
+          "median_of_medians_us": 4.005999471701216,
+          "worst_observed_us": 20.290000065870117
+        },
+        {
+          "name": "ray",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 0.6381270026395214,
+          "median_of_medians_us": 0.5709998731617816,
+          "worst_observed_us": 64.07599994417978
+        },
+        {
+          "name": "capsule_sweep",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 1.7665836021478754,
+          "median_of_medians_us": 1.7029997252393514,
+          "worst_observed_us": 74.97299975511851
+        },
+        {
+          "name": "overlap",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 7.530268805930973,
+          "median_of_medians_us": 6.4899995777523145,
+          "worst_observed_us": 413.8149997743312
+        },
+        {
+          "name": "fixed_step_static",
+          "count_per_repeat": 1000,
+          "repetitions": 5,
+          "mean_of_means_us": 4.719421001027513,
+          "median_of_medians_us": 3.9959995774552226,
+          "worst_observed_us": 583.2320002809865
+        }
+      ],
+      "initialization_mean_ms": 1.264070199795242,
+      "initialization_median_ms": 1.3110609997966094,
+      "initialization_worst_ms": 1.449751000109245,
+      "peak_rss_kib": 13440,
+      "build": {
+        "build_seconds": 47.37638284500008,
+        "clean_target_build": true,
+        "binary_bytes": 1195320,
+        "linked_dependency_archive_bytes": 4285950,
+        "dependency_source_bytes": 336664963
+      }
+    }
+  },
+  "decision_scope": "Phase2.2 development foundation; revisit on motor, dynamic/triangle scenes or platform evidence"
+}

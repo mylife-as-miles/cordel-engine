@@ -95,10 +95,10 @@ Keep the known history-click failure separate from CORDEL identity changes.
 is not. Preserve all three references; do not turn passing software probes into
 hardware, arbitrary-script compatibility or AAA performance claims.
 
-**Exact next task:** **Phase 2.1 — Collision / Query Adapter**. Compare Jolt and
-Bullet behind native-owned query/ID boundaries before choosing a provider.
-A minimal no-full-physics baseline is optional if it clarifies query cost/behavior.
-Phase 2.1 has not begun; no physics dependency is added in Phase 1.4.
+**Latest completed gate:** Phase 2.1 — Collision / Query Adapter, software/native
+query gate passed 2026-10-08. Jolt selected for development under ADR 0002;
+Bullet comparison remains tested. **Exact next task: Phase 2.2 — Third-Person
+Character Motor.** No motor has begun.
 
 Canonical selected architecture smoke, using BOOTSTRAP's existing environment:
 
@@ -112,8 +112,13 @@ without another build. Full 1.1 and baseline checks stay separate regression gat
 
 ## Phase 2 — Third-person character controller
 
-1. **2.1 Collision / Query Adapter:** compare at least **Jolt and Bullet**.
-   No provider is selected yet. Independently testable steps:
+1. **2.1 Collision / Query Adapter: passed software gate 2026-10-08.**
+   Both Jolt and Bullet pass 207 identical assertions, five teardown cycles and
+   repeated warmed workloads. Jolt is the selected development backend; native
+   60 Hz/narrative continuity/GL regressions pass. See
+   [report](PHASE_2_1_COLLISION_QUERY.md) and [ADR 0002](adr/0002-physics-query-backend.md).
+   **Open:** Windows/macOS, accelerated/device evidence, dynamic/mesh contacts,
+   full motor behavior and production timing budgets. Completed engineering steps:
 
    - **Candidate/build inventory:** pin exact revisions/URLs, enabled features,
      transitive licenses and build/runtime footprint; assess Linux/Windows viability.

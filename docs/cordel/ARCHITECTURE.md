@@ -21,6 +21,7 @@ boundary. Ren'Py contributes narrative technology; it does not own CORDEL.**
 | Narrative rewrite/replacement | Rejected for current scope; reconsider only with measured adapter-maintenance cost exceeding replacement of the supported subset |
 | Development renderer | OpenGL Core, executed C++20/SDL3 native reference |
 | Production renderer | Undecided; no permanent OpenGL/API commitment |
+| Collision query backend | Jolt selected for native development under ADR 0002; Bullet remains separately tested; dynamic physics/motor/platform certification pending |
 | Production presentation/audio | CORDEL owns in-game UI/input routing and future real-time audio device/world mix; narrative supplies semantic cues |
 
 [Source audit](ARCHITECTURE_AUDIT.md) and executed [1.1](PHASE_1_1_VIEWPORT.md),
@@ -49,7 +50,7 @@ flowchart TD
         Input --> World[Fixed world and gameplay]
         World --> Extraction[Interpolated render extraction]
         Extraction --> Renderer[Renderer: current OpenGL Core]
-        World --> Physics[Future physics]
+        World --> Physics[Native collision queries: Jolt development backend]
         World --> Animation[Future animation and AI]
         World --> Cinematics[Future cinematics]
         World --> Audio[Future native audio mix]
@@ -252,12 +253,36 @@ shutdown/packaging behavior. These gates do not all block Phase 2 experiments.
 2. **Accepted by ADR 0001:** native runtime authority, transport-independent narrative
    service, current isolated-worker default, native input/UI/future audio ownership,
    coordinated checkpoint direction and explicit rollback-safe boundaries.
-3. **Deferred:** production renderer/API, physics selection, scene registry/ECS,
+3. **Accepted by ADR 0002:** Jolt development query backend behind CORDEL handles,
+   fixed-clock stepping and authoritative sensor events; retain tested Bullet adapter.
+4. **Deferred:** production renderer/API, dynamic physics qualification, scene registry/ECS,
    animation, audio/UI implementation, editor, embedding/permanent narrative deployment,
    full save/legacy compatibility and cinematic skip/seek semantics.
 
-**Next: Phase 2.1 — Collision / Query Adapter.** Compare Jolt and Bullet using
-capsule sweeps/raycasts/static collision, slopes/steps/triggers/layers/contacts,
-ordered native events, fixed-clock cost, build footprint, exact licenses and
-Linux/Windows viability. Optional query-only baseline if informative. Do not
-begin physics, character motor or animation during the ADR milestone.
+## Executed collision/query foundation
+
+[Phase 2.1](PHASE_2_1_COLLISION_QUERY.md) and
+[ADR 0002](adr/0002-physics-query-backend.md) record 207 identical assertions for
+Jolt and Bullet on the same 25-box CPU fixture. Rays, upright capsule casts,
+overlaps/penetration, five slopes/steps, ceilings, doorway clearance, layers,
+sensor transitions and lifetime checks pass. Native FrameRunner owns a small
+PhysicsRuntime/world and steps it once per existing 60 Hz world tick, with the
+three-tick catch-up limit. Narrative wait/explicit-pause checks cover physics
+continuity. Selected host links Jolt only; no Python enters this update path.
+
+World/shape/body handles include world token, slot and generation; objects and
+queries remain on the authoritative thread. Native sensor events are query-derived
+Character-capsule/Sensor pairs drained every tick, not general rigid-body callbacks.
+Collision geometry and lifetime are independent of GPU meshes and rendering.
+The reference fly camera remains unconstrained and the collision fixture is not
+visually aligned with the seven-mesh reference scene. No motor is implemented.
+
+Both libraries are pinned with retained licenses. Warmed costs, clean build/
+footprint, five-cycle zero-owned-handle teardown and Phase 1 regressions are
+archived; Windows/hardware, dynamic-body contacts, mesh edges and world budgets
+remain open. These static query results do not certify a production character.
+
+**Next: Phase 2.2 — Third-Person Character Motor.** Build gravity, grounding,
+bounded slide/penetration recovery and step/slope handling over the CORDEL-owned
+query interface; test motion independently of presentation rate. Retain both
+candidate query gates and the accepted Phase 1 reference regressions.

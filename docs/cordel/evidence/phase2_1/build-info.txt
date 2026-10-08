@@ -1,0 +1,12 @@
+_deps/jolt-build/CMakeFiles/Jolt.dir/flags.make
+CXX_DEFINES = -DNDEBUG
+CXX_FLAGS =  -frtti -fexceptions -Wno-stringop-overflow -Wno-psabi -ffp-contract=off -O3 -DNDEBUG -std=c++17 -msse2 -mfpmath=sse -pthread
+_deps/bullet-build/src/BulletCollision/CMakeFiles/BulletCollision.dir/flags.make
+CXX_DEFINES = -DBT_USE_EGL -DNO_OPENGL3
+CXX_FLAGS = -O3 -DNDEBUG -std=c++20
+CMakeFiles/cordel-physics-jolt.dir/flags.make
+CXX_DEFINES =
+CXX_FLAGS = -O3 -DNDEBUG -std=c++20
+CMakeFiles/cordel-physics-bullet.dir/flags.make
+CXX_DEFINES =
+CXX_FLAGS = -O3 -DNDEBUG -std=c++20

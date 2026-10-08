@@ -12,6 +12,9 @@ waits and failures leave the native world clock authoritative. Phase 1 is now
 architecturally complete: [ADR 0001](docs/cordel/adr/0001-runtime-narrative-ownership.md)
 accepts a native real-time runtime and independent narrative service boundary.
 The isolated worker is the development default; deployment remains replaceable.
+Phase 2.1 adds a native collision/query interface and executed Jolt/Bullet
+comparison. [ADR 0002](docs/cordel/adr/0002-physics-query-backend.md) selects Jolt
+for development; the next milestone is the third-person character motor.
 
 Our long-term focus is third-person gameplay, expressive character animation,
 interactive environments, branching dialogue, and seamless cinematic transitions.
@@ -67,11 +70,12 @@ environment limits, and test results. Other project documents:
 
 - [Architecture audit](docs/cordel/ARCHITECTURE_AUDIT.md): source evidence and reuse decisions.
 - [Accepted architecture](docs/cordel/ARCHITECTURE.md): ownership, interfaces, deferred technologies and qualification gates.
-- [Roadmap](docs/cordel/ROADMAP.md): completed Phase 1 gates and next collision/query comparison.
+- [Roadmap](docs/cordel/ROADMAP.md): completed Phase 1/2.1 gates and next character motor.
 - [Upstream policy](docs/cordel/UPSTREAM.md): provenance, remotes, licenses, and synchronization.
 - [Project metadata](cordel/project.toml): machine-readable identity and foundation commit.
 - [Phase 1.1 findings](docs/cordel/PHASE_1_1_VIEWPORT.md): implementation, measurements and runtime limits.
 - [Phase 1.2 findings](docs/cordel/PHASE_1_2_NATIVE_HOST.md): native host, comparison measurements and open device gates.
+- [Phase 2.1 findings](docs/cordel/PHASE_2_1_COLLISION_QUERY.md): shared collision queries, measured backend selection and fixed-clock integration.
 - [Phase 1.3 findings](docs/cordel/PHASE_1_3_NARRATIVE_OWNERSHIP.md): narrative boundary, continuity/failure evidence and compatibility limits.
 
 Canonical software smoke after BOOTSTRAP setup (use a new or empty directory):

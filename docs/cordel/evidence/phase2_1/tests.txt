@@ -1,0 +1,15 @@
+cmake -S native/physics -B /workspace/cordel-engine/build/phase2-physics-final -DCMAKE_BUILD_TYPE=Release
+cmake --build /workspace/cordel-engine/build/phase2-physics-final --target cordel-physics-jolt -j 4
+cmake --build /workspace/cordel-engine/build/phase2-physics-final --target cordel-physics-bullet -j 4
+ctest --test-dir /workspace/cordel-engine/build/phase2-physics-final --output-on-failure -V
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt /workspace/cordel-engine/tmp/phase2_1-verified/jolt-results.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt /workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt /workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt /workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt /workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet /workspace/cordel-engine/tmp/phase2_1-verified/bullet-results.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet /workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet /workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet /workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json
+/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet /workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json
+All commands passed.

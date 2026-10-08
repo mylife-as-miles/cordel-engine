@@ -1,0 +1,432 @@
+{
+  "shared_fixture_identical": true,
+  "assertions_per_candidate": 207,
+  "candidates": {
+    "jolt": [
+      {
+        "body_slot": 0,
+        "distance": 3.0000001192092896,
+        "fraction": 0.6000000238418579,
+        "name": "ray_ground",
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "point": [
+          0,
+          -1.1920928955078125e-07,
+          0
+        ],
+        "started_inside": false,
+        "subshape": 4294967295
+      },
+      {
+        "body_slot": 1,
+        "distance": 3.75,
+        "fraction": 0.46875,
+        "name": "ray_wall",
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "point": [
+          0,
+          1,
+          -3.75
+        ],
+        "started_inside": false,
+        "subshape": 4294967295
+      },
+      {
+        "body_slot": 7,
+        "distance": 2.0000000596046448,
+        "fraction": 0.3333333432674408,
+        "name": "ray_sensor",
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "point": [
+          -20,
+          1,
+          10.999999940395355
+        ],
+        "started_inside": false,
+        "subshape": 4294967295
+      },
+      {
+        "body_slot": 1,
+        "distance": 3.4000000953674316,
+        "fraction": 0.42500001192092896,
+        "name": "sweep_wall",
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "penetration": 0,
+        "point": [
+          0,
+          1.1341463327407837,
+          -3.75
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 1,
+        "distance": 3.4264596391364854,
+        "fraction": 0.42500001192092896,
+        "name": "sweep_diagonal",
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "penetration": 0,
+        "point": [
+          0.42499983310699463,
+          1.1341462135314941,
+          -3.75
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 0,
+        "distance": 1.100000113248825,
+        "fraction": 0.366666704416275,
+        "name": "sweep_ground",
+        "normal": [
+          0,
+          0.9999999999999999,
+          0
+        ],
+        "penetration": 0,
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 3,
+        "distance": 0.299999862909317,
+        "fraction": 0.1499999314546585,
+        "name": "sweep_ceiling",
+        "normal": [
+          0,
+          -1,
+          0
+        ],
+        "penetration": 0,
+        "point": [
+          -20,
+          1.5,
+          0
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 8,
+        "name": "obstacle_overlap",
+        "normal": [
+          0.9999999998776176,
+          -5.4431625193416684e-06,
+          1.466754234816098e-05
+        ],
+        "penetration": 0.6499989032745361
+      },
+      {
+        "body_slot": 9,
+        "name": "obstacle_overlap",
+        "normal": [
+          -0.9999999998248362,
+          -5.747550228637871e-06,
+          -1.7812735628216143e-05
+        ],
+        "penetration": 0.6499999761581421
+      },
+      {
+        "capsule_angle": 10.000000280759684,
+        "name": "ramp_10",
+        "ray_angle": 10.0000005308835,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 24.999999646833363,
+        "name": "ramp_25",
+        "ray_angle": 25.00000125874876,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 34.999998594810286,
+        "name": "ramp_35",
+        "ray_angle": 34.99999827476641,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 44.99999655023384,
+        "name": "ramp_45",
+        "ray_angle": 44.99999758516352,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 54.99999820474956,
+        "name": "ramp_55",
+        "ray_angle": 54.99999780759808,
+        "walkable": false
+      },
+      {
+        "can_step": true,
+        "forward_fraction": 0.5924249291419983,
+        "height": 0.1,
+        "name": "step_10",
+        "raise": 0.35
+      },
+      {
+        "can_step": true,
+        "forward_fraction": 0.5646500587463379,
+        "height": 0.2,
+        "name": "step_20",
+        "raise": 0.35
+      },
+      {
+        "can_step": true,
+        "forward_fraction": 0.552357017993927,
+        "height": 0.3,
+        "name": "step_30",
+        "raise": 0.35
+      },
+      {
+        "can_step": false,
+        "forward_fraction": 0.550000011920929,
+        "height": 0.45,
+        "name": "step_45",
+        "raise": 0.35
+      },
+      {
+        "can_step": false,
+        "forward_fraction": 0.5499999523162842,
+        "height": 0.6,
+        "name": "step_60",
+        "raise": 0.35
+      }
+    ],
+    "bullet": [
+      {
+        "body_slot": 0,
+        "distance": 3.0000001192092896,
+        "fraction": 0.6000000238418579,
+        "name": "ray_ground",
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "point": [
+          0,
+          -1.1920928955078125e-07,
+          0
+        ],
+        "started_inside": false,
+        "subshape": null
+      },
+      {
+        "body_slot": 1,
+        "distance": 3.7499935626983643,
+        "fraction": 0.46874919533729553,
+        "name": "ray_wall",
+        "normal": [
+          -1.3017714763896714e-06,
+          1.3017714763896714e-06,
+          0.9999999999983054
+        ],
+        "point": [
+          0,
+          1,
+          -3.7499935626983643
+        ],
+        "started_inside": false,
+        "subshape": null
+      },
+      {
+        "body_slot": 7,
+        "distance": 2.0000000596046448,
+        "fraction": 0.3333333432674408,
+        "name": "ray_sensor",
+        "normal": [
+          0,
+          0,
+          1
+        ],
+        "point": [
+          -20,
+          1,
+          11
+        ],
+        "started_inside": false,
+        "subshape": null
+      },
+      {
+        "body_slot": 1,
+        "distance": 3.3999998569488525,
+        "fraction": 0.42499998211860657,
+        "name": "sweep_wall",
+        "normal": [
+          -8.51494590392561e-08,
+          1.702989180785122e-07,
+          0.999999999999982
+        ],
+        "penetration": 0,
+        "point": [
+          2.9802322387695312e-08,
+          1.1341463327407837,
+          -3.75
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 1,
+        "distance": 3.4264593988624807,
+        "fraction": 0.42499998211860657,
+        "name": "sweep_diagonal",
+        "normal": [
+          1.7029891807848255e-07,
+          5.960462203801164e-07,
+          0.9999999999998079
+        ],
+        "penetration": 0,
+        "point": [
+          0.4249998927116394,
+          1.1341462135314941,
+          -3.75
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 0,
+        "distance": 1.100000113248825,
+        "fraction": 0.366666704416275,
+        "name": "sweep_ground",
+        "normal": [
+          0,
+          1,
+          0
+        ],
+        "penetration": 0,
+        "point": [
+          0,
+          0,
+          0
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 3,
+        "distance": 0.29999998211860657,
+        "fraction": 0.14999999105930328,
+        "name": "sweep_ceiling",
+        "normal": [
+          0,
+          -1,
+          0
+        ],
+        "penetration": 0,
+        "point": [
+          -20,
+          1.5,
+          0
+        ],
+        "started_inside": false
+      },
+      {
+        "body_slot": 8,
+        "name": "obstacle_overlap",
+        "normal": [
+          0.999999999999998,
+          -4.584973385572817e-08,
+          -4.229010993665229e-08
+        ],
+        "penetration": 0.6499999165534973
+      },
+      {
+        "body_slot": 9,
+        "name": "obstacle_overlap",
+        "normal": [
+          -0.9999999999999982,
+          -4.5849727570157404e-08,
+          -4.229010386325164e-08
+        ],
+        "penetration": 0.6499999761581421
+      },
+      {
+        "capsule_angle": 9.999987918839851,
+        "name": "ramp_10",
+        "ray_angle": 9.99981189862589,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 24.999996616058628,
+        "name": "ramp_25",
+        "ray_angle": 25.000036135401533,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 34.99993392689236,
+        "name": "ramp_35",
+        "ray_angle": 34.99985139247554,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 45,
+        "name": "ramp_45",
+        "ray_angle": 44.99860422457521,
+        "walkable": true
+      },
+      {
+        "capsule_angle": 54.99999501011644,
+        "name": "ramp_55",
+        "ray_angle": 54.99977818498866,
+        "walkable": false
+      },
+      {
+        "can_step": true,
+        "forward_fraction": 0.5924087762832642,
+        "height": 0.1,
+        "name": "step_10",
+        "raise": 0.35
+      },
+      {
+        "can_step": true,
+        "forward_fraction": 0.5645832419395447,
+        "height": 0.2,
+        "name": "step_20",
+        "raise": 0.35
+      },
+      {
+        "can_step": true,
+        "forward_fraction": 0.5523568987846375,
+        "height": 0.3,
+        "name": "step_30",
+        "raise": 0.35
+      },
+      {
+        "can_step": false,
+        "forward_fraction": 0.550000011920929,
+        "height": 0.45,
+        "name": "step_45",
+        "raise": 0.35
+      },
+      {
+        "can_step": false,
+        "forward_fraction": 0.550000011920929,
+        "height": 0.6,
+        "name": "step_60",
+        "raise": 0.35
+      }
+    ]
+  }
+}

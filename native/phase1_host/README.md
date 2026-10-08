@@ -149,3 +149,18 @@ Optional `FrameBoundary` hooks pump bounded messages and apply world commands
 outside rendering. Ordinary runs leave the hook null. The new process transport
 uses Linux/POSIX APIs; other-OS builds of this addition have not been validated.
 The current CTest flow includes two additional protocol targets.
+
+## Phase 2.1 native collision ownership
+
+The host now owns a CPU physics world through FrameRunner/PhysicsRuntime. The
+selected default is Jolt; the independent physics comparison project also tests
+Bullet. See [physics API/build contract](../physics/README.md) and
+[executed report](../../docs/cordel/PHASE_2_1_COLLISION_QUERY.md).
+Physics steps and diagnostic ground/overlap queries execute once per native fixed
+tick, before camera state updates. Narrative waits preserve those ticks; explicit
+world pause suspends them. Frame traces add physics CPU milliseconds, tick count,
+query results and live body/shape counts. Collision geometry is independent of
+GPU meshes and stays owned by the world. The free camera remains unconstrained;
+this diagnostic fixture is not visually aligned with the reference scene, and a
+character motor has not been implemented. Five lifecycle cycles destroy physics
+handles and preserve existing GL teardown checks.

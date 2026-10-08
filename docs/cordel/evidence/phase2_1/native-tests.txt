@@ -1,0 +1,32 @@
+Internal ctest changing into directory: /workspace/cordel-engine/build/phase2-physics-final
+UpdateCTestConfiguration  from :/workspace/cordel-engine/build/phase2-physics-final/DartConfiguration.tcl
+Parse Config file:/workspace/cordel-engine/build/phase2-physics-final/DartConfiguration.tcl
+UpdateCTestConfiguration  from :/workspace/cordel-engine/build/phase2-physics-final/DartConfiguration.tcl
+Parse Config file:/workspace/cordel-engine/build/phase2-physics-final/DartConfiguration.tcl
+Test project /workspace/cordel-engine/build/phase2-physics-final
+Constructing a list of tests
+Done constructing a list of tests
+Updating test list for fixtures
+Added 0 tests to meet fixture requirements
+Checking test dependency graph...
+Checking test dependency graph end
+test 1
+    Start 1: physics_jolt
+
+1: Test command: /workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt
+1: Working Directory: /workspace/cordel-engine/build/phase2-physics-final
+1: Test timeout computed to be: 1500
+1: Jolt 5.3.0: 207 assertions passed; five teardown cycles; final handles 0
+1/2 Test #1: physics_jolt .....................   Passed    0.02 sec
+test 2
+    Start 2: physics_bullet
+
+2: Test command: /workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet
+2: Working Directory: /workspace/cordel-engine/build/phase2-physics-final
+2: Test timeout computed to be: 1500
+2: Bullet 3.25: 207 assertions passed; five teardown cycles; final handles 0
+2/2 Test #2: physics_bullet ...................   Passed    0.03 sec
+
+100% tests passed, 0 tests failed out of 2
+
+Total Test time (real) =   0.04 sec

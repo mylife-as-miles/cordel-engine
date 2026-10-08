@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "dependencies": [
+    {
+      "project": "Jolt Physics",
+      "tag": "v5.3.0",
+      "revision": "0373ec0dd762e4bc2f6acdb08371ee84fa23c6db",
+      "url": "https://github.com/jrouwe/JoltPhysics",
+      "archive_url": "https://codeload.github.com/jrouwe/JoltPhysics/tar.gz/0373ec0dd762e4bc2f6acdb08371ee84fa23c6db",
+      "archive_sha256": "834644d7e9dffee9be0220748015667649d3361611b01c7e6839a5eb58e89711",
+      "license": "MIT",
+      "notice": "Jolt-LICENSE",
+      "purpose": "Collision query comparison candidate and selected development backend",
+      "shipping_in_development_host": true
+    },
+    {
+      "project": "Bullet Physics",
+      "tag": "3.25",
+      "revision": "2c204c49e56ed15ec5fcfa71d199ab6d6570b3f5",
+      "url": "https://github.com/bulletphysics/bullet3",
+      "archive_url": "https://codeload.github.com/bulletphysics/bullet3/tar.gz/2c204c49e56ed15ec5fcfa71d199ab6d6570b3f5",
+      "archive_sha256": "f7c486f10b9f645d0577249d02855e076e8368babaa3d31ced6095e7162baee9",
+      "license": "Zlib",
+      "notice": "Bullet-LICENSE",
+      "purpose": "Independent collision query comparison candidate",
+      "shipping_in_development_host": false
+    }
+  ],
+  "acquisition": "CMake FetchContent commit URL plus SHA256; sources stay in ignored build tree",
+  "configuration": "C++20 Release, single precision, no extra physics threads, Jolt SSE2 baseline without AVX/LTO, Bullet sequential dispatcher; static library linking",
+  "final_product_commitment": "Development dependency only; deployment/platform certification remains pending"
+}

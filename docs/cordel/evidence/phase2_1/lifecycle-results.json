@@ -1,0 +1,80 @@
+{
+  "jolt": {
+    "cycles": [
+      {
+        "cycle": 1,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 2,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 3,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 4,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 5,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      }
+    ],
+    "final_live": [
+      0,
+      0,
+      0
+    ]
+  },
+  "bullet": {
+    "cycles": [
+      {
+        "cycle": 1,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 2,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 3,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 4,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      },
+      {
+        "cycle": 5,
+        "live_bodies": 0,
+        "live_shapes": 0,
+        "live_worlds": 0
+      }
+    ],
+    "final_live": [
+      0,
+      0,
+      0
+    ]
+  }
+}

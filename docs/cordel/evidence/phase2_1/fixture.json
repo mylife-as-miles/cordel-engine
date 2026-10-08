@@ -1,0 +1,502 @@
+[
+  {
+    "center": [
+      0,
+      -0.25,
+      0
+    ],
+    "half_extents": [
+      8,
+      0.25,
+      8
+    ],
+    "layer": 1,
+    "name": "ground",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      0,
+      1.5,
+      -4
+    ],
+    "half_extents": [
+      3,
+      1.5,
+      0.25
+    ],
+    "layer": 1,
+    "name": "wall",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      3.25,
+      1.5,
+      -2
+    ],
+    "half_extents": [
+      0.25,
+      1.5,
+      2
+    ],
+    "layer": 1,
+    "name": "corner",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      -20,
+      1.65,
+      0
+    ],
+    "half_extents": [
+      2,
+      0.15,
+      2
+    ],
+    "layer": 1,
+    "name": "ceiling",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      -20.55,
+      1,
+      -10
+    ],
+    "half_extents": [
+      0.25,
+      1,
+      0.25
+    ],
+    "layer": 1,
+    "name": "door_left",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      -19.45,
+      1,
+      -10
+    ],
+    "half_extents": [
+      0.25,
+      1,
+      0.25
+    ],
+    "layer": 1,
+    "name": "door_right",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      -20,
+      -0.25,
+      20
+    ],
+    "half_extents": [
+      2,
+      0.25,
+      2
+    ],
+    "layer": 1,
+    "name": "ledge",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      -20,
+      1,
+      10
+    ],
+    "half_extents": [
+      1,
+      1,
+      1
+    ],
+    "layer": 4,
+    "name": "sensor",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      -0.2,
+      1,
+      12
+    ],
+    "half_extents": [
+      0.5,
+      1,
+      0.5
+    ],
+    "layer": 1,
+    "name": "overlap_a",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      0.2,
+      1,
+      12
+    ],
+    "half_extents": [
+      0.5,
+      1,
+      0.5
+    ],
+    "layer": 1,
+    "name": "overlap_b",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      20,
+      0.5,
+      0
+    ],
+    "half_extents": [
+      2,
+      0.15,
+      2
+    ],
+    "layer": 1,
+    "name": "ramp_10",
+    "rotation_xyzw": [
+      0,
+      0,
+      0.08715574274765817,
+      0.9961946980917455
+    ]
+  },
+  {
+    "center": [
+      28,
+      0.5,
+      0
+    ],
+    "half_extents": [
+      2,
+      0.15,
+      2
+    ],
+    "layer": 1,
+    "name": "ramp_25",
+    "rotation_xyzw": [
+      0,
+      0,
+      0.21643961393810288,
+      0.9762960071199334
+    ]
+  },
+  {
+    "center": [
+      36,
+      0.5,
+      0
+    ],
+    "half_extents": [
+      2,
+      0.15,
+      2
+    ],
+    "layer": 1,
+    "name": "ramp_35",
+    "rotation_xyzw": [
+      0,
+      0,
+      0.3007057995042731,
+      0.9537169507482269
+    ]
+  },
+  {
+    "center": [
+      44,
+      0.5,
+      0
+    ],
+    "half_extents": [
+      2,
+      0.15,
+      2
+    ],
+    "layer": 1,
+    "name": "ramp_45",
+    "rotation_xyzw": [
+      0,
+      0,
+      0.3826834323650898,
+      0.9238795325112867
+    ]
+  },
+  {
+    "center": [
+      52,
+      0.5,
+      0
+    ],
+    "half_extents": [
+      2,
+      0.15,
+      2
+    ],
+    "layer": 1,
+    "name": "ramp_55",
+    "rotation_xyzw": [
+      0,
+      0,
+      0.4617486132350339,
+      0.8870108331782217
+    ]
+  },
+  {
+    "center": [
+      20,
+      0.05,
+      15
+    ],
+    "half_extents": [
+      1,
+      0.05,
+      1
+    ],
+    "layer": 1,
+    "name": "step_10",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      20,
+      -0.25,
+      15
+    ],
+    "half_extents": [
+      3,
+      0.25,
+      3
+    ],
+    "layer": 1,
+    "name": "step_10_floor",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      28,
+      0.1,
+      15
+    ],
+    "half_extents": [
+      1,
+      0.1,
+      1
+    ],
+    "layer": 1,
+    "name": "step_20",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      28,
+      -0.25,
+      15
+    ],
+    "half_extents": [
+      3,
+      0.25,
+      3
+    ],
+    "layer": 1,
+    "name": "step_20_floor",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      36,
+      0.15,
+      15
+    ],
+    "half_extents": [
+      1,
+      0.15,
+      1
+    ],
+    "layer": 1,
+    "name": "step_30",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      36,
+      -0.25,
+      15
+    ],
+    "half_extents": [
+      3,
+      0.25,
+      3
+    ],
+    "layer": 1,
+    "name": "step_30_floor",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      44,
+      0.225,
+      15
+    ],
+    "half_extents": [
+      1,
+      0.225,
+      1
+    ],
+    "layer": 1,
+    "name": "step_45",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      44,
+      -0.25,
+      15
+    ],
+    "half_extents": [
+      3,
+      0.25,
+      3
+    ],
+    "layer": 1,
+    "name": "step_45_floor",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      52,
+      0.3,
+      15
+    ],
+    "half_extents": [
+      1,
+      0.3,
+      1
+    ],
+    "layer": 1,
+    "name": "step_60",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  },
+  {
+    "center": [
+      52,
+      -0.25,
+      15
+    ],
+    "half_extents": [
+      3,
+      0.25,
+      3
+    ],
+    "layer": 1,
+    "name": "step_60_floor",
+    "rotation_xyzw": [
+      0,
+      0,
+      0,
+      1
+    ]
+  }
+]

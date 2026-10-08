@@ -1,0 +1,114 @@
+{
+  "success": true,
+  "schema_version": 1,
+  "accepted_base": "0baf08bbf478ba5540ee3b5da067df83fe5e2724",
+  "source_revision_at_execution": "0baf08bbf478ba5540ee3b5da067df83fe5e2724",
+  "source_sha256": {
+    "native/physics/LICENSE": "7c7df8f9ea9a8b26f257d1411e2286f7edbfece5529bd24a7d940f9f86c651dd",
+    "native/physics/README.md": "b11cfc630a4cd21279856ec11bc838e2c7faed3c4e59f633e7746f4da2b256b6",
+    "native/physics/CMakeLists.txt": "601c3715a680cf36017eea65c39827319a83bf5736d80004da3e6cc013e85dcb",
+    "native/physics/fixtures/README.md": "00ebfc38e787fb94466f98a3cd74c9385970c0c6535857e59d14e90d78824378",
+    "native/physics/tests/test_queries.cpp": "f3cdedcb21ec4afe5a7488ba549430a40fcb55a2b58a05860e5051b9d173341d",
+    "native/physics/third_party/Jolt-LICENSE": "800abe35d64ad9defd636ff1ee8c961e06f0ebca3ef8d10083e8aa0e8ef86ac3",
+    "native/physics/third_party/Bullet-LICENSE": "885cd516a8420acb7c3e0b1a7119913b686495001ae564e3229740460e8cff59",
+    "native/physics/third_party/dependency-manifest.json": "16adab57efd7fb551d0fcbf12f62c4c2d8ac63fd6df21f40af174020868c1fd2",
+    "native/physics/tools/gate.py": "f2faa352e06d56c0adc51c10502d5fbb58079558822ed37a5ca657990c4a548a",
+    "native/physics/tools/run_phase2_1.sh": "b4b9a7b9ae17b88a44b100466d893e828938f10de38da7ef805baf4bc627064d",
+    "native/physics/src/bullet/backend.cpp": "eb9c43306cc235790358102aa36e240138061ba553b6b060dc6fd2a841ef60c4",
+    "native/physics/src/common/backend.hpp": "7228dd6d9e92848f460906f46ffd5b804230ee9ab4f1f0afb179663c6203d7c9",
+    "native/physics/src/common/world.cpp": "7df937aa5d86e074869b6d90ce0ff11e6c8e8f64272f11db5129e41d036fc6da",
+    "native/physics/src/common/fixture.cpp": "fe47051163fea045823be0e0ad0d59aaf479682031ab08d3f28be73d3e562049",
+    "native/physics/src/jolt/backend.cpp": "06854f39b9c4c2ba25b7da327f122bab44cdfa1aee5b247b143e25e14b82efcc",
+    "native/physics/include/cordel/physics/queries.hpp": "e14553745e4eb4230e5587ff3872e663483d47f77c630c026f5d8d86b9dca32d",
+    "native/physics/include/cordel/physics/world.hpp": "283c66942aca5cfd8e0ebd0fb0e36fb6f56c9fe951e769c7ab81c8a81e4ba8b0",
+    "native/physics/include/cordel/physics/types.hpp": "f1ae029ef47a9b79cf3b68ab48c43ae0e5d5044aa6c2338899062f4c57a5b596",
+    "native/physics/include/cordel/physics/fixture.hpp": "2a3aad982b10f8dc3c32a131633fd00195a730eded1d91c94d1609c61dcfa63b",
+    "native/physics/include/cordel/physics/helpers.hpp": "bfc715bcd4b0c8c72be3eeaf6b4b4e76fb1dd1ef09505e5d2f5421a064cb7732"
+  },
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "cmake": "cmake version 3.31.6",
+    "build_type": "Release",
+    "jobs": 4,
+    "float_precision": "32-bit backend / double CORDEL boundary"
+  },
+  "commands": [
+    [
+      "cmake",
+      "-S",
+      "native/physics",
+      "-B",
+      "/workspace/cordel-engine/build/phase2-physics-final",
+      "-DCMAKE_BUILD_TYPE=Release"
+    ],
+    [
+      "cmake",
+      "--build",
+      "/workspace/cordel-engine/build/phase2-physics-final",
+      "--target",
+      "cordel-physics-jolt",
+      "-j",
+      "4"
+    ],
+    [
+      "cmake",
+      "--build",
+      "/workspace/cordel-engine/build/phase2-physics-final",
+      "--target",
+      "cordel-physics-bullet",
+      "-j",
+      "4"
+    ],
+    [
+      "ctest",
+      "--test-dir",
+      "/workspace/cordel-engine/build/phase2-physics-final",
+      "--output-on-failure",
+      "-V"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/jolt-results.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-jolt",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/jolt-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/bullet-results.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json"
+    ],
+    [
+      "/workspace/cordel-engine/build/phase2-physics-final/cordel-physics-bullet",
+      "/workspace/cordel-engine/tmp/phase2_1-verified/bullet-temporary.json"
+    ]
+  ],
+  "graphics_fixture_sha256": "f2b2e9abf4d4715378a9b0b88ba62718aa62c08907ad0ac452b303ac83f07925",
+  "hardware_certification": false
+}
