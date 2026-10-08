@@ -169,6 +169,7 @@ void Session::frame_begin(Platform& platform,Renderer& renderer,Simulation& simu
         log("world_checkpoint_restored",{{"beacon_enabled",world.beacon_enabled},{"event_watermark",world.event_watermark},{"camera",json_vector(saved_camera.position)}});
     }
     if((client_.dead()||!client_.error().empty())&&status!="failed"&&status!="cancelled"&&status!="completed") {
+        if(!client_.error().empty()) client_.terminate_protocol_failure();
         finish("failed",client_.error().empty()?"worker EOF/process death":client_.error());log("worker_exit_detected",{{"transport",client_.diagnostics()}});
     }
     if(release_input_) {platform.release();platform.narrative_choice=0;platform.narrative_ack=false;platform.narrative_cancel=false;release_input_=false;}

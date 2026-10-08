@@ -100,7 +100,7 @@ public:
     void shutdown() {
         int pid=client.pid();client.close();auto d=client.diagnostics();
         gate_.check(d.at("worker_reaped").boolean(),"worker reaped at shutdown",d);
-        gate_.check(!d.at("forced_termination").boolean(),"graceful worker shutdown",d);
+        gate_.check(!d.at("forced_termination").boolean(),"shutdown needs no additional forced kill",d);
         gate_.check(kill(pid,0)<0&&errno==ESRCH,"no orphan narrative process");
         gate_.lifecycle.push_back(d);
     }

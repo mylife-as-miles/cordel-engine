@@ -31,6 +31,7 @@ class Client {
     double death_time_{};
     int exit_status_{};
     bool forced_{};
+    bool protocol_termination_{};
     void fail(std::string error);
     void loop();
 public:
@@ -48,6 +49,8 @@ public:
     bool dead() const {return dead_;}
     int pid() const {return pid_;}
     void terminate_for_test();
+    // World-thread nonblocking failure policy; reaping occurs during host teardown.
+    void terminate_protocol_failure();
     void close();
     Json diagnostics() const;
 };

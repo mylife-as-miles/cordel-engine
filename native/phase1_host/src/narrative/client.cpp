@@ -121,6 +121,10 @@ void Client::loop() {
     dead_=true;
 }
 void Client::terminate_for_test() {if(pid_>0) kill(pid_,SIGKILL);}
+void Client::terminate_protocol_failure() {
+    protocol_termination_=true;
+    if(pid_>0) kill(pid_,SIGKILL);
+}
 void Client::close() {
     if(pid_>0) {
         if(!dead_&&!stopping_) send("shutdown");
@@ -142,6 +146,6 @@ Json Client::diagnostics() const {
     return Json::Object{{"queue_limit",queue_limit},{"maximum_line_bytes",max_line},{"incoming_high_water",high_water_},
         {"outgoing_high_water",out_high_water_},{"incoming_size",incoming_.size()},{"outgoing_size",outgoing_.size()},
         {"error",error_},{"worker_eof",bool(dead_)},{"io_exit_monotonic",death_time_},{"worker_reaped",pid_==-1},
-        {"forced_termination",forced_},{"wait_status",exit_status_}};
+        {"forced_termination",forced_},{"protocol_failure_termination_requested",protocol_termination_},{"wait_status",exit_status_}};
 }
 }
