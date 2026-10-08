@@ -135,6 +135,7 @@ class WorkerTests(unittest.TestCase):
             ack=self.peer.receive('session_cancelled')
             self.assertEqual(ack['correlation_id'],request['message_id'])
             self.assertEqual(ack['payload']['pending_count'],0)
+            self.assertEqual(ack['payload']['context_depth'],1)
     def test_exception_is_protocol_error(self):
         self.peer.start('exception');line=self.peer.receive('dialogue')
         self.peer.send('dialogue_ack',correlation=line['message_id'])

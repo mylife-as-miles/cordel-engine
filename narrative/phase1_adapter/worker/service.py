@@ -36,6 +36,7 @@ class Worker:
         self.world_effect = False
         self.facts = {}
         self.stop = False
+        self.cancel_id = None
         self.trace = None
         destination = os.environ.get("CORDEL_WORKER_TRACE")
         if destination:
@@ -134,7 +135,7 @@ class Worker:
                 correlation = message.get("correlation_id")
                 if msgtype == "cancel_session":
                     self.pending = None
-                    self.emit("session_cancelled", {"pending_count": 0}, message["message_id"])
+                    self.cancel_id = message["message_id"]
                     raise Cancelled()
                 if msgtype == "world_fact":
                     fact = message["payload"]
@@ -209,7 +210,21 @@ class Worker:
         import renpy
         # Public context call executes Label/Say/Menu/Jump/If/Python/Return nodes.
         # Rollback is disabled; cancellation uses BaseException to avoid error UI.
-        renpy.game.call_in_new_context(label, _clear_layers=False)
+        active = []
+        depth = len(renpy.game.contexts)
+        def track_context():
+            active.append(renpy.game.context())
+        renpy.config.context_callbacks.append(track_context)
+        try:
+            renpy.game.call_in_new_context(label, _clear_layers=False)
+        finally:
+            renpy.config.context_callbacks.remove(track_context)
+            # Ren'Py run_context cleans dynamics for Exception, but our explicit
+            # cancellation/restore uses BaseException to bypass interactive error UI.
+            for context in reversed(active):
+                context.pop_all_dynamic()
+            assert len(renpy.game.contexts) == depth, "narrative context stack leaked"
+            self.log("context_unwound", context_depth=depth, dynamic_roots_remaining=sum(len(c.dynamic_stack) for c in active))
 
     def execute_session(self, message):
         import renpy
@@ -253,7 +268,9 @@ class Worker:
             self.emit("session_completed", {"outcome": renpy.store.outcome, "counter": renpy.store.story_counter,
                                            "beacon_fact": self.facts.get("beacon_enabled", {}).get("value", False)}, self.start_id)
         except Cancelled:
-            pass
+            if self.cancel_id:
+                self.emit("session_cancelled", {"pending_count": 0, "context_depth": len(renpy.game.contexts)}, self.cancel_id)
+                self.cancel_id = None
         except (ScriptFailure, Exception) as error:
             self.error("script_exception", error, True, self.start_id)
             self.log("worker_exception", detail=str(error)[:2048])
