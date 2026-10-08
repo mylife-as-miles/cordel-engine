@@ -14,7 +14,9 @@ accepts a native real-time runtime and independent narrative service boundary.
 The isolated worker is the development default; deployment remains replaceable.
 Phase 2.1 adds a native collision/query interface and executed Jolt/Bullet
 comparison. [ADR 0002](docs/cordel/adr/0002-physics-query-backend.md) selects Jolt
-for development; the next milestone is the third-person character motor.
+for development. Phase 2.2 now adds a CORDEL query-owned capsule motor with
+executed software evidence for collisions, slopes, steps, gravity, recovery and
+independent narrative/fixed-tick ownership. Next is Phase 2.3 — Follow / Orbit Camera.
 
 Our long-term focus is third-person gameplay, expressive character animation,
 interactive environments, branching dialogue, and seamless cinematic transitions.
@@ -29,8 +31,9 @@ Naughty Dog technology. This is a specialized narrative engine project.
   The source foundation remains `68fdaef917919e330c90765dd69668fee1cb9654`.
   Upstream history was removed at the project owner's request; source and notices
   were retained, with Ren'Py available through the `upstream` reference remote.
-- Original Python dependencies install in an isolated environment. Native source
-  compilation is blocked by missing SDL3 and other development packages.
+- Original Python dependencies install in an isolated environment. Ren'Py native
+  source compilation remains blocked by missing SDL3 and other development packages;
+  the separate CORDEL native host uses pinned project-local dependencies.
 - Unmodified checkout code runs using an upstream nightly's native modules.
   Mesa offscreen OpenGL executes both ending tests for **The Question** successfully.
 - 29 source-only unit tests and 89 selected SDK-backed unit tests pass. These
@@ -50,7 +53,8 @@ Naughty Dog technology. This is a specialized narrative engine project.
   bounded JSONL, native-owned presentation/input, beacon commands/events/facts,
   cancellation/failure isolation and one fixture checkpoint. Software gate passes;
   production compatibility and permanent deployment remain open. Phase 1.3
-  is accepted into `main`; Phase 1.4 decision work stays on its review branch.
+  is accepted into `main`, along with Phase 1.4 and Phase 2.1. Phase 2.2 stays
+  on its review branch.
 
 CORDEL owns the native world loop, input, simulation and GPU resources. Ren'Py
 contributes narrative technology behind a transport-independent interface.
@@ -60,8 +64,9 @@ ownership are accepted rules, not implemented production systems.
 
 Linux x86_64 offscreen software is verified; Windows x86_64 is the next platform
 qualification target. Hardware/devices, full narrative compatibility, in-process
-hosting and durable saves remain open. **Next: Phase 2.1 — Collision / Query Adapter**,
-comparing Jolt and Bullet; Phase 2 has not begun. Version remains `0.1.0-dev`.
+hosting and durable saves remain open. **Next: Phase 2.3 — Follow / Orbit Camera.**
+The Phase 2.2 software gate passes; desktop/production character qualification
+remains open. Version remains `0.1.0-dev`.
 
 ## Development and design
 
@@ -70,11 +75,12 @@ environment limits, and test results. Other project documents:
 
 - [Architecture audit](docs/cordel/ARCHITECTURE_AUDIT.md): source evidence and reuse decisions.
 - [Accepted architecture](docs/cordel/ARCHITECTURE.md): ownership, interfaces, deferred technologies and qualification gates.
-- [Roadmap](docs/cordel/ROADMAP.md): completed Phase 1/2.1 gates and next character motor.
+- [Roadmap](docs/cordel/ROADMAP.md): completed Phase 1/2.1/2.2 gates and next follow/orbit camera.
 - [Upstream policy](docs/cordel/UPSTREAM.md): provenance, remotes, licenses, and synchronization.
 - [Project metadata](cordel/project.toml): machine-readable identity and foundation commit.
 - [Phase 1.1 findings](docs/cordel/PHASE_1_1_VIEWPORT.md): implementation, measurements and runtime limits.
 - [Phase 1.2 findings](docs/cordel/PHASE_1_2_NATIVE_HOST.md): native host, comparison measurements and open device gates.
+- [Phase 2.2 findings](docs/cordel/PHASE_2_2_CHARACTER_MOTOR.md): query-owned capsule motor, fixed-step/scenario/narrative evidence and open qualifications.
 - [Phase 2.1 findings](docs/cordel/PHASE_2_1_COLLISION_QUERY.md): shared collision queries, measured backend selection and fixed-clock integration.
 - [Phase 1.3 findings](docs/cordel/PHASE_1_3_NARRATIVE_OWNERSHIP.md): narrative boundary, continuity/failure evidence and compatibility limits.
 

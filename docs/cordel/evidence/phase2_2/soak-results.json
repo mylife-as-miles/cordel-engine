@@ -1,0 +1,10 @@
+{
+  "clock_policy": "direct fixed ticks; backlog not applicable. Actual paced-loop drops measured separately",
+  "diagnostics_capacity": 6,
+  "execution": "deterministic tick-time soak, not 60s wall-time hardware soak",
+  "fixed_ticks": 3600,
+  "max_penetration_m": 0,
+  "reset_boundaries": 30,
+  "sensor_events": 180,
+  "simulated_seconds": 60
+}

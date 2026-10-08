@@ -1,0 +1,12 @@
+{
+  "airborne_dropped_seconds": 0.21666666666666667,
+  "airborne_motor_ticks": 3,
+  "airborne_raw_seconds": 0.26860145299906435,
+  "airborne_vertical_displacement_m": -0.016350000000000087,
+  "dropped_seconds": 0.21666666666666667,
+  "horizontal_displacement_m": 0.22500000000000053,
+  "motor_ticks": 3,
+  "raw_seconds": 0.26818872399962856,
+  "simulated_seconds": 0.05,
+  "vertical_displacement_m": 0
+}

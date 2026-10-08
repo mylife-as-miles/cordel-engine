@@ -1,0 +1,16 @@
+Internal ctest changing into directory: /workspace/cordel-engine/build/phase1-host
+Test project /workspace/cordel-engine/build/phase1-host
+    Start 1: native_logic
+1/5 Test #1: native_logic .....................   Passed    0.00 sec
+    Start 2: shared_python_goldens
+2/5 Test #2: shared_python_goldens ............   Passed    0.06 sec
+    Start 3: narrative_protocol
+3/5 Test #3: narrative_protocol ...............   Passed    0.00 sec
+    Start 4: narrative_python_protocol
+4/5 Test #4: narrative_python_protocol ........   Passed    0.09 sec
+    Start 5: character_motor
+5/5 Test #5: character_motor ..................   Passed    0.20 sec
+
+100% tests passed, 0 tests failed out of 5
+
+Total Test time (real) =   0.36 sec

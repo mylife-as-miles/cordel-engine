@@ -1,0 +1,18 @@
+{
+  "cylinder_length_m": 1.1,
+  "fixed_hz": 60,
+  "gravity_mps2": 9.81,
+  "ground_probe_m": 0.025,
+  "height_m": 1.8,
+  "max_snap_m": 0.15,
+  "movement_mps": 4.5,
+  "radius_m": 0.35,
+  "recovery_iterations": 6,
+  "recovery_limit_m": 0.2,
+  "recovery_tolerance_m": 5e-05,
+  "skin_m": 0.003,
+  "slide_iterations": 6,
+  "sprint_mps": 7,
+  "step_height_m": 0.35,
+  "walkable_slope_degrees": 45
+}

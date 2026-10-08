@@ -1,0 +1,351 @@
+[
+  {
+    "mean_ms": 0.007085746666666665,
+    "median_ms": 0.005829,
+    "samples": 300,
+    "scenario": "flat_forward_5s",
+    "worst_ms": 0.153693
+  },
+  {
+    "mean_ms": 0.007058183333333334,
+    "median_ms": 0.005879,
+    "samples": 300,
+    "scenario": "sprint_5s",
+    "worst_ms": 0.078309
+  },
+  {
+    "mean_ms": 0.006258833333333336,
+    "median_ms": 0.005859,
+    "samples": 60,
+    "scenario": "diagonal_normalization",
+    "worst_ms": 0.028193
+  },
+  {
+    "mean_ms": 0.007365506666666669,
+    "median_ms": 0.00604,
+    "samples": 300,
+    "scenario": "idle_grounded",
+    "worst_ms": 0.230067
+  },
+  {
+    "mean_ms": 0.014523158333333338,
+    "median_ms": 0.008332,
+    "samples": 120,
+    "scenario": "wall_direct",
+    "worst_ms": 0.506355
+  },
+  {
+    "mean_ms": 0.011615508333333335,
+    "median_ms": 0.008653,
+    "samples": 120,
+    "scenario": "wall_diagonal",
+    "worst_ms": 0.226742
+  },
+  {
+    "mean_ms": 0.012470900000000002,
+    "median_ms": 0.008733,
+    "samples": 40,
+    "scenario": "wall_shallow",
+    "worst_ms": 0.174214
+  },
+  {
+    "mean_ms": 0.010735241666666666,
+    "median_ms": 0.010256,
+    "samples": 120,
+    "scenario": "inside_corner",
+    "worst_ms": 0.081062
+  },
+  {
+    "mean_ms": 0.0074052799999999985,
+    "median_ms": 0.006821,
+    "samples": 100,
+    "scenario": "outside_corner",
+    "worst_ms": 0.020201
+  },
+  {
+    "mean_ms": 0.003961333333333334,
+    "median_ms": 0.005688,
+    "samples": 120,
+    "scenario": "fall_landing",
+    "worst_ms": 0.006059
+  },
+  {
+    "mean_ms": 0.008265433333333332,
+    "median_ms": 0.007502,
+    "samples": 60,
+    "scenario": "step_10",
+    "worst_ms": 0.021833
+  },
+  {
+    "mean_ms": 0.008275583333333334,
+    "median_ms": 0.007482,
+    "samples": 60,
+    "scenario": "step_20",
+    "worst_ms": 0.030326
+  },
+  {
+    "mean_ms": 0.007662816666666665,
+    "median_ms": 0.007301,
+    "samples": 60,
+    "scenario": "step_30",
+    "worst_ms": 0.013841
+  },
+  {
+    "mean_ms": 0.010559583333333332,
+    "median_ms": 0.012158,
+    "samples": 60,
+    "scenario": "step_45",
+    "worst_ms": 0.013851
+  },
+  {
+    "mean_ms": 0.009105316666666669,
+    "median_ms": 0.009264,
+    "samples": 60,
+    "scenario": "step_60",
+    "worst_ms": 0.031617
+  },
+  {
+    "mean_ms": 0.010617166666666669,
+    "median_ms": 0.008033,
+    "samples": 30,
+    "scenario": "step_down_10",
+    "worst_ms": 0.081113
+  },
+  {
+    "mean_ms": 0.007474899999999998,
+    "median_ms": 0.007441,
+    "samples": 30,
+    "scenario": "step_down_30",
+    "worst_ms": 0.008973
+  },
+  {
+    "mean_ms": 0.006528233333333333,
+    "median_ms": 0.007552,
+    "samples": 30,
+    "scenario": "step_down_60",
+    "worst_ms": 0.008403
+  },
+  {
+    "mean_ms": 0.0111974,
+    "median_ms": 0.009975,
+    "samples": 20,
+    "scenario": "ramp_10_up",
+    "worst_ms": 0.032328
+  },
+  {
+    "mean_ms": 0.042816150000000004,
+    "median_ms": 0.009754,
+    "samples": 20,
+    "scenario": "ramp_10_down",
+    "worst_ms": 0.64868
+  },
+  {
+    "mean_ms": 0.013427299999999998,
+    "median_ms": 0.009785,
+    "samples": 20,
+    "scenario": "ramp_25_up",
+    "worst_ms": 0.079801
+  },
+  {
+    "mean_ms": 0.01061255,
+    "median_ms": 0.009865,
+    "samples": 20,
+    "scenario": "ramp_25_down",
+    "worst_ms": 0.023175
+  },
+  {
+    "mean_ms": 0.010025200000000001,
+    "median_ms": 0.009985,
+    "samples": 20,
+    "scenario": "ramp_35_up",
+    "worst_ms": 0.011998
+  },
+  {
+    "mean_ms": 0.009851799999999997,
+    "median_ms": 0.009775,
+    "samples": 20,
+    "scenario": "ramp_35_down",
+    "worst_ms": 0.011427
+  },
+  {
+    "mean_ms": 0.01018585,
+    "median_ms": 0.009985,
+    "samples": 20,
+    "scenario": "ramp_45_up",
+    "worst_ms": 0.011758
+  },
+  {
+    "mean_ms": 0.0101828,
+    "median_ms": 0.010026,
+    "samples": 20,
+    "scenario": "ramp_45_down",
+    "worst_ms": 0.012989
+  },
+  {
+    "mean_ms": 0.011356600000000003,
+    "median_ms": 0.011227,
+    "samples": 20,
+    "scenario": "ramp_55_up",
+    "worst_ms": 0.015143
+  },
+  {
+    "mean_ms": 0.013094900000000001,
+    "median_ms": 0.013961,
+    "samples": 20,
+    "scenario": "wall_plus_slope",
+    "worst_ms": 0.014983
+  },
+  {
+    "mean_ms": 0.005287791666666667,
+    "median_ms": 0.0064,
+    "samples": 120,
+    "scenario": "edge_landing",
+    "worst_ms": 0.055544
+  },
+  {
+    "mean_ms": 0.012495075000000005,
+    "median_ms": 0.012078,
+    "samples": 80,
+    "scenario": "low_ceiling",
+    "worst_ms": 0.051839
+  },
+  {
+    "mean_ms": 0.04030415714285714,
+    "median_ms": 0.012289,
+    "samples": 70,
+    "scenario": "ceiling_over_step",
+    "worst_ms": 2.043208
+  },
+  {
+    "mean_ms": 0.007695766666666665,
+    "median_ms": 0.007581,
+    "samples": 60,
+    "scenario": "step_beside_wall",
+    "worst_ms": 0.015083
+  },
+  {
+    "mean_ms": 0.0017525000000000002,
+    "median_ms": 0.002243,
+    "samples": 2,
+    "scenario": "head_impact",
+    "worst_ms": 0.002243
+  },
+  {
+    "mean_ms": 0.030836375000000006,
+    "median_ms": 0.019599,
+    "samples": 80,
+    "scenario": "narrow_door_blocked",
+    "worst_ms": 1.248087
+  },
+  {
+    "mean_ms": 0.009323199999999999,
+    "median_ms": 0.00706,
+    "samples": 70,
+    "scenario": "wide_door_pass",
+    "worst_ms": 0.123236
+  },
+  {
+    "mean_ms": 0.011066514285714285,
+    "median_ms": 0.007431,
+    "samples": 70,
+    "scenario": "wide_door_glancing",
+    "worst_ms": 0.214063
+  },
+  {
+    "mean_ms": 0.0042107714285714295,
+    "median_ms": 0.001613,
+    "samples": 70,
+    "scenario": "ledge_walkoff",
+    "worst_ms": 0.020391
+  },
+  {
+    "mean_ms": 0.0072277999999999995,
+    "median_ms": 0.00709,
+    "samples": 10,
+    "scenario": "ledge_parallel",
+    "worst_ms": 0.008112
+  },
+  {
+    "mean_ms": 0.006615850000000001,
+    "median_ms": 0.006901,
+    "samples": 60,
+    "scenario": "ledge_diagonal",
+    "worst_ms": 0.067011
+  },
+  {
+    "mean_ms": 0.037036,
+    "median_ms": 0.037036,
+    "samples": 1,
+    "scenario": "small_floor_penetration",
+    "worst_ms": 0.037036
+  },
+  {
+    "mean_ms": 0.0129,
+    "median_ms": 0.0129,
+    "samples": 1,
+    "scenario": "small_wall_penetration",
+    "worst_ms": 0.0129
+  },
+  {
+    "mean_ms": 0.017366,
+    "median_ms": 0.017366,
+    "samples": 1,
+    "scenario": "small_corner_penetration",
+    "worst_ms": 0.017366
+  },
+  {
+    "mean_ms": 0.0072831375,
+    "median_ms": 0.007251,
+    "samples": 80,
+    "scenario": "sensor_enter_exit",
+    "worst_ms": 0.012138
+  },
+  {
+    "mean_ms": 0.02040883666666666,
+    "median_ms": 0.013521,
+    "samples": 300,
+    "scope": "motor.simulate CPU wall time including its collision queries; no render/reset/world.step",
+    "workload": "idle",
+    "worst_ms": 0.774741
+  },
+  {
+    "mean_ms": 0.026433636666666673,
+    "median_ms": 0.015042,
+    "samples": 300,
+    "scope": "motor.simulate CPU wall time including its collision queries; no render/reset/world.step",
+    "workload": "flat",
+    "worst_ms": 0.728321
+  },
+  {
+    "mean_ms": 0.024031740000000003,
+    "median_ms": 0.018908,
+    "samples": 300,
+    "scope": "motor.simulate CPU wall time including its collision queries; no render/reset/world.step",
+    "workload": "wall_slide",
+    "worst_ms": 0.258371
+  },
+  {
+    "mean_ms": 0.024579226666666676,
+    "median_ms": 0.018007,
+    "samples": 300,
+    "scope": "motor.simulate CPU wall time including its collision queries; no render/reset/world.step",
+    "workload": "ramp",
+    "worst_ms": 0.623522
+  },
+  {
+    "mean_ms": 0.037956866666666665,
+    "median_ms": 0.025048,
+    "samples": 300,
+    "scope": "motor.simulate CPU wall time including its collision queries; no render/reset/world.step",
+    "workload": "step_negotiation",
+    "worst_ms": 0.673719
+  },
+  {
+    "mean_ms": 0.017920570000000014,
+    "median_ms": 0.014271,
+    "samples": 300,
+    "scope": "motor.simulate CPU wall time including its collision queries; no render/reset/world.step",
+    "workload": "recovery",
+    "worst_ms": 0.33757
+  }
+]

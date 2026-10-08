@@ -95,10 +95,13 @@ Keep the known history-click failure separate from CORDEL identity changes.
 is not. Preserve all three references; do not turn passing software probes into
 hardware, arbitrary-script compatibility or AAA performance claims.
 
-**Latest completed gate:** Phase 2.1 — Collision / Query Adapter, software/native
-query gate passed 2026-10-08. Jolt selected for development under ADR 0002;
-Bullet comparison remains tested. **Exact next task: Phase 2.2 — Third-Person
-Character Motor.** No motor has begun.
+**Latest completed gate:** Phase 2.2 — Third-Person Character Motor, Linux
+software/native gate passed 2026-10-08. CORDEL query-owned capsule movement,
+slopes/steps/recovery, fixed-tick rate independence and real narrative continuity
+are verified; see [report](PHASE_2_2_CHARACTER_MOTOR.md) and
+[evidence](evidence/phase2_2/manifest.json). Jolt remains the development provider;
+Bullet's complete Phase 2.1 comparison gate remains green.
+**Exact next task: Phase 2.3 — Follow / Orbit Camera.** It has not begun.
 
 Canonical selected architecture smoke, using BOOTSTRAP's existing environment:
 
@@ -118,7 +121,7 @@ without another build. Full 1.1 and baseline checks stay separate regression gat
    60 Hz/narrative continuity/GL regressions pass. See
    [report](PHASE_2_1_COLLISION_QUERY.md) and [ADR 0002](adr/0002-physics-query-backend.md).
    **Open:** Windows/macOS, accelerated/device evidence, dynamic/mesh contacts,
-   full motor behavior and production timing budgets. Completed engineering steps:
+   production character qualification and production timing budgets. Completed engineering steps:
 
    - **Candidate/build inventory:** pin exact revisions/URLs, enabled features,
      transitive licenses and build/runtime footprint; assess Linux/Windows viability.
@@ -136,9 +139,18 @@ without another build. Full 1.1 and baseline checks stay separate regression gat
      thread <16.67 ms at 60 fps, zero normal dropped time; targets require profiling.
      Exit: select a provider with evidence and explicit open platform/device gates.
      Do not fold animation, combat or a full character motor into the comparison.
-2. **2.2 Character motor:** movement, gravity, ground state and a capsule player;
-   one fixed update owns motion. Exit: consistent travel at different presentation
-   rates, no wall penetration in test scenes, focus loss stops input.
+2. **2.2 Character motor: passed software gate 2026-10-08.** CORDEL-owned
+   upright query capsule, fixed 60 Hz movement/gravity, bounded sweep/slide/recovery,
+   10–45° walkable ramps/55° downhill slide, 0.10–0.30 m steps/0.45–0.60 m blockers,
+   ceilings/doors/ledges/sensors. 43 scenarios, 10,202 assertions, 25 synthetic
+   presentation comparisons (zero state difference), real 30/60/120/uncapped
+   offscreen renders, five zero-owned-resource cycles and 60 simulated seconds
+   of deterministic soak pass. Motor/world/physics continue during real Ren'Py
+   dialogue/choice/event waits; explicit pause stops ticks while rendering continues.
+   Both Phase 2.1 query candidates, Phase 1 smoke and full viewport/baseline pass.
+   **Open:** desktop/device/hardware, Windows/macOS, dynamic/moving-platform/mesh
+   contacts, production tuning, durable motor checkpoints and production soak.
+   Report: [Phase 2.2](PHASE_2_2_CHARACTER_MOTOR.md).
 3. **2.3 Follow/orbit camera:** obstruction handling, rotation and camera distance.
    Exit: no clipping through tested walls; gameplay/UI camera ownership is explicit.
 4. **2.4 Basic locomotion:** import one licensed skeleton and idle/walk/run clips,

@@ -1,0 +1,154 @@
+{
+  "30": {
+    "backpressure": "synchronous glFinish per frame; bounded diagnostic path, not production queue design",
+    "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+    "drawable_size": [
+      850,
+      480
+    ],
+    "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+    "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "pacing": "monotonic_sleep_fallback",
+    "summary": {
+      "camera_mean_cpu_ms_per_tick": 0.000633589980281429,
+      "cpu_core_equivalents": 0.07522133565776948,
+      "dropped_seconds": 0,
+      "event_mean_cpu_ms": 0.015827222159714438,
+      "frame_interval_mean_ms": 32.96466232222883,
+      "frame_interval_worst_ms": 33.419209999919985,
+      "gl_completion_wait_mean_cpu_ms": 0.8218946221354094,
+      "gl_submission_mean_cpu_ms": 0.2314334555194364,
+      "gpu_timing": "unavailable",
+      "peak_rss_kib": 70624,
+      "present_mean_cpu_ms": 0.017280411076272786,
+      "process_cpu_seconds": 0.225671,
+      "render_fps": 29.99907036880792,
+      "render_frames": 90,
+      "render_prep_mean_cpu_ms": 0.021654355643679284,
+      "simulation_mean_cpu_ms": 0.05628603357763495,
+      "simulation_observed_hz": 59.33149472942011,
+      "simulation_ticks": 178,
+      "wall_seconds": 3.000092966000011
+    },
+    "target_render_hz": 30,
+    "window_size": [
+      850,
+      480
+    ]
+  },
+  "60": {
+    "backpressure": "synchronous glFinish per frame; bounded diagnostic path, not production queue design",
+    "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+    "drawable_size": [
+      850,
+      480
+    ],
+    "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+    "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "pacing": "monotonic_sleep_fallback",
+    "summary": {
+      "camera_mean_cpu_ms_per_tick": 0.0008757654962834886,
+      "cpu_core_equivalents": 0.13963288436728497,
+      "dropped_seconds": 0,
+      "event_mean_cpu_ms": 0.010896666743873438,
+      "frame_interval_mean_ms": 16.574819294439497,
+      "frame_interval_worst_ms": 16.727935999369947,
+      "gl_completion_wait_mean_cpu_ms": 0.7626461833246544,
+      "gl_submission_mean_cpu_ms": 0.1939565500328576,
+      "gpu_timing": "unavailable",
+      "peak_rss_kib": 70612,
+      "present_mean_cpu_ms": 0.012921105482948607,
+      "process_cpu_seconds": 0.41891100000000003,
+      "render_fps": 59.998231572127,
+      "render_frames": 180,
+      "render_prep_mean_cpu_ms": 0.01232508901820337,
+      "simulation_mean_cpu_ms": 0.0346688777325552,
+      "simulation_observed_hz": 59.66490806339296,
+      "simulation_ticks": 179,
+      "wall_seconds": 3.0000884239998413
+    },
+    "target_render_hz": 60,
+    "window_size": [
+      850,
+      480
+    ]
+  },
+  "120": {
+    "backpressure": "synchronous glFinish per frame; bounded diagnostic path, not production queue design",
+    "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+    "drawable_size": [
+      850,
+      480
+    ],
+    "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+    "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "pacing": "monotonic_sleep_fallback",
+    "summary": {
+      "camera_mean_cpu_ms_per_tick": 0.0005889832001184659,
+      "cpu_core_equivalents": 0.2821905032707563,
+      "dropped_seconds": 0,
+      "event_mean_cpu_ms": 0.0096378972709014,
+      "frame_interval_mean_ms": 8.310557233330151,
+      "frame_interval_worst_ms": 11.006455999449827,
+      "gl_completion_wait_mean_cpu_ms": 0.7927217666140981,
+      "gl_submission_mean_cpu_ms": 0.17392426666447136,
+      "gpu_timing": "unavailable",
+      "peak_rss_kib": 71544,
+      "present_mean_cpu_ms": 0.008473236150368595,
+      "process_cpu_seconds": 0.8466130000000001,
+      "render_fps": 119.99411912818756,
+      "render_frames": 360,
+      "render_prep_mean_cpu_ms": 0.009656791684796594,
+      "simulation_mean_cpu_ms": 0.01835071666897016,
+      "simulation_observed_hz": 59.66374256651548,
+      "simulation_ticks": 179,
+      "wall_seconds": 3.0001470290008
+    },
+    "target_render_hz": 120,
+    "window_size": [
+      850,
+      480
+    ]
+  },
+  "uncapped": {
+    "backpressure": "synchronous glFinish per frame; bounded diagnostic path, not production queue design",
+    "cpu_fragments": "monotonic durations of CPU code, may include descheduling/driver waits",
+    "drawable_size": [
+      850,
+      480
+    ],
+    "frame_metric": "native render loop iterations, including swap; not physical display refresh",
+    "gl_version": "4.5 (Core Profile) Mesa 25.0.7-2+deb13u1",
+    "gpu": "llvmpipe (LLVM 19.1.7, 256 bits)",
+    "pacing": "uncapped",
+    "summary": {
+      "camera_mean_cpu_ms_per_tick": 0.0002771460182547538,
+      "cpu_core_equivalents": 1.9927605984228158,
+      "dropped_seconds": 0,
+      "event_mean_cpu_ms": 0.0030925693361950465,
+      "frame_interval_mean_ms": 1.2089870263584412,
+      "frame_interval_worst_ms": 24.696176000361447,
+      "gl_completion_wait_mean_cpu_ms": 1.0701523223871885,
+      "gl_submission_mean_cpu_ms": 0.13514287954900608,
+      "gpu_timing": "unavailable",
+      "peak_rss_kib": 71580,
+      "present_mean_cpu_ms": 0.0019536877183249485,
+      "process_cpu_seconds": 5.99045,
+      "render_fps": 820.330298343307,
+      "render_frames": 2466,
+      "render_prep_mean_cpu_ms": 0.005272633837467667,
+      "simulation_mean_cpu_ms": 0.0021891066326864272,
+      "simulation_observed_hz": 59.21281147814625,
+      "simulation_ticks": 178,
+      "wall_seconds": 3.006106205000833
+    },
+    "target_render_hz": 0,
+    "window_size": [
+      850,
+      480
+    ]
+  }
+}

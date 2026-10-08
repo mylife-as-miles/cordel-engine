@@ -1,0 +1,592 @@
+[
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      20.51,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      20.49,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      19,
+      1.3873863252344074,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_10_up",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        20.499999999999986,
+        1.6488764836291914,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 1.6488764836291914,
+      "min_y": 1.3873863252344074,
+      "normal": [
+        -0.17364818679182895,
+        0.9848077514032422,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      19.01,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      18.99,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      20.5,
+      1.651876796297105,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          -1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_10_down",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        19.000000000000014,
+        1.3843859839052568,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 1.651876796297105,
+      "min_y": 1.3843859839052568,
+      "normal": [
+        -0.17364818679182895,
+        0.9848077514032422,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      28.51,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      28.49,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      27,
+      1.1413813013262473,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_25_up",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        28.499999999999986,
+        1.8378418724410004,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 1.8378418724410004,
+      "min_y": 1.1413813013262473,
+      "normal": [
+        -0.4226182816516566,
+        0.9063077777520178,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      27.01,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      26.99,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      28.5,
+      1.8408427885587453,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          -1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_25_down",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        27.000000000000014,
+        1.138380422994006,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 1.8408427885587453,
+      "min_y": 1.138380422994006,
+      "normal": [
+        -0.4226182816516566,
+        0.9063077777520178,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      36.51,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      36.49,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      35,
+      0.9661797561710184,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_35_up",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        36.50000000000006,
+        2.0134879845081226,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 2.0134879845081226,
+      "min_y": 0.9661797561710184,
+      "normal": [
+        -0.5735764116855533,
+        0.8191520615599552,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      35.01,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      34.99,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      36.5,
+      2.016491063485583,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          -1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_35_down",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        34.99999999999994,
+        0.9631769576983694,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 2.016491063485583,
+      "min_y": 0.9631769576983694,
+      "normal": [
+        -0.5735764116855533,
+        0.8191520615599552,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      44.51,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      44.49,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      43,
+      0.7631067811865475,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_45_up",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        44.50000000000006,
+        2.2601047098539016,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 2.2601047098539016,
+      "min_y": 0.7631067811865475,
+      "normal": [
+        -0.7071067513842252,
+        0.7071068109888685,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      43.01,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      42.99,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      44.5,
+      2.2631067811865475,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          -1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_45_down",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        42.99999999999994,
+        0.760104962734977,
+        0
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 2.2631067811865475,
+      "min_y": 0.760104962734977,
+      "normal": [
+        -0.7071067513842252,
+        0.7071068109888685,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  },
+  {
+    "expected_grounded": 0,
+    "expected_max": [
+      51.01,
+      4,
+      0.001
+    ],
+    "expected_min": [
+      50,
+      -2,
+      -0.001
+    ],
+    "initial": [
+      51,
+      0.4995753910684345,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          1,
+          0,
+          0
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "ramp_55_up",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 20,
+      "final": [
+        50.73113044138844,
+        0.11558989813576666,
+        0
+      ],
+      "ground_ticks": 0,
+      "grounded": false,
+      "max_penetration": 0,
+      "max_y": 0.4995753910684345,
+      "min_y": 0.11558989813576666,
+      "normal": [
+        -0.8191520223412998,
+        0.5735764676955972,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": -3.27,
+      "walkable": false
+    }
+  },
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      28.08,
+      2,
+      0.31
+    ],
+    "expected_min": [
+      28.05,
+      0.9,
+      0.28
+    ],
+    "initial": [
+      27,
+      1.1413813013262473,
+      0
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          1,
+          0,
+          1
+        ],
+        "sprint": false,
+        "ticks": 20
+      }
+    ],
+    "name": "wall_plus_slope",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        28.060660171779805,
+        1.6329742167928238,
+        0.29798543006948774
+      ],
+      "ground_ticks": 20,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 1.6329742167928238,
+      "min_y": 1.1413813013262473,
+      "normal": [
+        -0.4226182816516566,
+        0.9063077777520178,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 0,
+      "sensor_end": 0,
+      "sensor_persist": 0,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  }
+]

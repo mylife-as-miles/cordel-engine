@@ -1,0 +1,247 @@
+{
+  "success": true,
+  "schema_version": 1,
+  "accepted_base": "057d304c5958e00913dae3d4d1383dff6dbf81fa",
+  "source_revision_at_execution": "5e7a068846c929e12eb1d5d33de1ec93b168a8ca",
+  "source_sha256": {
+    "native/runtime/character/LICENSE": "7c7df8f9ea9a8b26f257d1411e2286f7edbfece5529bd24a7d940f9f86c651dd",
+    "native/runtime/character/CMakeLists.txt": "c1626f4180f8a129f9421b6791e3e88d605d19173d289f8416d86d09acddddde",
+    "native/runtime/character/tests/test_motor.cpp": "0f202c7b1541b6e8e5b85b24d2d9547723ed82238762444f598461bab25c42b8",
+    "native/runtime/character/src/motor.cpp": "6c1665d528b2f876b61c4b9e3b26616ea471383afebd8d8d8e2af1570435279d",
+    "native/runtime/character/src/demo_fixture.cpp": "755805a78b5d483c6d4ddd5ac70f7236a7397c86b5ba28853e395fe4f7466600",
+    "native/runtime/character/tools/gate.py": "9004638681c4c5087a5836712353adea7cdbe1cbb0c0e295df0ff909ad53d486",
+    "native/runtime/character/tools/run_phase2_2.sh": "e656de09b196f0d006d04529b5f629e23d542d1b8709151d8c361c1ca0654dd1",
+    "native/runtime/character/include/cordel/character/motor.hpp": "7ff738c120d6d85228d5faaf65aa0d81f8e8b2254cbe7b6992218e4fc08744c0",
+    "native/runtime/character/include/cordel/character/demo_fixture.hpp": "9818852f75c11521be52bb7a25c976f33fe689647a0691e999f420fb64092400",
+    "native/phase1_host/LICENSE": "7c7df8f9ea9a8b26f257d1411e2286f7edbfece5529bd24a7d940f9f86c651dd",
+    "native/phase1_host/README.md": "09940f354dbb7c757041ede35e4fcc472ed456d58e83df8d127ab1c9686188d4",
+    "native/phase1_host/CMakeLists.txt": "1f5a6303fe68c6a8a3a3486018cf3317ea6172b4a885051b7ed2c31258d87f49",
+    "native/phase1_host/tests/logic_suite.hpp": "3f96b866e818e5790ed2e8505f043ae7183a5b315ef2c49ecebc8a71880273c1",
+    "native/phase1_host/tests/goldens.json": "045ab2eb91fd87b08be50def3df3dc082d3d982bdf6511365f9090f4aa2623c5",
+    "native/phase1_host/tests/goldens.hpp": "8de992cc588cdecc727db3929fe504246ea95c85ee7be4c441baae07fe9c2b2e",
+    "native/phase1_host/tests/test_logic.cpp": "877302a7f9e11ef5f6968c4ccd6586c1a9a1dbb4ddcd1f60eaf94d33d9cb23c6",
+    "native/phase1_host/tests/test_protocol.cpp": "4bda53f92c12015f51743c03d81ad3e22127944519a9af96deef262bcc97d549",
+    "native/phase1_host/src/runtime.cpp": "3986f706f377cf3bc296864d046be9656cf3626880c4e272931abb983f9aebf4",
+    "native/phase1_host/src/main.cpp": "2cc9df74533155b4229a8a884e227572ce0992f70603f8d698bcb805d2f8a19a",
+    "native/phase1_host/src/self_test.cpp": "c4012854c6bf41a887b6f9de441b38337f7181cb53d07958b40d524c9951200d",
+    "native/phase1_host/third_party/cgltf-LICENSE": "f619925f80ef862497aaf8e8155ef218fa6a2190055129523ca3df9119a9ba95",
+    "native/phase1_host/third_party/SDL-LICENSE.txt": "1c040b8271b37e5076359f8fd54240e371114112924d2df81ef87c7d6a1dfdfd",
+    "native/phase1_host/third_party/dependency-manifest.json": "e295dbca38840e9c71a5e27819236fa3af7dac65b85905f1ac610b7105d971e0",
+    "native/phase1_host/third_party/cgltf.h": "e378a21c084bf1f288bb799de827bb26906efb024255f1ecf1705ea13f11c6ec",
+    "native/phase1_host/third_party/HIDAPI-LICENSE-bsd.txt": "30eb1bef29b46f8ba7ab8b416035dbd93cb034a45481dd97815b944284582cd2",
+    "native/phase1_host/tools/goldens.py": "be605e903724d0924d377091e1d0d8482a024624e66e02c6de4dc83cb5aeb74a",
+    "native/phase1_host/tools/run_offscreen.sh": "c5d9f9cebdb6ba9b62c3061ff4d1807e2a4a819f24fb9aeeafde513e088b302b",
+    "native/phase1_host/tools/compare.py": "9c34941f8819c9a6869ececcb3ca76ece0ffd88716d4d1ec8cfd84ca76e7019d",
+    "native/phase1_host/tools/convert_images.py": "55f0ad05241d7ef934a54c9beac12ef92c245ba3ac5b57d86ff5615ec2488d85",
+    "native/phase1_host/src/narrative/experiment.cpp": "307f7fbeb086fe013e8abbbf6571317e5b078703faa76fda0885c33edc52012f",
+    "native/phase1_host/src/narrative/json.cpp": "b0266f78cb1ef07a9d2253be2bf93261be397e489073f5a5c75ebb6ca90785cb",
+    "native/phase1_host/src/narrative/session.cpp": "1888bca29a12290b6d43f525473c677d3fc4e86e3e94a2d114a141524c9ae282",
+    "native/phase1_host/src/narrative/protocol.cpp": "184c5b20026097edeff8a63716d7bbbd8b1e41fd6f8c91352f3543d7b109f7b5",
+    "native/phase1_host/src/narrative/client.cpp": "06cd25de30c227272d3d6045e2a22ed6a8383ff5058ffca81da63cae9e6ca19d",
+    "native/phase1_host/src/diagnostics/diagnostics.cpp": "d4a831c6a74e24e31ccb6706b821ba0f5eae6f5a332b644b2824981d6bc525f4",
+    "native/phase1_host/src/platform/platform.cpp": "b98f85e03a237e81dd201ad3a0126341f15c1fb057476f72f25d62d922acbfb5",
+    "native/phase1_host/src/render/renderer.cpp": "d4ae22f6712a9011c48843a4e96e7b9c2bb5c74657f4bcfb2ee419b4ae0c508a",
+    "native/phase1_host/src/character/experiment.cpp": "f28cbb3df6a66d5b1122e155382db36a9930600270dcae9a4e7b8c1651517caf",
+    "native/phase1_host/src/character/debug.cpp": "7a1f1643af70b4363cf3629bdc96c1a472ae8a9a6659235f203a18d9be358d84",
+    "native/phase1_host/src/scene/scene.cpp": "cb7a4cf0afd97b48a98c916caa285d6eb3f68c8da73d84bc6efed529927ff1ad",
+    "native/phase1_host/include/cordel/renderer.hpp": "db4f590e64d4bcf6a3e04a4fe379137670a5a7d389ac61e090a324561b9c0ea0",
+    "native/phase1_host/include/cordel/narrative.hpp": "6e7f1d244eda7dac7da18de4c41d171fc2b732ddef24068adfc069174f42a296",
+    "native/phase1_host/include/cordel/narrative_session.hpp": "79f7eb016015c467f63cbde39d2973bce4afc7800196dde04f93cdf40066e9f4",
+    "native/phase1_host/include/cordel/scene.hpp": "8602242bb53e84ff849af51f5cb66869966a004efe8827d820dc5010c66869b1",
+    "native/phase1_host/include/cordel/runtime.hpp": "3b0be722eaf304f2620bda89d2be2cafb174352a248ca7cbbb7e1fe55d710390",
+    "native/phase1_host/include/cordel/platform.hpp": "996755e5eeda5ffaaeb6f47b7f8a9855ea92d6c695fa192d2cf328390cc4dd58",
+    "native/phase1_host/include/cordel/diagnostics.hpp": "e9e53c9e97b3b00c74363def2f2f70effd0a4e1dcbf60a4f579e20afee5968f0",
+    "native/phase1_host/include/cordel/motor_debug.hpp": "1651da2e597dc9822d86178d6e675db8444015354ac34f410efbe2775de093e6",
+    "native/phase1_host/include/cordel/logic.hpp": "9efb81a618184c9d04cfc857c4fbabb9e4d8354bf9543163da48094fc9e2fcb9",
+    "native/phase1_host/include/cordel/json.hpp": "9b0d4caa4352de5bd44463f3281daf1f8311e36041e7d5d7340c5e7eec4acdcc",
+    "native/phase1_host/include/cordel/physics_runtime.hpp": "0c51b8795266f2478f0e09fafc247729a0b244f1283407021fd4905f22270c39",
+    "native/physics/LICENSE": "7c7df8f9ea9a8b26f257d1411e2286f7edbfece5529bd24a7d940f9f86c651dd",
+    "native/physics/README.md": "ab01d320872d7ce2137bd7437e8ae477dfb24e0b812eed117f8ad918bb15adbd",
+    "native/physics/CMakeLists.txt": "601c3715a680cf36017eea65c39827319a83bf5736d80004da3e6cc013e85dcb",
+    "native/physics/fixtures/README.md": "00ebfc38e787fb94466f98a3cd74c9385970c0c6535857e59d14e90d78824378",
+    "native/physics/tests/test_queries.cpp": "f3cdedcb21ec4afe5a7488ba549430a40fcb55a2b58a05860e5051b9d173341d",
+    "native/physics/third_party/Jolt-LICENSE": "800abe35d64ad9defd636ff1ee8c961e06f0ebca3ef8d10083e8aa0e8ef86ac3",
+    "native/physics/third_party/Bullet-LICENSE": "885cd516a8420acb7c3e0b1a7119913b686495001ae564e3229740460e8cff59",
+    "native/physics/third_party/dependency-manifest.json": "16adab57efd7fb551d0fcbf12f62c4c2d8ac63fd6df21f40af174020868c1fd2",
+    "native/physics/tools/gate.py": "f2faa352e06d56c0adc51c10502d5fbb58079558822ed37a5ca657990c4a548a",
+    "native/physics/tools/run_phase2_1.sh": "b4b9a7b9ae17b88a44b100466d893e828938f10de38da7ef805baf4bc627064d",
+    "native/physics/src/bullet/backend.cpp": "eb9c43306cc235790358102aa36e240138061ba553b6b060dc6fd2a841ef60c4",
+    "native/physics/src/common/backend.hpp": "7228dd6d9e92848f460906f46ffd5b804230ee9ab4f1f0afb179663c6203d7c9",
+    "native/physics/src/common/world.cpp": "b50342b19c85d935c68b2cead526bdc8184692a659ceb43aa6a2b6f964e3b3b7",
+    "native/physics/src/common/fixture.cpp": "fe47051163fea045823be0e0ad0d59aaf479682031ab08d3f28be73d3e562049",
+    "native/physics/src/jolt/backend.cpp": "06854f39b9c4c2ba25b7da327f122bab44cdfa1aee5b247b143e25e14b82efcc",
+    "native/physics/include/cordel/physics/queries.hpp": "e14553745e4eb4230e5587ff3872e663483d47f77c630c026f5d8d86b9dca32d",
+    "native/physics/include/cordel/physics/world.hpp": "ada0bedc4146635286957ca079a35c73ea0d85c4de30b55702d23f532cc3895d",
+    "native/physics/include/cordel/physics/types.hpp": "f1ae029ef47a9b79cf3b68ab48c43ae0e5d5044aa6c2338899062f4c57a5b596",
+    "native/physics/include/cordel/physics/fixture.hpp": "2a3aad982b10f8dc3c32a131633fd00195a730eded1d91c94d1609c61dcfa63b",
+    "native/physics/include/cordel/physics/helpers.hpp": "bfc715bcd4b0c8c72be3eeaf6b4b4e76fb1dd1ef09505e5d2f5421a064cb7732"
+  },
+  "environment": {
+    "system": "Linux",
+    "machine": "x86_64",
+    "compiler": "c++ (Debian 14.2.0-19) 14.2.0",
+    "graphics": "SDL offscreen / Mesa llvmpipe; software functional evidence",
+    "build": "Release"
+  },
+  "motor_assertions": 10202,
+  "scenarios": 43,
+  "narrative_assertions": 70,
+  "hardware_verified": false,
+  "commands": [
+    {
+      "command": [
+        "cmake",
+        "-S",
+        "native/phase1_host",
+        "-B",
+        "/workspace/cordel-engine/build/phase1-host",
+        "-DCORDEL_OFFSCREEN_ONLY=ON",
+        "-DCMAKE_BUILD_TYPE=Release"
+      ],
+      "passed": true,
+      "wall_seconds": 0.6196561979995749
+    },
+    {
+      "command": [
+        "cmake",
+        "--build",
+        "/workspace/cordel-engine/build/phase1-host",
+        "-j",
+        "4"
+      ],
+      "passed": true,
+      "wall_seconds": 21.023398367000482
+    },
+    {
+      "command": [
+        "ctest",
+        "--test-dir",
+        "/workspace/cordel-engine/build/phase1-host",
+        "--output-on-failure"
+      ],
+      "passed": true,
+      "wall_seconds": 0.4680557809988386
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/character/cordel-motor-tests",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/motor"
+      ],
+      "passed": true,
+      "wall_seconds": 0.26555867299975944
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/cordel-native-host",
+        "--motor-test",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/runtime"
+      ],
+      "passed": true,
+      "wall_seconds": 4.279245218998767
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/cordel-native-host",
+        "--motor",
+        "--narrative-test",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/narrative"
+      ],
+      "passed": true,
+      "wall_seconds": 2.9745780490011384
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/cordel-native-host",
+        "--motor",
+        "--seconds",
+        "3",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/pacing-30",
+        "--render-hz",
+        "30"
+      ],
+      "passed": true,
+      "wall_seconds": 3.0737162030000036
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/cordel-native-host",
+        "--motor",
+        "--seconds",
+        "3",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/pacing-60",
+        "--render-hz",
+        "60"
+      ],
+      "passed": true,
+      "wall_seconds": 3.072265671000423
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/cordel-native-host",
+        "--motor",
+        "--seconds",
+        "3",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/pacing-120",
+        "--render-hz",
+        "120"
+      ],
+      "passed": true,
+      "wall_seconds": 3.0760841210012586
+    },
+    {
+      "command": [
+        "/workspace/cordel-engine/build/phase1-host/cordel-native-host",
+        "--motor",
+        "--seconds",
+        "3",
+        "--output",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/pacing-uncapped",
+        "--uncapped"
+      ],
+      "passed": true,
+      "wall_seconds": 3.1264484809998976
+    },
+    {
+      "command": [
+        "bash",
+        "native/physics/tools/run_phase2_1.sh",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/physics-regression"
+      ],
+      "passed": true,
+      "wall_seconds": 13.813971042000048
+    },
+    {
+      "command": [
+        "bash",
+        "scripts/cordel_phase1_smoke.sh",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/phase1-regression"
+      ],
+      "passed": true,
+      "wall_seconds": 17.627667099000973
+    },
+    {
+      "command": [
+        "bash",
+        "examples/cordel_viewport/tools/run_offscreen.sh",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/renpy-regression"
+      ],
+      "passed": true,
+      "wall_seconds": 25.608941941000012
+    },
+    {
+      "command": [
+        "bash",
+        "examples/cordel_viewport/tools/check_baseline.sh",
+        "/workspace/cordel-engine/tmp/phase2_2-verified/renpy-baseline"
+      ],
+      "passed": true,
+      "wall_seconds": 6.154893363000156
+    }
+  ]
+}

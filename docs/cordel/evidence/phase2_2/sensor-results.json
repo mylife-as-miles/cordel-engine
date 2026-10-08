@@ -1,0 +1,61 @@
+[
+  {
+    "expected_grounded": 1,
+    "expected_max": [
+      -19.999,
+      0.904,
+      7.01
+    ],
+    "expected_min": [
+      -20.001,
+      0.902,
+      6.99
+    ],
+    "initial": [
+      -20,
+      0.903,
+      13
+    ],
+    "input_sequence": [
+      {
+        "first_tick": 0,
+        "planar": [
+          0,
+          0,
+          -1
+        ],
+        "sprint": false,
+        "ticks": 80
+      }
+    ],
+    "name": "sensor_enter_exit",
+    "passed": true,
+    "position_tolerance_m": 0.005,
+    "result": {
+      "accepted_step_ticks": 0,
+      "air_ticks": 0,
+      "final": [
+        -20,
+        0.903,
+        7.000000000000044
+      ],
+      "ground_ticks": 80,
+      "grounded": true,
+      "max_penetration": 0,
+      "max_y": 0.903,
+      "min_y": 0.903,
+      "normal": [
+        0,
+        1,
+        0
+      ],
+      "recovery_iterations": 0,
+      "sensor_begin": 1,
+      "sensor_end": 1,
+      "sensor_persist": 34,
+      "slide_caps": 0,
+      "vertical_velocity": 0,
+      "walkable": true
+    }
+  }
+]

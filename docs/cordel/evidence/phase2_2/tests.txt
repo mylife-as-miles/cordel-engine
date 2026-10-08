@@ -1,0 +1,14 @@
+cmake -S native/phase1_host -B /workspace/cordel-engine/build/phase1-host -DCORDEL_OFFSCREEN_ONLY=ON -DCMAKE_BUILD_TYPE=Release : PASS
+cmake --build /workspace/cordel-engine/build/phase1-host -j 4 : PASS
+ctest --test-dir /workspace/cordel-engine/build/phase1-host --output-on-failure : PASS
+/workspace/cordel-engine/build/phase1-host/character/cordel-motor-tests --output /workspace/cordel-engine/tmp/phase2_2-verified/motor : PASS
+/workspace/cordel-engine/build/phase1-host/cordel-native-host --motor-test --output /workspace/cordel-engine/tmp/phase2_2-verified/runtime : PASS
+/workspace/cordel-engine/build/phase1-host/cordel-native-host --motor --narrative-test --output /workspace/cordel-engine/tmp/phase2_2-verified/narrative : PASS
+/workspace/cordel-engine/build/phase1-host/cordel-native-host --motor --seconds 3 --output /workspace/cordel-engine/tmp/phase2_2-verified/pacing-30 --render-hz 30 : PASS
+/workspace/cordel-engine/build/phase1-host/cordel-native-host --motor --seconds 3 --output /workspace/cordel-engine/tmp/phase2_2-verified/pacing-60 --render-hz 60 : PASS
+/workspace/cordel-engine/build/phase1-host/cordel-native-host --motor --seconds 3 --output /workspace/cordel-engine/tmp/phase2_2-verified/pacing-120 --render-hz 120 : PASS
+/workspace/cordel-engine/build/phase1-host/cordel-native-host --motor --seconds 3 --output /workspace/cordel-engine/tmp/phase2_2-verified/pacing-uncapped --uncapped : PASS
+bash native/physics/tools/run_phase2_1.sh /workspace/cordel-engine/tmp/phase2_2-verified/physics-regression : PASS
+bash scripts/cordel_phase1_smoke.sh /workspace/cordel-engine/tmp/phase2_2-verified/phase1-regression : PASS
+bash examples/cordel_viewport/tools/run_offscreen.sh /workspace/cordel-engine/tmp/phase2_2-verified/renpy-regression : PASS
+bash examples/cordel_viewport/tools/check_baseline.sh /workspace/cordel-engine/tmp/phase2_2-verified/renpy-baseline : PASS

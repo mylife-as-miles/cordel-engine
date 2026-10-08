@@ -1,0 +1,113 @@
+{
+  "cycles": [
+    {
+      "bodies": 0,
+      "cycle": 0,
+      "gl": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "motors": 0,
+      "shapes": 0
+    },
+    {
+      "bodies": 0,
+      "cycle": 1,
+      "gl": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "motors": 0,
+      "shapes": 0
+    },
+    {
+      "bodies": 0,
+      "cycle": 2,
+      "gl": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "motors": 0,
+      "shapes": 0
+    },
+    {
+      "bodies": 0,
+      "cycle": 3,
+      "gl": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "motors": 0,
+      "shapes": 0
+    },
+    {
+      "bodies": 0,
+      "cycle": 4,
+      "gl": {
+        "ebos": 0,
+        "programs": 0,
+        "scenes": 0,
+        "shader_stages": 0,
+        "textures": 0,
+        "vaos": 0,
+        "vbos": 0
+      },
+      "motors": 0,
+      "shapes": 0
+    }
+  ],
+  "final_gl": {
+    "ebos": 0,
+    "programs": 0,
+    "scenes": 0,
+    "shader_stages": 0,
+    "textures": 0,
+    "vaos": 0,
+    "vbos": 0
+  },
+  "final_motors": 0,
+  "final_worlds": 0,
+  "focus": {
+    "displacement_after_clear_m": 0,
+    "held_empty": true
+  },
+  "frames": 198,
+  "pause": {
+    "paused_motor_ticks": 0,
+    "render_frames": 21,
+    "resume_dropped_seconds": 0
+  },
+  "stall": {
+    "airborne_dropped_seconds": 0.21666666666666667,
+    "airborne_motor_ticks": 3,
+    "airborne_raw_seconds": 0.26860145299906435,
+    "airborne_vertical_displacement_m": -0.016350000000000087,
+    "dropped_seconds": 0.21666666666666667,
+    "horizontal_displacement_m": 0.22500000000000053,
+    "motor_ticks": 3,
+    "raw_seconds": 0.26818872399962856,
+    "simulated_seconds": 0.05,
+    "vertical_displacement_m": 0
+  },
+  "success": true
+}

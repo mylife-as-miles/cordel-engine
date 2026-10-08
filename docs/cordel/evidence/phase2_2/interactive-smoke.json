@@ -1,0 +1,14 @@
+{
+  "evidence": "bounded offscreen CLI, no physical device input",
+  "ramp35_cli": {
+    "success": true,
+    "seconds": 1,
+    "motor_ticks_observed": 30
+  },
+  "motor_narrative_cli": {
+    "success": true,
+    "seconds": 1,
+    "world_ticks_observed": 61
+  },
+  "owned_resources_at_shutdown": "zero; no worker orphan"
+}

@@ -21,7 +21,7 @@ boundary. Ren'Py contributes narrative technology; it does not own CORDEL.**
 | Narrative rewrite/replacement | Rejected for current scope; reconsider only with measured adapter-maintenance cost exceeding replacement of the supported subset |
 | Development renderer | OpenGL Core, executed C++20/SDL3 native reference |
 | Production renderer | Undecided; no permanent OpenGL/API commitment |
-| Collision query backend | Jolt selected for native development under ADR 0002; Bullet remains separately tested; dynamic physics/motor/platform certification pending |
+| Collision query backend | Jolt selected for native development under ADR 0002; Bullet remains separately tested; query motor software gate passed; dynamic physics/production motor/platform qualification pending |
 | Production presentation/audio | CORDEL owns in-game UI/input routing and future real-time audio device/world mix; narrative supplies semantic cues |
 
 [Source audit](ARCHITECTURE_AUDIT.md) and executed [1.1](PHASE_1_1_VIEWPORT.md),
@@ -275,14 +275,35 @@ queries remain on the authoritative thread. Native sensor events are query-deriv
 Character-capsule/Sensor pairs drained every tick, not general rigid-body callbacks.
 Collision geometry and lifetime are independent of GPU meshes and rendering.
 The reference fly camera remains unconstrained and the collision fixture is not
-visually aligned with the seven-mesh reference scene. No motor is implemented.
+visually aligned with the seven-mesh reference scene in its original mode.
+Phase 2.2 adds a separate, opt-in greybox motor presentation.
 
 Both libraries are pinned with retained licenses. Warmed costs, clean build/
 footprint, five-cycle zero-owned-handle teardown and Phase 1 regressions are
 archived; Windows/hardware, dynamic-body contacts, mesh edges and world budgets
 remain open. These static query results do not certify a production character.
 
-**Next: Phase 2.2 — Third-Person Character Motor.** Build gravity, grounding,
-bounded slide/penetration recovery and step/slope handling over the CORDEL-owned
-query interface; test motion independently of presentation rate. Retain both
-candidate query gates and the accepted Phase 1 reference regressions.
+## Executed character motor boundary
+
+[Phase 2.2](PHASE_2_2_CHARACTER_MOTOR.md) implements CORDEL-owned upright capsule
+movement exclusively through `PhysicsWorld` queries. The motor owns its shape and
+sensor proxy, authoritative current/previous centre, desired planar velocity,
+gravity/vertical velocity, grounding and bounded recovery/slide/step decisions.
+No Jolt character class or type enters the movement API. The world is authoritative
+at 60 Hz; renderer consumes interpolated positions and a fixed-size CPU debug packet.
+
+The selected Jolt build passes 43 scenarios/10,202 assertions, five presentation
+schedules for five sequences (zero final-position difference), slope/step/door/
+ceiling/ledge/sensor probes, five teardown cycles and 60 simulated seconds of soak.
+Real Ren'Py dialogue/choice/event waits retain motor/physics/world ticks and render
+activity with zero normal dropped time; explicit pause freezes ticks only. Both
+query adapters and all accepted Phase 1 regressions remain green. The new weak
+world-lifetime guard is an authoritative-thread expiration check, not concurrent
+access or backend ownership leaking into gameplay.
+
+This establishes a reusable movement seam, not production character qualification.
+Dynamic contacts/platforms, mesh seams, animation/root motion, durable motor saves,
+physical devices, hardware and other platforms remain open. Development ramp speed
+and edge adhesion policies are explicit in the report. **Next: Phase 2.3 — Follow /
+Orbit Camera**, consuming motor presentation state and testing camera obstruction
+and input ownership; no follow/orbit implementation is part of Phase 2.2.

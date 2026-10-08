@@ -1,0 +1,29 @@
+{
+  "physics": 207,
+  "phase1": {
+    "schema_version": 1,
+    "success": true,
+    "evidence_class": "Linux SDL offscreen / Mesa software; no hardware certification",
+    "revision": "5e7a068846c929e12eb1d5d33de1ec93b168a8ca",
+    "smoke_script_sha256": "bae83ea5579beeb85b460490fea79a47aa006371435eaae518b33c6fa0987c38",
+    "narrative_checks": 191,
+    "native_checks": 129,
+    "ordinary_renpy_reference_branches": 2,
+    "scene_cycles": 5,
+    "final_live_resources": {
+      "ebos": 0,
+      "programs": 0,
+      "scenes": 0,
+      "shader_stages": 0,
+      "textures": 0,
+      "vaos": 0,
+      "vbos": 0
+    },
+    "full_milestone_regressions": "Run separately; see Phase 1 conclusion"
+  },
+  "viewport_checks": 83,
+  "source_tests": 29,
+  "sdk_tests": 89,
+  "the_question_endings": 2,
+  "known_failures": "Original full-suite BOOTSTRAP.md failures remain excluded, unchanged"
+}

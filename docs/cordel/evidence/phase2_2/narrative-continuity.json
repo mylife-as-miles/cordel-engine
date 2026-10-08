@@ -1,0 +1,152 @@
+[
+  {
+    "camera_distance": 0,
+    "dropped_seconds": 0,
+    "explicit_pause": false,
+    "motor_cpu_ms_last_frame": 0.014001,
+    "motor_displacement": [
+      0,
+      -0.8856250000000006,
+      -1.8750000000000044
+    ],
+    "motor_end": [
+      0,
+      3.1143749999999994,
+      2.1249999999999956
+    ],
+    "motor_start": [
+      0,
+      4,
+      4
+    ],
+    "motor_ticks": 25,
+    "physics_ticks": 25,
+    "render_frames": 23,
+    "session_id": "motor-continue",
+    "simulation_ticks": 25,
+    "wait_still_pending": true,
+    "wait_type": "dialogue",
+    "wall_seconds": 0.40938887000083923,
+    "worst_render_interval_ms": 18.74231200054055
+  },
+  {
+    "camera_distance": 0,
+    "dropped_seconds": 0,
+    "explicit_pause": false,
+    "motor_cpu_ms_last_frame": 0.016254,
+    "motor_displacement": [
+      0,
+      -0.8856250000000006,
+      -1.8750000000000044
+    ],
+    "motor_end": [
+      0,
+      3.1143749999999994,
+      2.1249999999999956
+    ],
+    "motor_start": [
+      0,
+      4,
+      4
+    ],
+    "motor_ticks": 25,
+    "physics_ticks": 25,
+    "render_frames": 23,
+    "session_id": "motor-continue",
+    "simulation_ticks": 25,
+    "wait_still_pending": true,
+    "wait_type": "wait_for_event",
+    "wall_seconds": 0.41013534699959564,
+    "worst_render_interval_ms": 18.734680001216475
+  },
+  {
+    "camera_distance": 0,
+    "dropped_seconds": 0,
+    "explicit_pause": false,
+    "motor_cpu_ms_last_frame": 0.009084,
+    "motor_displacement": [
+      0,
+      -0.8175000000000003,
+      -1.8000000000000043
+    ],
+    "motor_end": [
+      0,
+      3.1824999999999997,
+      2.1999999999999957
+    ],
+    "motor_start": [
+      0,
+      4,
+      4
+    ],
+    "motor_ticks": 24,
+    "physics_ticks": 24,
+    "render_frames": 23,
+    "session_id": "motor-continue",
+    "simulation_ticks": 24,
+    "wait_still_pending": true,
+    "wait_type": "choice",
+    "wall_seconds": 0.4096871090005152,
+    "worst_render_interval_ms": 19.37887299936847
+  },
+  {
+    "camera_distance": 0,
+    "dropped_seconds": 0,
+    "explicit_pause": true,
+    "motor_cpu_ms_last_frame": 0,
+    "motor_displacement": [
+      0,
+      0,
+      0
+    ],
+    "motor_end": [
+      0,
+      4,
+      4
+    ],
+    "motor_start": [
+      0,
+      4,
+      4
+    ],
+    "motor_ticks": 0,
+    "physics_ticks": 0,
+    "render_frames": 23,
+    "session_id": "motor-pause",
+    "simulation_ticks": 0,
+    "wait_still_pending": true,
+    "wait_type": "dialogue",
+    "wall_seconds": 0.40271786700031953,
+    "worst_render_interval_ms": 18.342948000281467
+  },
+  {
+    "camera_distance": 0,
+    "dropped_seconds": 0,
+    "explicit_pause": false,
+    "motor_cpu_ms_last_frame": 0.007221,
+    "motor_displacement": [
+      0,
+      -0.8175000000000003,
+      -1.8000000000000043
+    ],
+    "motor_end": [
+      0,
+      3.1824999999999997,
+      2.1999999999999957
+    ],
+    "motor_start": [
+      0,
+      4,
+      4
+    ],
+    "motor_ticks": 24,
+    "physics_ticks": 24,
+    "render_frames": 23,
+    "session_id": "motor-pause",
+    "simulation_ticks": 24,
+    "wait_still_pending": true,
+    "wait_type": "dialogue",
+    "wall_seconds": 0.40673191499990935,
+    "worst_render_interval_ms": 18.00634000028367
+  }
+]
