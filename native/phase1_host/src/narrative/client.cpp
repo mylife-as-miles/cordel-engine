@@ -100,7 +100,7 @@ void Client::loop() {
             }
             if(fds[0].revents&(POLLIN|POLLHUP|POLLERR)) {
                 char chunk[4096];auto n=::read(read_,chunk,sizeof(chunk));
-                if(n==0) {if(!buffer.empty()) fail("Worker ended with partial JSONL frame");break;}
+                if(n==0) {eof_=true;if(!buffer.empty()) fail("Worker ended with partial JSONL frame");break;}
                 if(n<0) {if(errno==EAGAIN||errno==EINTR) continue;throw std::runtime_error("Narrative pipe read failed");}
                 buffer.append(chunk,static_cast<std::size_t>(n));
                 std::size_t newline;
@@ -145,7 +145,7 @@ Json Client::diagnostics() const {
     std::lock_guard lock(mutex_);
     return Json::Object{{"queue_limit",queue_limit},{"maximum_line_bytes",max_line},{"incoming_high_water",high_water_},
         {"outgoing_high_water",out_high_water_},{"incoming_size",incoming_.size()},{"outgoing_size",outgoing_.size()},
-        {"error",error_},{"worker_eof",bool(dead_)},{"io_exit_monotonic",death_time_},{"worker_reaped",pid_==-1},
+        {"error",error_},{"worker_eof",bool(eof_)},{"io_stopped",bool(dead_)},{"io_exit_monotonic",death_time_},{"worker_reaped",pid_==-1},
         {"forced_termination",forced_},{"protocol_failure_termination_requested",protocol_termination_},{"wait_status",exit_status_}};
 }
 }

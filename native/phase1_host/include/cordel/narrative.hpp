@@ -27,6 +27,7 @@ class Client {
     std::deque<std::string> outgoing_;
     std::string error_;
     std::atomic<bool> stopping_{false},dead_{false};
+    std::atomic<bool> eof_{false};
     std::size_t sequence_{},peer_sequence_{},high_water_{},out_high_water_{};
     double death_time_{};
     int exit_status_{};
